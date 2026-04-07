@@ -11,7 +11,8 @@ namespace Managers
         
         public Timeline ActiveTimeline { get; private set; }
         
-        [SerializeField] private List<Timeline> timelines = new List<Timeline>();
+        [SerializeField] private List<Timeline> timelines = new();
+        public List<Timeline> AllTimelines => timelines;
         
         private void Awake()
         {

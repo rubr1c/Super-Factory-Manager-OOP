@@ -129,8 +129,9 @@ GameObject:
   m_Component:
   - component: {fileID: 227766767}
   - component: {fileID: 227766766}
+  - component: {fileID: 227766768}
   m_Layer: 0
-  m_Name: Player
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0edc28d22e84f0d8ab4f4c09e08ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  TestItem: {fileID: 11400000, guid: 47977ac91f5754c4fbf3763c8c72c5c3, type: 2}
+  TestItem: {fileID: 11400000, guid: f2e3d4c5b6a79889796959493929190f, type: 2}
 --- !u!4 &227766767
 Transform:
   m_ObjectHideFlags: 0
@@ -164,6 +165,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &227766768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227766765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7a9025eacc46ffb841a8d4075b64b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.TimelineManager
+  timeline: {fileID: 8691321373789671872, guid: 12bbf68fb56cfff469dbcb6cca6a34f2, type: 3}
+  timelines: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

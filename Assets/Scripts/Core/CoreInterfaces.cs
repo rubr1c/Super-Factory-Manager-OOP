@@ -17,6 +17,9 @@
 
     public interface IProducer
     {
-        ItemData ExtractOutput();
+        ItemData ExtractOutput(float amount);
     }
+
+    public interface IGenerator : ITickable, IInteractable, IProducer { }
+    public interface IMachine : ITickable, IInteractable, IProducer, IConsumer { }
 }

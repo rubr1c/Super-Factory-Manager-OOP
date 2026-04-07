@@ -1,5 +1,6 @@
 ﻿using System;
 using Core;
+using Entity;
 using UnityEngine;
 
 
@@ -16,11 +17,12 @@ public class Timeline : MonoBehaviour
     [SerializeField] private float speedModifier       = 1.0f;
     [SerializeField] private float energyUsageModifier = 1.0f;
 
-    private GridEntity[] _entityGrid;
+    private PlaceableGridEntity[] _entityGrid;
+    public PlaceableGridEntity[] GridEntities => _entityGrid;
 
     private void Awake()
     {
-        _entityGrid = new GridEntity[gridHeight * gridWidth];
+        _entityGrid = new PlaceableGridEntity[gridHeight * gridWidth];
     }
 
     public bool IsSlotEmpty(Vector2Int pos)
@@ -34,7 +36,7 @@ public class Timeline : MonoBehaviour
         return pos.x >= 0 && pos.x < gridWidth && pos.y >= 0 && pos.y < gridHeight;
     }
     
-    public GridEntity EntityAt(Vector2Int pos)
+    public PlaceableGridEntity EntityAt(Vector2Int pos)
     {
         if (!IsValidGridPosition(pos)) return null;
         return _entityGrid[pos.y * gridWidth + pos.x];
@@ -46,11 +48,8 @@ public class Timeline : MonoBehaviour
 
         var spawnedItemObject = Instantiate(item.Prefab, transform);
 
-        if (!spawnedItemObject.TryGetComponent<GridEntity>(out var itemEntity))
+        if (!spawnedItemObject.TryGetComponent<PlaceableGridEntity>(out var itemEntity))
         {
-            Debug.LogError(
-                $"Prefab for '{item.ItemName}' needs a component that inherits GridEntity (e.g. PlaceableGridItem).",
-                spawnedItemObject);
             Destroy(spawnedItemObject);
             return false;
         }

@@ -1,13 +1,11 @@
-﻿using Unity.Mathematics;
+using Core;
+using Entity;
 using UnityEngine;
 
-namespace Core
+namespace Entity
 {
-    public abstract class GridEntity : MonoBehaviour
+    public abstract class PlaceableGridEntity : Entity
     {
-        public Vector2Int GridPos { get; protected set; }
-        public ItemData Item { get; protected set; }
-
         public virtual void Place(ItemData item, Vector2Int pos, float slotSize)
         {
             GridPos = pos;
