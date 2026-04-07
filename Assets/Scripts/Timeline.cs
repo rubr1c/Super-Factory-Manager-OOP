@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Core;
 using Entity;
 using UnityEngine;
@@ -12,6 +12,10 @@ public class Timeline : MonoBehaviour
     [SerializeField] private int gridWidth  = 30;
     [SerializeField] private int gridHeight = 30;
     [SerializeField] private float slotSize = 1.0f;
+
+    public int GridWidth => gridWidth;
+    public int GridHeight => gridHeight;
+    public float SlotSize => slotSize;
     
     // timeline modifiers
     [SerializeField] private float speedModifier       = 1.0f;

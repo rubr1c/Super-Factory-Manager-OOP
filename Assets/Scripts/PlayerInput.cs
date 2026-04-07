@@ -2,33 +2,39 @@
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerInput : MonoBehaviour
 {
-    public ItemData TestItem;
+    public ItemData testItem;
+    private Camera _camera;
+
+    private void Start()
+    {
+        _camera = Camera.main;
+    }
 
     private void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (TestItem == null) return;
+            if (!testItem) return;
 
             var currentTimeline = TimelineManager.Instance.ActiveTimeline;
-            if (currentTimeline == null) return;
+            if (!currentTimeline) return;
 
-            var cam = Camera.main;
-            if (cam == null) return;
+            if (!_camera) return;
 
-            var screen = (Vector3)Mouse.current.position.ReadValue();
-            screen.z = -cam.transform.position.z;
-            var mousePos = cam.ScreenToWorldPoint(screen);
+            Vector3 screen = Mouse.current.position.ReadValue();
+            screen.z = -_camera.transform.position.z;
+            var mousePos = _camera.ScreenToWorldPoint(screen);
             mousePos.z = 0f;
 
             var gridPos = currentTimeline.WorldToGridPosition(mousePos);
 
             if (currentTimeline.IsSlotEmpty(gridPos))
             {
-                currentTimeline.TryPlace(TestItem, gridPos);
+                currentTimeline.TryPlace(testItem, gridPos);
             }
         }
     }
