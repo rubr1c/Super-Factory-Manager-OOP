@@ -1,15 +1,21 @@
 using Core;
-using Entity;
 using UnityEngine;
 
 namespace Entity
 {
     public abstract class PlaceableGridEntity : Entity
     {
-        public virtual void Place(ItemData item, Vector2Int pos, float slotSize)
+        public Timeline ParentTimeline { get; protected set; }
+        
+        public virtual void Place(
+            ItemData item, 
+            Vector2Int pos, 
+            float slotSize,
+            Timeline timeline)
         {
             GridPos = pos;
             Item = item;
+            ParentTimeline = timeline;
             transform.localPosition = new Vector3(pos.x * slotSize, pos.y * slotSize, 0f);
         }
 

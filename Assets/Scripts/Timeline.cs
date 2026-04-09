@@ -58,7 +58,7 @@ public class Timeline : MonoBehaviour
             return false;
         }
 
-        itemEntity.Place(item, pos, slotSize);
+        itemEntity.Place(item, pos, slotSize, this);
 
         _entityGrid[pos.y * gridWidth + pos.x] = itemEntity;
         return true;
