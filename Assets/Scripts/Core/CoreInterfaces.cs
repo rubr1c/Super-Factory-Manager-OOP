@@ -1,4 +1,6 @@
-﻿namespace Core
+﻿using Item;
+
+namespace Core
 {
     public interface ITickable
     {
@@ -17,7 +19,7 @@
 
     public interface IProducer
     {
-        ItemData ExtractOutput(float amount);
+        float ExtractOutput(ItemData item, float maxAmount);
     }
     
     public interface ITransport

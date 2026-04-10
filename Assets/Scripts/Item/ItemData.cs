@@ -1,7 +1,6 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Core
+namespace Item
 {
     [CreateAssetMenu(fileName = "Item", menuName = "SFM/Item Data")]
     public class ItemData : ScriptableObject
@@ -9,8 +8,6 @@ namespace Core
         public string ItemName;
         public Sprite Icon;
         public bool IsPlaceable;
-        
-        [Tooltip("Only for placeable items")]
         public GameObject Prefab; 
     }
 }

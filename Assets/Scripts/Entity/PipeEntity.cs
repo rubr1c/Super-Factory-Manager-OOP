@@ -1,4 +1,5 @@
 ﻿using Core;
+using Item;
 using UnityEngine;
 
 namespace Entity
@@ -13,6 +14,14 @@ namespace Entity
         public float TransferRate = 10f; 
 
         public PipeMode[] Connections = new PipeMode[4]; 
+        
+        private Vector2Int[] _directions =
+        {
+            new (0, 1),
+            new (1, 0),
+            new (0, -1),
+            new (-1, 0)
+        };
 
         public override void Place(
             ItemData item, 
@@ -34,8 +43,7 @@ namespace Entity
             MaxCapacity = maxCapacity;
             ItemCount = 0;
             
-            // Default all sides to Neutral for now
-            for(int i=0; i<4; i++) Connections[i] = PipeMode.Neutral;
+            for(int i = 0 ; i < 4; i++) Connections[i] = PipeMode.None;
         }
 
         public virtual bool CanHoldItem(ItemData item) { return true; }
@@ -74,51 +82,58 @@ namespace Entity
         {
             if (ItemCount <= 0) return; 
 
-            Vector2Int[] directions =
-            {
-                new (0, 1),
-                new (1, 0),
-                new (0, -1),
-                new (-1, 0)
-            };
+            
 
             for (int i = 0; i < 4; i++)
             {
-                if (Connections[i] == PipeMode.Push)
+                if (Connections[i] == PipeMode.None) continue;
+
+                var neighborPos = GridPos + _directions[i];
+
+                var neighbor = ParentTimeline.EntityAt(neighborPos);
+
+                if (!neighbor) continue;
+                
+                if (Connections[i] == PipeMode.Neutral &&
+                    neighbor is ITransport transport)
                 {
-                    var neighborPos = GridPos + directions[i];
-
-                    var neighbor = ParentTimeline.EntityAt(neighborPos);
-
-                    if (neighbor != null)
+                    var neighborCount = transport.GetItemCount(Item);
+                        
+                    if (ItemCount > neighborCount)
                     {
-                        float amountToMove = Mathf.Min(ItemCount, TransferRate);
+                        var volumeDifferance = ItemCount - neighborCount;
+                        var transferAmountNeeded = volumeDifferance / 2f;
 
-                        if (neighbor is IConsumer consumer)
+                        var spaceAvailable = transport.GetRemainingCapacity(Item);
+                        var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
+
+                        if (amountToTransfer > 0 && transport.Push(Item, amountToTransfer))
                         {
-                            if (consumer.TryConsume(Item, amountToMove))
-                            {
-                                ItemCount -= amountToMove;
-                            }
+                            ItemCount -= amountToTransfer;
                         }
-                        else if (neighbor is ITransport transport)
+                    }
+                } 
+                else if (Connections[i] == PipeMode.Push)
+                {
+                    if (neighbor is IConsumer consumer)
+                    {
+                        var amountToMove = Mathf.Min(ItemCount, TransferRate);
+
+                        if (consumer.TryConsume(Item, amountToMove))
                         {
-                            var neighborCount = transport.GetItemCount(this.Item);
-                            
-                            if (ItemCount > neighborCount)
-                            {
-                                var volumeDifferance = ItemCount - neighborCount;
-                                var transferAmountNeeded = volumeDifferance / 2f;
-
-                                var spaceAvailable = transport.GetRemainingCapacity(Item);
-                                var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
-
-                                if (amountToTransfer > 0 && transport.Push(Item, amountToTransfer))
-                                {
-                                    ItemCount -= amountToTransfer;
-                                }
-                            }
+                            ItemCount -= amountToMove;
                         }
+                    }
+                }
+                else if (Connections[i] == PipeMode.Pull)
+                {
+                    if (neighbor is IProducer producer)
+                    {
+                        var amountToExtract = Mathf.Min(MaxCapacity - ItemCount, TransferRate);
+                        
+                        var extractedAmount = producer.ExtractOutput(Item, amountToExtract);
+
+                        ItemCount += extractedAmount;
                     }
                 }
             }

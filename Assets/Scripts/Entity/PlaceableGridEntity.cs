@@ -1,4 +1,4 @@
-using Core;
+using Item;
 using UnityEngine;
 
 namespace Entity
