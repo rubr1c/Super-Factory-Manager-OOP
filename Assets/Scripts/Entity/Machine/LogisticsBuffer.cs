@@ -1,14 +1,15 @@
-﻿using Core;
+using Core;
 using GameItems;
 using Inventory;
 using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class EnergyGenerator : PlaceableGridEntity, IProductionTickable, IProducer, IConsumer, IInteractable, IUpgradeable
+    public class LogisticsBuffer : PlaceableGridEntity, ILogisticsTickable, IProducer, IConsumer, IInteractable, IUpgradeable
     {
-        private InventorySlot _fuelInput;
-        private InventorySlot _energyOutput;
+        private ItemContainer _storage;
+
+        [SerializeField] private int capacity = 16;
 
         public UpgradeSlots Upgrades { get; private set; }
 
@@ -17,19 +18,18 @@ namespace Entity.Machine
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
             base.Place(item, pos, slotSize, timeline);
-            _fuelInput = InventorySlot.Empty;
-            _energyOutput = InventorySlot.Empty;
+            _storage = new ItemContainer(capacity);
             Upgrades = new UpgradeSlots(3);
         }
 
         public bool TryInstallUpgrade(UpgradeCardItem card) => Upgrades.TryInstall(card);
 
-        public void OnProductionTick()
+        public void OnLogisticsTick()
         {
             throw new System.NotImplementedException();
         }
 
-        public InventorySlot PeekOutput() => _energyOutput;
+        public InventorySlot PeekOutput() => _storage.GetFirst();
 
         public InventorySlot TryExtract(InventorySlot request)
         {

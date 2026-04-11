@@ -1,6 +1,7 @@
-﻿using Core;
+using Core;
 using GameItems;
 using UnityEngine;
+using Inventory;
 
 namespace Entity
 {
@@ -41,7 +42,7 @@ namespace Entity
         {
             base.Place(item, pos, slotSize, timeline);
             MaxCapacity = maxCapacity;
-            Buffer = InventorySlots.Empty;
+            Buffer = InventorySlot.Empty;
 
             for (var index = 0; index < Connections.Length; index++)
             {
@@ -56,20 +57,22 @@ namespace Entity
 
         public InventorySlot TryInsert(InventorySlot slot)
         {
-            if (InventorySlots.IsEmpty(slot) || !CanHoldItem(slot.Definition) || !InventorySlots.CanAdd(Buffer, slot.Definition))
+            if (slot.IsEmpty || !CanHoldItem(slot.Held) || !Buffer.CanAdd(slot))
             {
                 return slot;
             }
 
-            var spaceAvailable = GetRemainingCapacity(slot.Definition);
+            var spaceAvailable = GetRemainingCapacity(slot);
             if (spaceAvailable <= 0f)
             {
                 return slot;
             }
 
             var movedAmount = Mathf.Min(spaceAvailable, slot.Count);
-            Buffer = InventorySlots.Add(Buffer, slot.Definition, movedAmount);
-            return InventorySlots.Remove(slot, movedAmount);
+            Buffer.Add(new InventorySlot(slot.Held, movedAmount));
+            var remainder = slot;
+            remainder.Remove(movedAmount);
+            return remainder;
         }
 
         public InventorySlot PeekOutput()
@@ -82,26 +85,31 @@ namespace Entity
             return Buffer;
         }
 
-        public InventorySlot TryExtract(Item item, float maxAmount)
+        public InventorySlot TryExtract(InventorySlot request)
         {
-            if (InventorySlots.IsEmpty(Buffer) || Buffer.Definition != item || maxAmount <= 0f)
+            if (request.IsEmpty || Buffer.IsEmpty || Buffer.Held != request.Held)
             {
-                return InventorySlots.Empty;
+                return InventorySlot.Empty;
             }
 
-            var extractedAmount = Mathf.Min(Buffer.Count, maxAmount);
-            Buffer = InventorySlots.Remove(Buffer, extractedAmount);
-            return new InventorySlot(item, extractedAmount);
+            var extractedAmount = Mathf.Min(Buffer.Count, request.Count);
+            if (extractedAmount <= 0f)
+            {
+                return InventorySlot.Empty;
+            }
+
+            Buffer.Remove(extractedAmount);
+            return new InventorySlot(request.Held, extractedAmount);
         }
 
-        public float GetRemainingCapacity(Item item)
+        public float GetRemainingCapacity(InventorySlot typeSlot)
         {
-            if (!CanHoldItem(item))
+            if (typeSlot.IsEmpty || !CanHoldItem(typeSlot.Held))
             {
                 return 0f;
             }
 
-            if (InventorySlots.IsEmpty(Buffer) || Buffer.Definition == item)
+            if (Buffer.IsEmpty || Buffer.Held == typeSlot.Held)
             {
                 return MaxCapacity - Buffer.Count;
             }
@@ -132,7 +140,7 @@ namespace Entity
                     continue;
                 }
 
-                if (InventorySlots.IsEmpty(Buffer))
+                if (Buffer.IsEmpty)
                 {
                     continue;
                 }
@@ -153,19 +161,19 @@ namespace Entity
         private void PullFromProducer(IProducer producer)
         {
             var availableOutput = producer.PeekOutput();
-            if (InventorySlots.IsEmpty(availableOutput) || !CanHoldItem(availableOutput.Definition))
+            if (availableOutput.IsEmpty || !CanHoldItem(availableOutput.Held))
             {
                 return;
             }
 
-            var amountToExtract = Mathf.Min(GetRemainingCapacity(availableOutput.Definition), TransferRate);
+            var amountToExtract = Mathf.Min(GetRemainingCapacity(availableOutput), TransferRate);
             if (amountToExtract <= 0f)
             {
                 return;
             }
 
-            var extractedSlot = producer.TryExtract(availableOutput.Definition, amountToExtract);
-            if (!InventorySlots.IsEmpty(extractedSlot))
+            var extractedSlot = producer.TryExtract(new InventorySlot(availableOutput.Held, amountToExtract));
+            if (!extractedSlot.IsEmpty)
             {
                 TryInsert(extractedSlot);
             }
@@ -174,7 +182,7 @@ namespace Entity
         private void BalanceWith(ITransport transport)
         {
             var neighborBuffer = transport.PeekBuffer();
-            if (!InventorySlots.IsEmpty(neighborBuffer) && neighborBuffer.Definition != Buffer.Definition)
+            if (!neighborBuffer.IsEmpty && neighborBuffer.Held != Buffer.Held)
             {
                 return;
             }
@@ -186,7 +194,7 @@ namespace Entity
 
             var difference = Buffer.Count - neighborBuffer.Count;
             var transferAmountNeeded = difference / 2f;
-            var spaceAvailable = transport.GetRemainingCapacity(Buffer.Definition);
+            var spaceAvailable = transport.GetRemainingCapacity(Buffer);
             var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
 
             TransferTo(transport, amountToTransfer);
@@ -194,17 +202,17 @@ namespace Entity
 
         private void TransferTo(IConsumer consumer, float amountToMove)
         {
-            if (InventorySlots.IsEmpty(Buffer) || amountToMove <= 0f)
+            if (Buffer.IsEmpty || amountToMove <= 0f)
             {
                 return;
             }
 
-            var outgoingSlot = new InventorySlot(Buffer.Definition, amountToMove);
+            var outgoingSlot = new InventorySlot(Buffer.Held, amountToMove);
             var remainder = consumer.TryInsert(outgoingSlot);
             var movedAmount = outgoingSlot.Count - remainder.Count;
             if (movedAmount > 0f)
             {
-                Buffer = InventorySlots.Remove(Buffer, movedAmount);
+                Buffer.Remove(movedAmount);
             }
         }
     }

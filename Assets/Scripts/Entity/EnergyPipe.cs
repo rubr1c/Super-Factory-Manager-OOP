@@ -1,5 +1,4 @@
-﻿using Core;
-using GameItems;
+﻿using GameItems;
 
 namespace Entity
 {

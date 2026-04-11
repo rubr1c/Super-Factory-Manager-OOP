@@ -14,7 +14,7 @@ namespace Entity
             Timeline timeline)
         {
             GridPos = pos;
-            Definition = item;
+            Held = item;
             ParentTimeline = timeline;
             transform.localPosition = new Vector3(pos.x * slotSize, pos.y * slotSize, 0f);
         }

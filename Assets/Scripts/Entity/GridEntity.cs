@@ -1,4 +1,4 @@
-﻿using GameItems;
+using GameItems;
 using UnityEngine;
 
 namespace Entity
@@ -6,6 +6,6 @@ namespace Entity
     public abstract class Entity : MonoBehaviour
     {
         public Vector2Int GridPos { get; protected set; }
-        public Item Definition { get; protected set; }
+        public Item Held { get; protected set; }
     }
 }

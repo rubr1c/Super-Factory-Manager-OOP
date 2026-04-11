@@ -1,11 +1,11 @@
-﻿using Core;
+using Core;
 using GameItems;
 using Inventory;
 using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class EnergyGenerator : PlaceableGridEntity, IProductionTickable, IProducer, IConsumer, IInteractable, IUpgradeable
+    public class CoalBurner : PlaceableGridEntity, IProductionTickable, IProducer, IConsumer, IInteractable, IUpgradeable
     {
         private InventorySlot _fuelInput;
         private InventorySlot _energyOutput;

@@ -1,4 +1,5 @@
 ﻿using GameItems;
+using Inventory;
 using UnityEngine;
 
 namespace Core
@@ -31,13 +32,13 @@ namespace Core
     public interface IProducer
     {
         InventorySlot PeekOutput();
-        InventorySlot TryExtract(Item item, float maxAmount);
+        InventorySlot TryExtract(InventorySlot request);
     }
 
     public interface ITransport : IProducer, IConsumer
     {
         InventorySlot PeekBuffer();
-        float GetRemainingCapacity(Item item);
+        float GetRemainingCapacity(InventorySlot typeSlot);
     }
 
     public interface IPlaceable
@@ -45,11 +46,15 @@ namespace Core
         GameObject Prefab { get; }
     }
 
+    public interface IUpgradeable
+    {
+        UpgradeSlots Upgrades { get; }
+        MachineModifiers Modifiers { get; }
+        bool TryInstallUpgrade(UpgradeCardItem card);
+    }
+
     public interface IFuel
     {
         float BurnTime { get; }
     }
-
-    public interface IGenerator : IConsumptionTickable, IInteractable, IProducer, IConsumer { }
-    public interface IMachine : IConsumptionTickable, IInteractable, IProducer, IConsumer { }
 }
