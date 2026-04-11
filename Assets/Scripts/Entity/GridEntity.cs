@@ -1,6 +1,4 @@
-﻿using Core;
-using Item;
-using Unity.Mathematics;
+﻿using GameItems;
 using UnityEngine;
 
 namespace Entity
@@ -8,6 +6,6 @@ namespace Entity
     public abstract class Entity : MonoBehaviour
     {
         public Vector2Int GridPos { get; protected set; }
-        public ItemData Item { get; protected set; }
+        public Item Definition { get; protected set; }
     }
 }

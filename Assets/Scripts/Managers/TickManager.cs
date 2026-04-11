@@ -29,16 +29,26 @@ namespace Managers
 
                 if (TimelineManager.Instance == null) continue;
 
-                foreach (var timeline in TimelineManager.Instance.AllTimelines)
-                {
-                    foreach (var entity in timeline.GridEntities)
-                    {
-                        if (entity == null) continue;
+                RunPhase<IProductionTickable>((phaseEntity) => phaseEntity.OnProductionTick());
+                RunPhase<ILogisticsTickable>((phaseEntity) => phaseEntity.OnLogisticsTick());
+                RunPhase<IConsumptionTickable>((phaseEntity) => phaseEntity.OnConsumptionTick());
+            }
+        }
 
-                        if (entity is ITickable tickableEntity)
-                        {
-                            tickableEntity.OnTick();
-                        }
+        private static void RunPhase<TPhase>(System.Action<TPhase> phaseAction)
+        {
+            if (TimelineManager.Instance == null)
+            {
+                return;
+            }
+
+            foreach (var timeline in TimelineManager.Instance.AllTimelines)
+            {
+                foreach (var entity in timeline.GridEntities)
+                {
+                    if (entity is TPhase phaseEntity)
+                    {
+                        phaseAction(phaseEntity);
                     }
                 }
             }

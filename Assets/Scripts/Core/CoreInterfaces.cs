@@ -1,10 +1,21 @@
-﻿using Item;
+﻿using GameItems;
+using UnityEngine;
 
 namespace Core
 {
-    public interface ITickable
+    public interface IProductionTickable
     {
-        void OnTick();
+        void OnProductionTick();
+    }
+
+    public interface ILogisticsTickable
+    {
+        void OnLogisticsTick();
+    }
+
+    public interface IConsumptionTickable
+    {
+        void OnConsumptionTick();
     }
 
     public interface IInteractable
@@ -14,23 +25,31 @@ namespace Core
 
     public interface IConsumer
     {
-        bool TryConsume(ItemData item, float amount);
+        InventorySlot TryInsert(InventorySlot slot);
     }
 
     public interface IProducer
     {
-        float ExtractOutput(ItemData item, float maxAmount);
-    }
-    
-    public interface ITransport
-    {
-        bool Push(ItemData item, float amount);
-        bool Pull(ItemData item, float amount);
-        
-        float GetItemCount(ItemData item);
-        float GetRemainingCapacity(ItemData item);
+        InventorySlot PeekOutput();
+        InventorySlot TryExtract(Item item, float maxAmount);
     }
 
-    public interface IGenerator : ITickable, IInteractable, IProducer { }
-    public interface IMachine : ITickable, IInteractable, IProducer, IConsumer { }
+    public interface ITransport : IProducer, IConsumer
+    {
+        InventorySlot PeekBuffer();
+        float GetRemainingCapacity(Item item);
+    }
+
+    public interface IPlaceable
+    {
+        GameObject Prefab { get; }
+    }
+
+    public interface IFuel
+    {
+        float BurnTime { get; }
+    }
+
+    public interface IGenerator : IConsumptionTickable, IInteractable, IProducer, IConsumer { }
+    public interface IMachine : IConsumptionTickable, IInteractable, IProducer, IConsumer { }
 }

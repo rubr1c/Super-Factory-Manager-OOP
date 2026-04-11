@@ -1,11 +1,11 @@
-﻿using Item;
+﻿using GameItems;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    public ItemData testItem;
+    [SerializeField] private string selectedItemId = "pipe";
     private Camera _camera;
 
     private void Start()
@@ -17,12 +17,15 @@ public class PlayerInput : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (!testItem) return;
-
             var currentTimeline = TimelineManager.Instance.ActiveTimeline;
             if (!currentTimeline) return;
 
             if (!_camera) return;
+
+            if (!Items.TryGet(selectedItemId, out var selectedItem))
+            {
+                return;
+            }
 
             Vector3 screen = Mouse.current.position.ReadValue();
             screen.z = -_camera.transform.position.z;
@@ -33,7 +36,7 @@ public class PlayerInput : MonoBehaviour
 
             if (currentTimeline.IsSlotEmpty(gridPos))
             {
-                currentTimeline.TryPlace(testItem, gridPos);
+                currentTimeline.TryPlace(selectedItem, gridPos);
             }
         }
     }

@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8735e34c7ba9204a9719b0cbda66713, type: 3}
-  m_Name: EnergyGeneratorItem
-  m_EditorClassIdentifier: Assembly-CSharp::GameItems.ItemData
-  registryName: energy_generator
-  displayName: Energy Generator
+  m_Script: {fileID: 11500000, guid: 3f0e81a8c92343cabf2b80e8ad7f4e9d, type: 3}
+  m_Name: WaterPumpItem
+  m_EditorClassIdentifier: Assembly-CSharp::GameItems.PlaceableItem
+  registryName: water_pump
+  displayName: Water Pump
   icon: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   maxStackSize: 20
   tagIds:
   - placeable
   - craftable
-  prefab: {fileID: 8153728190462739481, guid: e1f2a3b4c5d64758696a7b8c9d0e1f2a, type: 3}
+  prefab: {fileID: 6753728190462739481, guid: c1a2b3c4d5e6478899aabbccddeeff01, type: 3}

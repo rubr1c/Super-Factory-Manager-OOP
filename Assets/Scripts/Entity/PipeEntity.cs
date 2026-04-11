@@ -1,141 +1,210 @@
 ﻿using Core;
-using Item;
+using GameItems;
 using UnityEngine;
 
 namespace Entity
 {
     public enum PipeMode { None, Push, Pull, Neutral }
 
-    public abstract class PipeEntity : PlaceableGridEntity, ITransport, ITickable
+    public abstract class PipeEntity : PlaceableGridEntity, ITransport, ILogisticsTickable
     {
-        protected float ItemCount;
+        protected InventorySlot Buffer;
         protected float MaxCapacity;
-        
-        public float TransferRate = 10f; 
 
-        public PipeMode[] Connections = new PipeMode[4]; 
-        
-        private Vector2Int[] _directions =
+        public float TransferRate = 10f;
+
+        public PipeMode[] Connections = new PipeMode[4];
+
+        private readonly Vector2Int[] _directions =
         {
-            new (0, 1),
-            new (1, 0),
-            new (0, -1),
-            new (-1, 0)
+            new(0, 1),
+            new(1, 0),
+            new(0, -1),
+            new(-1, 0)
         };
 
         public override void Place(
-            ItemData item, 
-            Vector2Int pos, 
-            float slotSize, 
+            Item item,
+            Vector2Int pos,
+            float slotSize,
             Timeline timeline)
         {
-            Place(item, pos, slotSize, timeline, 1000);
+            Place(item, pos, slotSize, timeline, 1000f);
         }
 
         public void Place(
-            ItemData item, 
-            Vector2Int pos, 
-            float slotSize, 
-            Timeline timeline, 
+            Item item,
+            Vector2Int pos,
+            float slotSize,
+            Timeline timeline,
             float maxCapacity)
         {
             base.Place(item, pos, slotSize, timeline);
             MaxCapacity = maxCapacity;
-            ItemCount = 0;
-            
-            for(int i = 0 ; i < 4; i++) Connections[i] = PipeMode.None;
+            Buffer = InventorySlots.Empty;
+
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                Connections[index] = PipeMode.None;
+            }
         }
 
-        public virtual bool CanHoldItem(ItemData item) { return true; }
-        
-        public bool Push(ItemData item, float amount)
+        public virtual bool CanHoldItem(Item item)
         {
-            if (!CanHoldItem(item)) return false;
-            if (ItemCount + amount > MaxCapacity) return false;
-
-            ItemCount += amount;
-            return true;
+            return item != null;
         }
 
-        public bool Pull(ItemData item, float amount)
+        public InventorySlot TryInsert(InventorySlot slot)
         {
-            if (!CanHoldItem(item)) return false;
-            if (amount > ItemCount) return false;
+            if (InventorySlots.IsEmpty(slot) || !CanHoldItem(slot.Definition) || !InventorySlots.CanAdd(Buffer, slot.Definition))
+            {
+                return slot;
+            }
 
-            ItemCount -= amount;
-            return true;
+            var spaceAvailable = GetRemainingCapacity(slot.Definition);
+            if (spaceAvailable <= 0f)
+            {
+                return slot;
+            }
+
+            var movedAmount = Mathf.Min(spaceAvailable, slot.Count);
+            Buffer = InventorySlots.Add(Buffer, slot.Definition, movedAmount);
+            return InventorySlots.Remove(slot, movedAmount);
         }
 
-        public float GetItemCount(ItemData item)
+        public InventorySlot PeekOutput()
         {
-            if (Item == item) return ItemCount;
+            return Buffer;
+        }
+
+        public InventorySlot PeekBuffer()
+        {
+            return Buffer;
+        }
+
+        public InventorySlot TryExtract(Item item, float maxAmount)
+        {
+            if (InventorySlots.IsEmpty(Buffer) || Buffer.Definition != item || maxAmount <= 0f)
+            {
+                return InventorySlots.Empty;
+            }
+
+            var extractedAmount = Mathf.Min(Buffer.Count, maxAmount);
+            Buffer = InventorySlots.Remove(Buffer, extractedAmount);
+            return new InventorySlot(item, extractedAmount);
+        }
+
+        public float GetRemainingCapacity(Item item)
+        {
+            if (!CanHoldItem(item))
+            {
+                return 0f;
+            }
+
+            if (InventorySlots.IsEmpty(Buffer) || Buffer.Definition == item)
+            {
+                return MaxCapacity - Buffer.Count;
+            }
+
             return 0f;
         }
 
-        public float GetRemainingCapacity(ItemData item)
+        public void OnLogisticsTick()
         {
-            if (!CanHoldItem(item)) return 0f;
-            return MaxCapacity - ItemCount;
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                var connection = Connections[index];
+                if (connection == PipeMode.None)
+                {
+                    continue;
+                }
+
+                var neighborPos = GridPos + _directions[index];
+                var neighbor = ParentTimeline.EntityAt(neighborPos);
+                if (!neighbor)
+                {
+                    continue;
+                }
+
+                if (connection == PipeMode.Pull && neighbor is IProducer producer)
+                {
+                    PullFromProducer(producer);
+                    continue;
+                }
+
+                if (InventorySlots.IsEmpty(Buffer))
+                {
+                    continue;
+                }
+
+                if (connection == PipeMode.Push && neighbor is IConsumer consumer)
+                {
+                    TransferTo(consumer, Mathf.Min(Buffer.Count, TransferRate));
+                    continue;
+                }
+
+                if (connection == PipeMode.Neutral && neighbor is ITransport transport)
+                {
+                    BalanceWith(transport);
+                }
+            }
         }
 
-        public void OnTick()
+        private void PullFromProducer(IProducer producer)
         {
-            if (ItemCount <= 0) return; 
-
-            
-
-            for (int i = 0; i < 4; i++)
+            var availableOutput = producer.PeekOutput();
+            if (InventorySlots.IsEmpty(availableOutput) || !CanHoldItem(availableOutput.Definition))
             {
-                if (Connections[i] == PipeMode.None) continue;
+                return;
+            }
 
-                var neighborPos = GridPos + _directions[i];
+            var amountToExtract = Mathf.Min(GetRemainingCapacity(availableOutput.Definition), TransferRate);
+            if (amountToExtract <= 0f)
+            {
+                return;
+            }
 
-                var neighbor = ParentTimeline.EntityAt(neighborPos);
+            var extractedSlot = producer.TryExtract(availableOutput.Definition, amountToExtract);
+            if (!InventorySlots.IsEmpty(extractedSlot))
+            {
+                TryInsert(extractedSlot);
+            }
+        }
 
-                if (!neighbor) continue;
-                
-                if (Connections[i] == PipeMode.Neutral &&
-                    neighbor is ITransport transport)
-                {
-                    var neighborCount = transport.GetItemCount(Item);
-                        
-                    if (ItemCount > neighborCount)
-                    {
-                        var volumeDifferance = ItemCount - neighborCount;
-                        var transferAmountNeeded = volumeDifferance / 2f;
+        private void BalanceWith(ITransport transport)
+        {
+            var neighborBuffer = transport.PeekBuffer();
+            if (!InventorySlots.IsEmpty(neighborBuffer) && neighborBuffer.Definition != Buffer.Definition)
+            {
+                return;
+            }
 
-                        var spaceAvailable = transport.GetRemainingCapacity(Item);
-                        var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
+            if (Buffer.Count <= neighborBuffer.Count)
+            {
+                return;
+            }
 
-                        if (amountToTransfer > 0 && transport.Push(Item, amountToTransfer))
-                        {
-                            ItemCount -= amountToTransfer;
-                        }
-                    }
-                } 
-                else if (Connections[i] == PipeMode.Push)
-                {
-                    if (neighbor is IConsumer consumer)
-                    {
-                        var amountToMove = Mathf.Min(ItemCount, TransferRate);
+            var difference = Buffer.Count - neighborBuffer.Count;
+            var transferAmountNeeded = difference / 2f;
+            var spaceAvailable = transport.GetRemainingCapacity(Buffer.Definition);
+            var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
 
-                        if (consumer.TryConsume(Item, amountToMove))
-                        {
-                            ItemCount -= amountToMove;
-                        }
-                    }
-                }
-                else if (Connections[i] == PipeMode.Pull)
-                {
-                    if (neighbor is IProducer producer)
-                    {
-                        var amountToExtract = Mathf.Min(MaxCapacity - ItemCount, TransferRate);
-                        
-                        var extractedAmount = producer.ExtractOutput(Item, amountToExtract);
+            TransferTo(transport, amountToTransfer);
+        }
 
-                        ItemCount += extractedAmount;
-                    }
-                }
+        private void TransferTo(IConsumer consumer, float amountToMove)
+        {
+            if (InventorySlots.IsEmpty(Buffer) || amountToMove <= 0f)
+            {
+                return;
+            }
+
+            var outgoingSlot = new InventorySlot(Buffer.Definition, amountToMove);
+            var remainder = consumer.TryInsert(outgoingSlot);
+            var movedAmount = outgoingSlot.Count - remainder.Count;
+            if (movedAmount > 0f)
+            {
+                Buffer = InventorySlots.Remove(Buffer, movedAmount);
             }
         }
     }

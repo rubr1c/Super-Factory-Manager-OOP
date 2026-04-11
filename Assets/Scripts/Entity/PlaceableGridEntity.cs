@@ -1,4 +1,4 @@
-using Item;
+using GameItems;
 using UnityEngine;
 
 namespace Entity
@@ -8,19 +8,24 @@ namespace Entity
         public Timeline ParentTimeline { get; protected set; }
         
         public virtual void Place(
-            ItemData item, 
+            Item item, 
             Vector2Int pos, 
             float slotSize,
             Timeline timeline)
         {
             GridPos = pos;
-            Item = item;
+            Definition = item;
             ParentTimeline = timeline;
             transform.localPosition = new Vector3(pos.x * slotSize, pos.y * slotSize, 0f);
         }
 
         public virtual void Remove()
         {
+            if (ParentTimeline != null)
+            {
+                ParentTimeline.ClearEntityAt(GridPos, this);
+            }
+
             Destroy(gameObject);
         }
     }

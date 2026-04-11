@@ -1,5 +1,6 @@
 using Entity;
-using Item;
+using Core;
+using GameItems;
 using UnityEngine;
 
 
@@ -45,11 +46,13 @@ public class Timeline : MonoBehaviour
         return _entityGrid[pos.y * gridWidth + pos.x];
     }
 
-    public bool TryPlace(ItemData item, Vector2Int pos)
+    public bool TryPlace(Item item, Vector2Int pos)
     {
+        if (item == null || !item.Is(ItemTags.PLACEABLE)) return false;
+        if (item is not IPlaceable placeableItem || placeableItem.Prefab == null) return false;
         if (!IsSlotEmpty(pos)) return false;
 
-        var spawnedItemObject = Instantiate(item.Prefab, transform);
+        var spawnedItemObject = Instantiate(placeableItem.Prefab, transform);
 
         if (!spawnedItemObject.TryGetComponent<PlaceableGridEntity>(out var itemEntity))
         {
@@ -61,6 +64,17 @@ public class Timeline : MonoBehaviour
 
         _entityGrid[pos.y * gridWidth + pos.x] = itemEntity;
         return true;
+    }
+
+    public void ClearEntityAt(Vector2Int pos, PlaceableGridEntity entity)
+    {
+        if (!IsValidGridPosition(pos)) return;
+
+        var index = pos.y * gridWidth + pos.x;
+        if (_entityGrid[index] == entity)
+        {
+            _entityGrid[index] = null;
+        }
     }
     
     public Vector2Int WorldToGridPosition(Vector3 worldPos)

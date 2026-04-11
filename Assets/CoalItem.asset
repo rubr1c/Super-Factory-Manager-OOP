@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8735e34c7ba9204a9719b0cbda66713, type: 3}
-  m_Name: PipeItem
-  m_EditorClassIdentifier: Assembly-CSharp::GameItems.ItemData
-  registryName: pipe
-  displayName: Energy Pipe
+  m_Script: {fileID: 11500000, guid: 1a7b9d2e4c6f48b8a0d1e2f3a4b5c6d7, type: 3}
+  m_Name: CoalItem
+  m_EditorClassIdentifier: Assembly-CSharp::GameItems.FuelItem
+  registryName: coal
+  displayName: Coal
   icon: {fileID: 6842727970519756248, guid: 642727d56c2b92b4a98f262b30ca8293, type: 3}
-  maxStackSize: 50
+  maxStackSize: 100
   tagIds:
-  - placeable
+  - fuel
   - craftable
-  prefab: {fileID: 3360724490406457834, guid: 722ce80c396c6a44088ecc9d62c30909, type: 3}
+  burnTime: 25

@@ -1,19 +1,14 @@
-﻿using Item;
+﻿using GameItems;
 
-public struct InventorySlot
+public readonly struct InventorySlot
 {
-    private ItemData _item;
-    private float _count;
-    
-    public static bool operator ==(InventorySlot left, InventorySlot right)
+    public InventorySlot(Item item, float count)
     {
-        return left._item == right._item;
+        Definition = item;
+        Count = count;
     }
 
-    public static bool operator !=(InventorySlot left, InventorySlot right)
-    {
-        return left._item != right._item;
-    }
+    public Item Definition { get; }
+
+    public float Count { get; }
 }
-
-
