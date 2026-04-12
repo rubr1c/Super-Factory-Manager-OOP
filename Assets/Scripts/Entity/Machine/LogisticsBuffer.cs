@@ -5,24 +5,18 @@ using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class LogisticsBuffer : PlaceableGridEntity, ILogisticsTickable, IProducer, IConsumer, IInteractable, IUpgradeable
+    public class LogisticsBuffer : UpgradableEntity, ILogisticsTickable, IProducer, IConsumer
     {
         private ItemContainer _storage;
 
         [SerializeField] private int capacity = 16;
 
-        public UpgradeSlots Upgrades { get; private set; }
-
-        public MachineModifiers Modifiers => Upgrades.ComputeModifiers();
-
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
             base.Place(item, pos, slotSize, timeline);
             _storage = new ItemContainer(capacity);
-            Upgrades = new UpgradeSlots(3);
+            InitUpgrades();
         }
-
-        public bool TryInstallUpgrade(UpgradeCardItem card) => Upgrades.TryInstall(card);
 
         public void OnLogisticsTick()
         {
@@ -37,11 +31,6 @@ namespace Entity.Machine
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnInteract()
         {
             throw new System.NotImplementedException();
         }

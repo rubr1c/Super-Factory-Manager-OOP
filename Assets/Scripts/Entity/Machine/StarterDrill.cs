@@ -1,11 +1,11 @@
-using Core;
+﻿using Core;
 using GameItems;
 using Inventory;
 using UnityEngine;
 
 namespace Entity.Machine
 {
-    
+
     public class StarterDrill : PlaceableGridEntity, IProductionTickable, IProducer
     {
         private ItemContainer _output;
@@ -13,9 +13,9 @@ namespace Entity.Machine
         [SerializeField] private Item[] drillOutputs;
 
         public override void Place(
-            Item item, 
-            Vector2Int pos, 
-            float slotSize, 
+            Item item,
+            Vector2Int pos,
+            float slotSize,
             Timeline timeline)
         {
             base.Place(item, pos, slotSize, timeline);

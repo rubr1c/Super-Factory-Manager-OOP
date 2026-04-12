@@ -5,24 +5,18 @@ using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class PlateCompressor : PlaceableGridEntity, IConsumptionTickable, IProducer, IConsumer, IInteractable, IUpgradeable
+    public class PlateCompressor : UpgradableEntity, IConsumptionTickable, IProducer, IConsumer
     {
         private InventorySlot _oreInput;
         private InventorySlot _plateOutput;
-
-        public UpgradeSlots Upgrades { get; private set; }
-
-        public MachineModifiers Modifiers => Upgrades.ComputeModifiers();
 
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
             base.Place(item, pos, slotSize, timeline);
             _oreInput = InventorySlot.Empty;
             _plateOutput = InventorySlot.Empty;
-            Upgrades = new UpgradeSlots(3);
+            InitUpgrades();
         }
-
-        public bool TryInstallUpgrade(UpgradeCardItem card) => Upgrades.TryInstall(card);
 
         public void OnConsumptionTick()
         {
@@ -37,11 +31,6 @@ namespace Entity.Machine
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnInteract()
         {
             throw new System.NotImplementedException();
         }

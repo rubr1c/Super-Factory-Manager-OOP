@@ -5,15 +5,11 @@ using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class CircuitFabricator : PlaceableGridEntity, IConsumptionTickable, IProducer, IConsumer, IInteractable, IUpgradeable
+    public class CircuitFabricator : UpgradableEntity, IConsumptionTickable, IProducer, IConsumer
     {
         private InventorySlot _waferInput;
         private InventorySlot _wireInput;
         private InventorySlot _boardOutput;
-
-        public UpgradeSlots Upgrades { get; private set; }
-
-        public MachineModifiers Modifiers => Upgrades.ComputeModifiers();
 
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
@@ -21,10 +17,8 @@ namespace Entity.Machine
             _waferInput = InventorySlot.Empty;
             _wireInput = InventorySlot.Empty;
             _boardOutput = InventorySlot.Empty;
-            Upgrades = new UpgradeSlots(3);
+            InitUpgrades();
         }
-
-        public bool TryInstallUpgrade(UpgradeCardItem card) => Upgrades.TryInstall(card);
 
         public void OnConsumptionTick()
         {
@@ -39,11 +33,6 @@ namespace Entity.Machine
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnInteract()
         {
             throw new System.NotImplementedException();
         }

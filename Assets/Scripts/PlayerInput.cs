@@ -2,6 +2,7 @@
 using Managers;
 using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
@@ -18,6 +19,9 @@ public class PlayerInput : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return;
+
             var currentTimeline = TimelineManager.Instance.ActiveTimeline;
             if (!currentTimeline) return;
 
