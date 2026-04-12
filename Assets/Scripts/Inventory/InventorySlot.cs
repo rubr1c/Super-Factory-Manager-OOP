@@ -19,6 +19,8 @@ namespace Inventory
 
         public bool IsEmpty => Held == null || Count <= 0f;
 
+        public bool CanConsume() => !IsEmpty;
+
         public bool CanAdd(InventorySlot incoming)
         {
             if (incoming.IsEmpty)

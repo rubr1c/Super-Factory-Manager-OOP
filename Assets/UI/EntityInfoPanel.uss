@@ -1,0 +1,29 @@
+.backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: stretch;
+}
+
+.entity-info-panel {
+    width: 320px;
+    background-color: rgba(18, 18, 24, 0.92);
+    border-left-width: 2px;
+    border-left-color: rgba(100, 180, 255, 0.4);
+    padding: 16px;
+    flex-shrink: 0;
+}
+
+.panel-title {
+    font-size: 20px;
+    color: rgb(220, 230, 255);
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(100, 180, 255, 0.25);
+}

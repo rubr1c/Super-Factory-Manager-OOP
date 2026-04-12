@@ -1,9 +1,11 @@
+using Core;
 using GameItems;
+using UI;
 using UnityEngine;
 
 namespace Entity
 {
-    public abstract class PlaceableGridEntity : Entity
+    public abstract class PlaceableGridEntity : Entity, IInteractable
     {
         public Timeline ParentTimeline { get; protected set; }
         
@@ -27,6 +29,11 @@ namespace Entity
             }
 
             Destroy(gameObject);
+        }
+
+        public virtual void OnInteract()
+        {
+            EntityInfoPanel.Instance?.Show(this);
         }
     }
 }

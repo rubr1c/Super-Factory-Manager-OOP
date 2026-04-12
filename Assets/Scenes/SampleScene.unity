@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 227766766}
   - component: {fileID: 227766768}
   - component: {fileID: 227766769}
+  - component: {fileID: 227766770}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0edc28d22e84f0d8ab4f4c09e08ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  selectedItemId: pipe
+  selectedItemId: starter_drill
 --- !u!4 &227766767
 Transform:
   m_ObjectHideFlags: 0
@@ -212,6 +213,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47977ac91f5754c4fbf3763c8c72c5c3, type: 2}
   - {fileID: 11400000, guid: f2e3d4c5b6a79889796959493929190f, type: 2}
   - {fileID: 11400000, guid: c1a2b3c4d5e6478899aabbccddeeff02, type: 2}
+  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f85, type: 2}
+--- !u!114 &227766770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227766765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0d03d3f473477ca33eae32b424e1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.TickManager
+  tickRateSeconds: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
