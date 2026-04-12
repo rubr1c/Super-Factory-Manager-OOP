@@ -1,4 +1,4 @@
-﻿using GameItems;
+﻿using Inventory;
 using Managers;
 using UI;
 using UnityEngine;
@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] private string selectedItemId = "starter_drill";
     private Camera _camera;
 
     private void Start()
@@ -43,15 +42,16 @@ public class PlayerInput : MonoBehaviour
 
             EntityInfoPanel.Instance?.Hide();
 
-            if (!Items.TryGet(selectedItemId, out var selectedItem))
-            {
-                return;
-            }
+            var playerInventory = PlayerInventory.Instance;
+            if (!playerInventory) return;
 
-            if (currentTimeline.IsSlotEmpty(gridPos))
-            {
-                currentTimeline.TryPlace(selectedItem, gridPos);
-            }
+            var selectedSlot = playerInventory.SelectedHotbarSlot;
+            if (selectedSlot.IsEmpty) return;
+
+            if (!currentTimeline.IsSlotEmpty(gridPos)) return;
+            if (!currentTimeline.TryPlace(selectedSlot.Held, gridPos)) return;
+
+            playerInventory.TryConsumeSelectedHotbarItem(1);
         }
     }
 }
