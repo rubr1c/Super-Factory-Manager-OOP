@@ -1,4 +1,4 @@
-using GameItems;
+using Data.Items;
 
 namespace Core
 {

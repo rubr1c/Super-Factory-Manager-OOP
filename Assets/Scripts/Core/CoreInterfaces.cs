@@ -1,5 +1,5 @@
-﻿using GameItems;
-using Inventory;
+using Data.Items;
+using Systems.Inventory;
 using UnityEngine;
 
 namespace Core
@@ -56,5 +56,13 @@ namespace Core
     public interface IFuel
     {
         float BurnTime { get; }
+    }
+
+    public interface IEnergyItem
+    {
+    }
+
+    public interface IResourceItem
+    {
     }
 }
