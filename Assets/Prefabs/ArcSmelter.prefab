@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4771563622526843299}
   - component: {fileID: 4934569706668722884}
+  - component: {fileID: -690510193955842806}
   m_Layer: 0
-  m_Name: Square
+  m_Name: ArcSmelter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,3 +92,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-690510193955842806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360724490406457834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2204f89f5a225a840b13f1dab5cd95dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.ArcSmelter
+  energyCostPerCycle: 1000

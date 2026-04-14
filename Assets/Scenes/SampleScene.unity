@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7a9025eacc46ffb841a8d4075b64b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.TimelineManager
-  timeline: {fileID: 8691321373789671872, guid: 12bbf68fb56cfff469dbcb6cca6a34f2, type: 3}
+  timelinePrefab: {fileID: 0}
   timelines: []
 --- !u!114 &227766769
 MonoBehaviour:
@@ -191,15 +191,40 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b2d1c748114d7daff1029384756abc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameItems.ItemDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Items.ItemDatabase
   items:
-  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f81, type: 2}
+  - {fileID: 11400000, guid: d9f7cb8ebbdd5e344ac6d400c2bb0939, type: 2}
+  - {fileID: 11400000, guid: d0cedcd490739c44fb9c956acc2bfa76, type: 2}
+  - {fileID: 11400000, guid: cea5e4f3267726544bcee4a3b2ca2769, type: 2}
+  - {fileID: 11400000, guid: 24abf2e70b4cbd945a140f2c152d80ad, type: 2}
+  - {fileID: 11400000, guid: 42ea989c9ded7e64db43f448c3116bc0, type: 2}
+  - {fileID: 11400000, guid: c613ac615e149184395725eb4a2bb26c, type: 2}
   - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f82, type: 2}
-  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f83, type: 2}
-  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f84, type: 2}
-  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f85, type: 2}
-  - {fileID: 11400000, guid: 1445ba642bfeebe43ba579c71ad9673d, type: 2}
+  - {fileID: 11400000, guid: 81db8ebb78bbc464da17438e45a736cc, type: 2}
+  - {fileID: 11400000, guid: 0f3a51e13ff2b214394b0cf605f76820, type: 2}
+  - {fileID: 11400000, guid: fd56632480f7e3c4986802341a684b75, type: 2}
+  - {fileID: 11400000, guid: 171f17c430bf984478e94ca6481bbbe2, type: 2}
+  - {fileID: 11400000, guid: da81c9df2146996459794681e5283596, type: 2}
   - {fileID: 11400000, guid: c511b9ef72cf4ea4c8387a4f25613381, type: 2}
+  - {fileID: 11400000, guid: 9e74b57efb01f704eac7e8068fa5bb7b, type: 2}
+  - {fileID: 11400000, guid: c389cab00b183bc4db01055d069f2ddc, type: 2}
+  - {fileID: 11400000, guid: cec59c77805b28b469e78b2eee8f9d5b, type: 2}
+  - {fileID: 11400000, guid: abcca865c0167034ab34718cbb3270ec, type: 2}
+  - {fileID: 11400000, guid: a46b942dec3d9b840998626daa550885, type: 2}
+  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f81, type: 2}
+  - {fileID: 11400000, guid: c85be78133c57ad4983d7e640bb2af7e, type: 2}
+  - {fileID: 11400000, guid: 01660d09049e63b479ac1ab12d605555, type: 2}
+  - {fileID: 11400000, guid: 8fe064c46cc59d248b825f3dd8f0f63e, type: 2}
+  - {fileID: 11400000, guid: 0a3aa2d5e3830c940a3ca52a8291ced2, type: 2}
+  - {fileID: 11400000, guid: ed8be4744699df149a901815f64b6a93, type: 2}
+  - {fileID: 11400000, guid: 87ce4765d6723434bb5805841754c952, type: 2}
+  - {fileID: 11400000, guid: 77d7efd2ffc213d44977d69c06dfe1e3, type: 2}
+  - {fileID: 11400000, guid: 758b97c8f011ff142a23f92ad8957a4d, type: 2}
+  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f83, type: 2}
+  - {fileID: 11400000, guid: 66e507b562a71e44aa3a805e2a8691ca, type: 2}
+  - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f85, type: 2}
+  - {fileID: 11400000, guid: 301f55aef75217744b638d5bc65e21c9, type: 2}
+  - {fileID: 11400000, guid: 87ffea646a16cbb4ebadb640235332b2, type: 2}
 --- !u!114 &227766770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706f8fd531d7499c8680a43ff5603b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  _camera: {fileID: 519420031}
+  cameraComponent: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory.PlayerInventory
   startingSlots:
   - slotIndex: 0
-    itemId: energy_generator
+    itemId: starter_drill
     count: 1
 --- !u!4 &2074307227
 Transform:

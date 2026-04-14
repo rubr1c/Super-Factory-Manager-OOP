@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f0e81a8c92343cabf2b80e8ad7f4e9d, type: 3}
-  m_Name: Pipe
-  m_EditorClassIdentifier: Assembly-CSharp::GameItems.PlaceableItem
-  registryName: pipe
-  displayName: Pipe
-  icon: {fileID: 6842727970519756248, guid: 642727d56c2b92b4a98f262b30ca8293, type: 3}
+  m_Name: IndustrialAssembler
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
+  registryName: industrial_assembler
+  displayName: Industrial Assembler
+  icon: {fileID: 0}
   maxStackSize: 100
-  tagIds:
-  - placeable
-  prefab: {fileID: 0}
+  prefab: {fileID: 3360724490406457834, guid: 3cc27b2c0613a444a95e94f72af47638, type: 3}

@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4771563622526843299}
   - component: {fileID: 4934569706668722884}
-  - component: {fileID: 2847563928475629182}
-  - component: {fileID: -246963139132884040}
+  - component: {fileID: 2307844457790872868}
   m_Layer: 0
-  m_Name: Pipe
+  m_Name: PlateCompressor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &2847563928475629182
+--- !u!114 &2307844457790872868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,22 +101,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3360724490406457834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8295e4404134ffda419aabf7c42b627, type: 3}
+  m_Script: {fileID: 11500000, guid: e51582df748f4b845bc10680faa0083b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Entity.EnergyPipe
-  TransferRate: 10
-  Connections: 00000000000000000000000000000000
---- !u!114 &-246963139132884040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3360724490406457834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8295e4404134ffda419aabf7c42b627, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Entity.EnergyPipe
-  TransferRate: 10
-  Connections: 00000000000000000000000000000000
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.PlateCompressor
