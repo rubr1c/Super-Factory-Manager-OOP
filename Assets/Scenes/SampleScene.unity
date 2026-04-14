@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0edc28d22e84f0d8ab4f4c09e08ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  selectedItemId: starter_drill
 --- !u!4 &227766767
 Transform:
   m_ObjectHideFlags: 0
@@ -200,6 +199,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f84, type: 2}
   - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f85, type: 2}
   - {fileID: 11400000, guid: 1445ba642bfeebe43ba579c71ad9673d, type: 2}
+  - {fileID: 11400000, guid: c511b9ef72cf4ea4c8387a4f25613381, type: 2}
 --- !u!114 &227766770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,7 +645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0edc28d22e84f0d8ab4f4c09e08ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  selectedItemId: starter_drill
 --- !u!114 &2074307226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,7 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory.PlayerInventory
   startingSlots:
   - slotIndex: 0
-    itemId: pipe
+    itemId: energy_generator
     count: 1
 --- !u!4 &2074307227
 Transform:

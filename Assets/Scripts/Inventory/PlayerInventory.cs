@@ -123,5 +123,95 @@ namespace Inventory
             InventoryChanged?.Invoke();
             return true;
         }
+
+        public void MoveSlot(int fromIndex, int toIndex)
+        {
+            if (fromIndex == toIndex) return;
+
+            ref var from = ref _items.GetSlot(fromIndex);
+            ref var to = ref _items.GetSlot(toIndex);
+
+            if (from.IsEmpty) return;
+
+            if (to.IsEmpty)
+            {
+                to = from;
+                from = InventorySlot.Empty;
+            }
+            else if (to.Held == from.Held && to.Count < to.Held.MaxStackSize)
+            {
+                var moved = Mathf.Min(from.Count, to.Held.MaxStackSize - to.Count);
+                to.Add(new InventorySlot(from.Held, moved));
+                from.Remove(moved);
+            }
+            else
+            {
+                var temp = to;
+                to = from;
+                from = temp;
+            }
+
+            InventoryChanged?.Invoke();
+        }
+
+        public void Add(ItemContainer container)
+        {
+            for (var i = 0; i < container.Capacity; i++)
+            {
+                ref var slot = ref container.GetSlot(i);
+                slot = Add(slot);
+            }
+
+            InventoryChanged?.Invoke();
+        }
+
+        public InventorySlot AddSlot(InventorySlot incoming)
+        {
+            var remainder = Add(incoming);
+            InventoryChanged?.Invoke();
+            return remainder;
+        }
+
+        private InventorySlot Add(InventorySlot incoming)
+        {
+            for (var i = 0; i < TotalSlotCount; i++)
+            {
+                ref var slot = ref _items.GetSlot(i);
+                if (slot.IsEmpty || !slot.CanAdd(incoming))
+                {
+                    continue;
+                }
+
+                var space = incoming.Held.MaxStackSize - slot.Count;
+                var take = Mathf.Min(space, incoming.Count);
+                slot.Add(new InventorySlot(incoming.Held, take));
+                incoming.Remove(take);
+
+                if (incoming.IsEmpty)
+                {
+                    return InventorySlot.Empty;
+                }
+            }
+
+            for (var i = 0; i < TotalSlotCount; i++)
+            {
+                ref var slot = ref _items.GetSlot(i);
+                if (!slot.IsEmpty || !slot.CanAdd(incoming))
+                {
+                    continue;
+                }
+
+                var take = Mathf.Min(incoming.Held.MaxStackSize, incoming.Count);
+                slot.Add(new InventorySlot(incoming.Held, take));
+                incoming.Remove(take);
+
+                if (incoming.IsEmpty)
+                {
+                    return InventorySlot.Empty;
+                }
+            }
+
+            return incoming;
+        }
     }
 }

@@ -53,6 +53,11 @@
     background-color: rgba(56, 82, 108, 0.95);
 }
 
+.move-slot {
+    border-color: rgba(255, 210, 120, 0.95);
+    background-color: rgba(108, 82, 56, 0.95);
+}
+
 .slot-icon {
     position: absolute;
     left: 6px;

@@ -27,3 +27,12 @@
     border-bottom-width: 1px;
     border-bottom-color: rgba(100, 180, 255, 0.25);
 }
+
+.panel-content {
+    flex-direction: column;
+}
+
+.panel-button {
+    height: 36px;
+    margin-top: 8px;
+}

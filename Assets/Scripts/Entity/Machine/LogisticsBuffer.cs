@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class LogisticsBuffer : UpgradableEntity, ILogisticsTickable, IProducer, IConsumer
+    public class LogisticsBuffer : UpgradableEntity, IProducer, IConsumer
     {
         private ItemContainer _storage;
 
@@ -18,21 +18,16 @@ namespace Entity.Machine
             InitUpgrades();
         }
 
-        public void OnLogisticsTick()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public InventorySlot PeekOutput() => _storage.GetFirst();
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            throw new System.NotImplementedException();
+            return _storage.TryExtract(request);
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
         {
-            throw new System.NotImplementedException();
+            return _storage.TryInsert(slot);
         }
     }
 }

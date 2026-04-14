@@ -1,38 +1,71 @@
 ﻿using Core;
 using GameItems;
 using Inventory;
+using UI;
 using UnityEngine;
 
 namespace Entity.Machine
 {
-    public class EnergyGenerator : UpgradableEntity, IProductionTickable, IProducer, IConsumer
+    public class EnergyGenerator : UpgradableEntity, IProductionTickable, IProducer
     {
-        private InventorySlot _fuelInput;
         private InventorySlot _energyOutput;
+        [SerializeField] private float energyPerTick = 100.0f;
 
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
             base.Place(item, pos, slotSize, timeline);
-            _fuelInput = InventorySlot.Empty;
             _energyOutput = InventorySlot.Empty;
             InitUpgrades();
         }
 
         public void OnProductionTick()
         {
-            throw new System.NotImplementedException();
+            var generatedAmount = energyPerTick * Modifiers.Energy;
+            if (generatedAmount <= 0f)
+            {
+                return;
+            }
+
+            if (_energyOutput.IsEmpty)
+            {
+                _energyOutput = new InventorySlot(Items.ENERGY, 0f);
+            }
+
+            if (_energyOutput.Held != Items.ENERGY)
+            {
+                return;
+            }
+
+            _energyOutput.Add(new InventorySlot(Items.ENERGY, generatedAmount));
         }
 
         public InventorySlot PeekOutput() => _energyOutput;
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            throw new System.NotImplementedException();
+            if (request.IsEmpty || _energyOutput.IsEmpty || _energyOutput.Held != request.Held)
+            {
+                return InventorySlot.Empty;
+            }
+
+            var extractedAmount = Mathf.Min(_energyOutput.Count, request.Count);
+            if (extractedAmount <= 0f)
+            {
+                return InventorySlot.Empty;
+            }
+
+            _energyOutput.Remove(extractedAmount);
+            return new InventorySlot(request.Held, extractedAmount);
         }
 
-        public InventorySlot TryInsert(InventorySlot slot)
+        public override void BuildInfoPanel(EntityInfoPanel panel)
         {
-            throw new System.NotImplementedException();
+            panel.AddLiveLabel("stored-energy", $"Stored Energy: {_energyOutput.Count:0.##}");
+        }
+
+        public override void RefreshInfoPanel(EntityInfoPanel panel)
+        {
+            panel.SetLiveLabelText("stored-energy", $"Stored Energy: {_energyOutput.Count:0.##}");
         }
     }
 }

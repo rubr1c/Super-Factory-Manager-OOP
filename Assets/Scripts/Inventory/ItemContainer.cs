@@ -30,33 +30,49 @@ namespace Inventory
 
         public bool TryAdd(InventorySlot incoming)
         {
+            return TryInsert(incoming).IsEmpty;
+        }
+
+        public InventorySlot TryInsert(InventorySlot incoming)
+        {
             if (incoming.IsEmpty)
             {
-                return true;
+                return InventorySlot.Empty;
             }
 
             var remaining = incoming;
             for (var i = 0; i < _slots.Length; i++)
             {
                 ref var slot = ref _slots[i];
-                if (!slot.CanAdd(remaining))
+                remaining = slot.TryInsert(remaining);
+                if (remaining.IsEmpty)
+                {
+                    return InventorySlot.Empty;
+                }
+            }
+
+            return remaining;
+        }
+
+        public InventorySlot TryExtract(InventorySlot request)
+        {
+            if (request.IsEmpty)
+            {
+                return InventorySlot.Empty;
+            }
+
+            for (var i = 0; i < _slots.Length; i++)
+            {
+                ref var slot = ref _slots[i];
+                if (!slot.CanConsume() || slot.Held != request.Held)
                 {
                     continue;
                 }
 
-                var space = slot.IsEmpty
-                    ? remaining.Held.MaxStackSize
-                    : remaining.Held.MaxStackSize - slot.Count;
-                var take = Mathf.Min(space, remaining.Count);
-                slot.Add(new InventorySlot(remaining.Held, take));
-                remaining.Remove(take);
-                if (remaining.IsEmpty)
-                {
-                    return true;
-                }
+                return slot.TryExtract(request);
             }
 
-            return false;
+            return InventorySlot.Empty;
         }
     }
 }

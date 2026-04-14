@@ -35,5 +35,13 @@ namespace Entity
         {
             EntityInfoPanel.Instance?.Show(this);
         }
+
+        public virtual void BuildInfoPanel(EntityInfoPanel panel)
+        {
+        }
+
+        public virtual void RefreshInfoPanel(EntityInfoPanel panel)
+        {
+        }
     }
 }

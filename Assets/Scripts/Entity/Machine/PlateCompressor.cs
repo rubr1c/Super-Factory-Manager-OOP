@@ -1,6 +1,7 @@
 using Core;
 using GameItems;
 using Inventory;
+using UI;
 using UnityEngine;
 
 namespace Entity.Machine
@@ -20,19 +21,65 @@ namespace Entity.Machine
 
         public void OnConsumptionTick()
         {
-            throw new System.NotImplementedException();
+            if (_oreInput.IsEmpty || !TryGetCompressedOutput(_oreInput.Held, out var outputItem))
+            {
+                return;
+            }
+
+            if (!_plateOutput.IsEmpty && _plateOutput.Held != outputItem)
+            {
+                return;
+            }
+
+            var producedAmount = Mathf.Max(1f, Modifiers.Yield);
+            _oreInput.Remove(1f);
+            _plateOutput.Add(new InventorySlot(outputItem, producedAmount));
         }
 
         public InventorySlot PeekOutput() => _plateOutput;
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            throw new System.NotImplementedException();
+            return _plateOutput.TryExtract(request);
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
         {
-            throw new System.NotImplementedException();
+            return _oreInput.TryInsert(slot, item => item == Items.IRON_ORE || item == Items.COPPER_ORE);
+        }
+
+        public override void BuildInfoPanel(EntityInfoPanel panel)
+        {
+            panel.AddButton("Collect", CollectOutput);
+        }
+
+        private void CollectOutput()
+        {
+            var inventory = PlayerInventory.Instance;
+            if (inventory == null)
+            {
+                return;
+            }
+
+            _plateOutput = inventory.AddSlot(_plateOutput);
+        }
+
+        private static bool TryGetCompressedOutput(Item input, out Item output)
+        {
+            if (input == Items.IRON_ORE)
+            {
+                output = Items.IRON_PLATE;
+                return true;
+            }
+
+            if (input == Items.COPPER_ORE)
+            {
+                output = Items.COPPER_PLATE;
+                return true;
+            }
+
+            output = null;
+            return false;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Core;
 using GameItems;
 using Inventory;
+using UI;
 using UnityEngine;
 
 namespace Entity.Machine
@@ -49,30 +50,20 @@ namespace Entity.Machine
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            if (request.IsEmpty)
-            {
-                return InventorySlot.Empty;
-            }
+            return _output.TryExtract(request);
+        }
 
-            for (var i = 0; i < _output.Capacity; i++)
-            {
-                ref var slot = ref _output.GetSlot(i);
-                if (!slot.CanConsume() || slot.Held != request.Held)
-                {
-                    continue;
-                }
+        public override void BuildInfoPanel(EntityInfoPanel panel)
+        {
+            panel.AddButton("Collect", CollectOutput);
+        }
 
-                var extractedAmount = Mathf.Min(slot.Count, request.Count);
-                if (extractedAmount <= 0f)
-                {
-                    return InventorySlot.Empty;
-                }
+        private void CollectOutput()
+        {
+            var inventory = PlayerInventory.Instance;
+            if (inventory == null) return;
 
-                slot.Remove(extractedAmount);
-                return new InventorySlot(request.Held, extractedAmount);
-            }
-
-            return InventorySlot.Empty;
+            inventory.Add(_output);
         }
     }
 }

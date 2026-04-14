@@ -10,6 +10,7 @@ namespace Entity.Machine
         private InventorySlot _buffer;
 
         [SerializeField] private InterTimelineBridge linkedBridge;
+        [SerializeField] private float transferRate = 50f;
 
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
@@ -20,19 +21,35 @@ namespace Entity.Machine
 
         public void OnLogisticsTick()
         {
-            throw new System.NotImplementedException();
+            if (linkedBridge == null || linkedBridge == this || _buffer.IsEmpty)
+            {
+                return;
+            }
+
+            var amountToTransfer = Mathf.Min(_buffer.Count, transferRate);
+            var extracted = TryExtract(new InventorySlot(_buffer.Held, amountToTransfer));
+            if (extracted.IsEmpty)
+            {
+                return;
+            }
+
+            var remainder = linkedBridge.TryInsert(extracted);
+            if (!remainder.IsEmpty)
+            {
+                TryInsert(remainder);
+            }
         }
 
         public InventorySlot PeekOutput() => _buffer;
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            throw new System.NotImplementedException();
+            return _buffer.TryExtract(request);
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
         {
-            throw new System.NotImplementedException();
+            return _buffer.TryInsert(slot);
         }
     }
 }

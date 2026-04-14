@@ -7,6 +7,7 @@
         <ui:VisualElement name="entity-info-panel" class="entity-info-panel">
 
             <ui:Label name="panel-title" text="Name" class="panel-title"/>
+            <ui:VisualElement name="panel-content" class="panel-content"></ui:VisualElement>
 
         </ui:VisualElement>
 

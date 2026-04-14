@@ -1,3 +1,4 @@
+using System;
 using GameItems;
 using UnityEngine;
 
@@ -61,6 +62,46 @@ namespace Inventory
             }
 
             Count = Mathf.Min(incoming.Held.MaxStackSize, Count + incoming.Count);
+        }
+
+        public InventorySlot TryInsert(InventorySlot incoming, Func<Item, bool> canAccept = null)
+        {
+            if (incoming.IsEmpty || !(canAccept?.Invoke(incoming.Held) ?? true) || !CanAdd(incoming))
+            {
+                return incoming;
+            }
+
+            var maxCount = incoming.Held.MaxStackSize;
+            var availableSpace = IsEmpty
+                ? maxCount
+                : maxCount - Count;
+            var movedAmount = Mathf.Min(availableSpace, incoming.Count);
+            if (movedAmount <= 0f)
+            {
+                return incoming;
+            }
+
+            Add(new InventorySlot(incoming.Held, movedAmount));
+            var remainder = incoming;
+            remainder.Remove(movedAmount);
+            return remainder;
+        }
+
+        public InventorySlot TryExtract(InventorySlot request)
+        {
+            if (request.IsEmpty || IsEmpty || Held != request.Held)
+            {
+                return Empty;
+            }
+
+            var extractedAmount = Mathf.Min(Count, request.Count);
+            if (extractedAmount <= 0f)
+            {
+                return Empty;
+            }
+
+            Remove(extractedAmount);
+            return new InventorySlot(request.Held, extractedAmount);
         }
 
         public void Remove(float amount)

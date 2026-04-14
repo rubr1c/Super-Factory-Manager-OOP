@@ -31,7 +31,6 @@ namespace GameItems
         public static Item INVENTORY_UPLINK => Get("inventory_uplink");
         public static Item LOGISTICS_BUFFER => Get("logistics_buffer");
         public static Item INTER_TIMELINE_BRIDGE => Get("inter_timeline_bridge");
-        public static Item CHRONOS_ANCHOR => Get("chronos_anchor");
 
         public static Item Get(string registryName)
         {

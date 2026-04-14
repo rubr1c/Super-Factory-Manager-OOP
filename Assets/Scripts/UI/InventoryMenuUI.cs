@@ -14,6 +14,7 @@ namespace UI
         private VisualElement[] _slotIcons;
         private Label[] _slotCounts;
         private PlayerInventory _inventory;
+        private int _moveFromSlotIndex = -1;
 
         private void Awake()
         {
@@ -25,17 +26,17 @@ namespace UI
 
             SetInventoryVisible(false);
             BuildSlots(root);
-
+   
             _menuSlot.RegisterCallback<ClickEvent>(evt =>
             {
                 evt.StopPropagation();
-                SetInventoryVisible(_inventoryOverlay.style.display == DisplayStyle.None);
+                ToggleInventory();
             });
 
             _inventoryOverlay.RegisterCallback<ClickEvent>(evt =>
             {
                 evt.StopPropagation();
-                SetInventoryVisible(false);
+                CloseInventory();
             });
 
             _inventoryPanel.RegisterCallback<ClickEvent>(evt => evt.StopPropagation());
@@ -61,6 +62,24 @@ namespace UI
         private void SetInventoryVisible(bool visible)
         {
             _inventoryOverlay.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        private void ToggleInventory()
+        {
+            if (_inventoryOverlay.style.display == DisplayStyle.None)
+            {
+                SetInventoryVisible(true);
+                return;
+            }
+
+            CloseInventory();
+        }
+
+        private void CloseInventory()
+        {
+            _moveFromSlotIndex = -1;
+            RefreshSlots();
+            SetInventoryVisible(false);
         }
 
         private void BuildSlots(VisualElement root)
@@ -94,15 +113,42 @@ namespace UI
             slotRoot.Add(count);
             _slotCounts[index] = count;
 
-            if (!isHotbar)
+            slotRoot.RegisterCallback<ClickEvent>(_ =>
             {
+                OnSlotClicked(index, isHotbar);
+            });
+        }
+
+        private void OnSlotClicked(int index, bool isHotbar)
+        {
+            if (_inventoryOverlay.style.display == DisplayStyle.None)
+            {
+                if (isHotbar)
+                {
+                    _inventory.ToggleHotbarSlotSelection(index);
+                }
+
                 return;
             }
 
-            slotRoot.RegisterCallback<ClickEvent>(_ =>
+            if (_moveFromSlotIndex < 0)
             {
-                _inventory.ToggleHotbarSlotSelection(index);
-            });
+                if (_inventory.GetSlot(index).IsEmpty) return;
+
+                _moveFromSlotIndex = index;
+                RefreshSlots();
+                return;
+            }
+
+            if (_moveFromSlotIndex == index)
+            {
+                _moveFromSlotIndex = -1;
+                RefreshSlots();
+                return;
+            }
+
+            _inventory.MoveSlot(_moveFromSlotIndex, index);
+            _moveFromSlotIndex = -1;
         }
 
         private void RefreshSlots()
@@ -119,6 +165,7 @@ namespace UI
                     : StyleKeyword.None;
                 _slotCounts[i].text = hasItem ? ((int)slot.Count).ToString() : string.Empty;
                 _slotRoots[i].EnableInClassList("selected-slot", i == _inventory.SelectedHotbarSlotIndex);
+                _slotRoots[i].EnableInClassList("move-slot", i == _moveFromSlotIndex);
             }
         }
     }

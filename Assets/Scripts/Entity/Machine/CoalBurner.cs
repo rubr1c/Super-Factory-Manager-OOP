@@ -1,6 +1,7 @@
 using Core;
 using GameItems;
 using Inventory;
+using UI;
 using UnityEngine;
 
 namespace Entity.Machine
@@ -9,6 +10,8 @@ namespace Entity.Machine
     {
         private InventorySlot _fuelInput;
         private InventorySlot _energyOutput;
+
+        [SerializeField] private float energyPerFuelUnit = 1000f;
 
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
@@ -20,19 +23,47 @@ namespace Entity.Machine
 
         public void OnProductionTick()
         {
-            throw new System.NotImplementedException();
+            if (_fuelInput.IsEmpty || _fuelInput.Held is not IFuel fuel)
+            {
+                return;
+            }
+
+            var producedEnergy = Mathf.Max(0f, fuel.BurnTime * energyPerFuelUnit * Modifiers.Yield);
+            if (producedEnergy <= 0f)
+            {
+                return;
+            }
+
+            _fuelInput.Remove(1f);
+            _energyOutput.Add(new InventorySlot(Items.ENERGY, producedEnergy));
         }
 
         public InventorySlot PeekOutput() => _energyOutput;
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            throw new System.NotImplementedException();
+            return _energyOutput.TryExtract(request);
         }
 
         public InventorySlot TryInsert(InventorySlot slot)
         {
-            throw new System.NotImplementedException();
+            return _fuelInput.TryInsert(slot, item => item is IFuel);
+        }
+
+        public override void BuildInfoPanel(EntityInfoPanel panel)
+        {
+            panel.AddButton("Collect", CollectOutput);
+        }
+
+        private void CollectOutput()
+        {
+            var inventory = PlayerInventory.Instance;
+            if (inventory == null)
+            {
+                return;
+            }
+
+            _energyOutput = inventory.AddSlot(_energyOutput);
         }
     }
 }

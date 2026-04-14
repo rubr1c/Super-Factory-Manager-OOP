@@ -1,4 +1,6 @@
 using Entity;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,6 +13,9 @@ namespace UI
 
         private VisualElement _panel;
         private Label _title;
+        private VisualElement _content;
+        private PlaceableGridEntity _currentEntity;
+        private readonly Dictionary<string, Label> _liveLabels = new();
 
         private void Awake()
         {
@@ -25,6 +30,7 @@ namespace UI
             var root = GetComponent<UIDocument>().rootVisualElement;
             _panel = root.Q<VisualElement>("entity-info-panel");
             _title = root.Q<Label>("panel-title");
+            _content = root.Q<VisualElement>("panel-content");
 
             SetPanelVisible(false);
         }
@@ -35,22 +41,93 @@ namespace UI
                 Instance = null;
         }
 
+        private void Update()
+        {
+            if (_panel.style.display == DisplayStyle.None)
+            {
+                return;
+            }
+
+            if (!_currentEntity)
+            {
+                Hide();
+                return;
+            }
+
+            _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
+            _currentEntity.RefreshInfoPanel(this);
+        }
+
         public void Show(PlaceableGridEntity entity)
         {
             if (!entity) return;
 
-            _title.text = entity.Held ? entity.Held.DisplayName : "Unknown";
+            _currentEntity = entity;
+            RefreshCurrentEntityInfo();
             SetPanelVisible(true);
         }
 
         public void Hide()
         {
+            _currentEntity = null;
             SetPanelVisible(false);
+        }
+
+        public void AddButton(string text, Action onClick)
+        {
+            var button = new Button(() => onClick())
+            {
+                text = text
+            };
+
+            button.AddToClassList("panel-button");
+            _content.Add(button);
+        }
+
+        public void AddLabel(string text)
+        {
+            var label = new Label(text);
+            _content.Add(label);
+        }
+
+        public void AddLiveLabel(string key, string text)
+        {
+            if (!_liveLabels.TryGetValue(key, out var label))
+            {
+                label = new Label(text);
+                _liveLabels[key] = label;
+                _content.Add(label);
+            }
+            else
+            {
+                label.text = text;
+            }
+        }
+
+        public void SetLiveLabelText(string key, string text)
+        {
+            if (_liveLabels.TryGetValue(key, out var label))
+            {
+                label.text = text;
+            }
         }
 
         private void SetPanelVisible(bool visible)
         {
             _panel.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        private void RefreshCurrentEntityInfo()
+        {
+            if (!_currentEntity)
+            {
+                return;
+            }
+
+            _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
+            _content.Clear();
+            _liveLabels.Clear();
+            _currentEntity.BuildInfoPanel(this);
         }
     }
 }
