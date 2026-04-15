@@ -20,7 +20,7 @@ namespace Presentation.Input
 
         private void Update()
         {
-            if (!Mouse.current.leftButton.wasPressedThisFrame)
+            if (!TryGetTapPosition(out var screenPosition))
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace Presentation.Input
                 return;
             }
 
-            Vector3 screen = Mouse.current.position.ReadValue();
+            Vector3 screen = screenPosition;
             screen.z = -_camera.transform.position.z;
             var mousePos = _camera.ScreenToWorldPoint(screen);
             mousePos.z = 0f;
@@ -87,6 +87,18 @@ namespace Presentation.Input
             }
 
             playerInventory.TryConsumeSelectedHotbarItem(1);
+        }
+
+        private static bool TryGetTapPosition(out Vector2 screenPosition)
+        {
+            if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
+            {
+                screenPosition = Pointer.current.position.ReadValue();
+                return true;
+            }
+
+            screenPosition = default;
+            return false;
         }
     }
 }

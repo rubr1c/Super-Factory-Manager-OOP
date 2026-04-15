@@ -15,7 +15,7 @@ namespace Presentation.Cameras
 
         private void LateUpdate()
         {
-            if (Mouse.current == null || !cameraComponent)
+            if (!cameraComponent)
             {
                 return;
             }
@@ -55,22 +55,27 @@ namespace Presentation.Cameras
 
         private void HandlePanning()
         {
-            if (Mouse.current.rightButton.wasPressedThisFrame)
-            {
-                _isPanning = true;
-                _lastTouchPos = Mouse.current.position.ReadValue();
-            }
-            else if (Mouse.current.rightButton.wasReleasedThisFrame)
-            {
-                _isPanning = false;
-            }
-
-            if (!_isPanning || !Mouse.current.rightButton.isPressed)
+            if (Pointer.current == null)
             {
                 return;
             }
 
-            var currentMousePos = Mouse.current.position.ReadValue();
+            if (Pointer.current.press.wasPressedThisFrame)
+            {
+                _isPanning = true;
+                _lastTouchPos = Pointer.current.position.ReadValue();
+            }
+            else if (Pointer.current.press.wasReleasedThisFrame)
+            {
+                _isPanning = false;
+            }
+
+            if (!_isPanning || !Pointer.current.press.isPressed)
+            {
+                return;
+            }
+
+            var currentMousePos = Pointer.current.position.ReadValue();
             var lastPos = ScreenToWorldOnPlayPlane(_lastTouchPos);
             var currentPos = ScreenToWorldOnPlayPlane(currentMousePos);
             cameraComponent.transform.position += lastPos - currentPos;

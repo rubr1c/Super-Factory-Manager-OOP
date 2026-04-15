@@ -16,11 +16,14 @@
     border-left-width: 2px;
     border-left-color: rgba(100, 180, 255, 0.4);
     padding: 16px;
+    padding-right: 40px;
     flex-shrink: 0;
     flex-direction: column;
 }
 
 .panel-title {
+    width: 100%;
+    align-self: stretch;
     font-size: 20px;
     color: rgb(220, 230, 255);
     -unity-font-style: bold;
@@ -33,9 +36,16 @@
 .panel-content {
     flex-direction: column;
     flex-grow: 1;
+    align-self: flex-start;
+    width: 100%;
+    max-width: 220px;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .panel-label {
+    max-width: 100%;
+    white-space: normal;
     color: rgb(220, 230, 255);
     margin-top: 6px;
 }
@@ -46,18 +56,28 @@
 }
 
 .panel-delete-button {
+    align-self: flex-start;
+    width: 100%;
+    max-width: 220px;
+    height: 28px;
+    min-height: 28px;
+    margin-top: 4px;
+    margin-bottom: 20px;
+    font-size: 11px;
     color: rgb(255, 220, 220);
     background-color: rgba(170, 45, 45, 0.95);
 }
 
 .entity-buffer-grid {
     flex-direction: column;
+    max-width: 100%;
     margin-top: 8px;
 }
 
 .entity-buffer-row {
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    max-width: 100%;
 }
 
 .entity-buffer-slot {
@@ -124,6 +144,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    max-width: 100%;
+    min-width: 0;
     margin-top: 6px;
     padding: 6px 8px;
     background-color: rgba(35, 38, 52, 0.75);
@@ -135,6 +157,7 @@
 .upgrade-slot-name {
     flex-grow: 1;
     flex-shrink: 1;
+    min-width: 0;
     color: rgb(220, 230, 255);
     font-size: 12px;
     margin-right: 8px;

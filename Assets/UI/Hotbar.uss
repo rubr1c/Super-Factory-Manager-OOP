@@ -6,7 +6,7 @@
     bottom: 0;
     justify-content: flex-end;
     align-items: center;
-    padding-bottom: 88px;
+    padding-bottom: 118px;
 }
 
 .inventory-panel {
@@ -27,7 +27,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
-    padding-bottom: 16px;
+    padding-bottom: 46px;
 }
 
 .hotbar-slot {
