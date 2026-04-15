@@ -267,15 +267,15 @@ namespace Gameplay.Entities
 
             if (UseIntegerTransfers)
             {
-                var a = Mathf.FloorToInt(Buffer.Count);
-                var b = Mathf.FloorToInt(neighborBuffer.Count);
-                if (a <= b)
+                var sourceWholeCount = Mathf.FloorToInt(Buffer.Count);
+                var neighborWholeCount = Mathf.FloorToInt(neighborBuffer.Count);
+                if (sourceWholeCount <= neighborWholeCount)
                 {
                     return;
                 }
 
-                var transferWhole = (a - b) / 2;
-                if (transferWhole == 0 && b == 0)
+                var transferWhole = (sourceWholeCount - neighborWholeCount) / 2;
+                if (transferWhole == 0 && neighborWholeCount == 0)
                 {
                     transferWhole = 1;
                 }

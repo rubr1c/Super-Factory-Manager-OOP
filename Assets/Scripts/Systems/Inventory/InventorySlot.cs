@@ -64,7 +64,17 @@ namespace Systems.Inventory
 
         public InventorySlot TryInsert(InventorySlot incoming, Func<Item, bool> canAccept = null)
         {
-            if (incoming.IsEmpty || !(canAccept?.Invoke(incoming.Held) ?? true) || !CanAdd(incoming))
+            if (incoming.IsEmpty)
+            {
+                return incoming;
+            }
+
+            if (canAccept != null && !canAccept(incoming.Held))
+            {
+                return incoming;
+            }
+
+            if (!CanAdd(incoming))
             {
                 return incoming;
             }

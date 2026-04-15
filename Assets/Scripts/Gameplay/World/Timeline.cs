@@ -96,10 +96,10 @@ namespace Gameplay.World
 
         public Vector2Int WorldToGridPosition(Vector3 worldPos)
         {
-            var local = transform.InverseTransformPoint(worldPos);
-            var x = Mathf.RoundToInt(local.x / slotSize);
-            var y = Mathf.RoundToInt(local.y / slotSize);
-            return new Vector2Int(x, y);
+            var localPosition = transform.InverseTransformPoint(worldPos);
+            var gridX = Mathf.RoundToInt(localPosition.x / slotSize);
+            var gridY = Mathf.RoundToInt(localPosition.y / slotSize);
+            return new Vector2Int(gridX, gridY);
         }
 
         private bool IsValidGridPosition(Vector2Int pos)

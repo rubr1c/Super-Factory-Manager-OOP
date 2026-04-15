@@ -40,7 +40,6 @@ namespace Application.Managers
 
         public Timeline CreateNewTimeline()
         {
-
             var newTimelineObj = Instantiate(timelinePrefab);
             if (!newTimelineObj.TryGetComponent<Timeline>(out var newTimeline))
             {
@@ -66,7 +65,6 @@ namespace Application.Managers
 
             if (!ItemCatalog.TryGet("chronos_fragment", out var chronosFragment))
             {
-                Debug.LogError("Chronos Fragment item is not available in the item catalog.");
                 return false;
             }
 
@@ -88,9 +86,9 @@ namespace Application.Managers
         {
             if (id < 0 || id >= timelines.Count) return;
 
-            foreach (var tl in timelines)
+            foreach (var timeline in timelines)
             {
-                tl.gameObject.SetActive(false);
+                timeline.gameObject.SetActive(false);
             }
 
             ActiveTimeline = timelines[id];

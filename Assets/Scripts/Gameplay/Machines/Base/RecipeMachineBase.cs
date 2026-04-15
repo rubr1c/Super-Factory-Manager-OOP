@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Application.Managers;
 using Core;
@@ -17,7 +16,7 @@ namespace Gameplay.Machines.Base
         private const int MaxUiSummaryEntries = 2;
 
         [SerializeField] private MachineType machineType;
-        [SerializeField] private Recipe[] allowedRecipes = Array.Empty<Recipe>();
+        [SerializeField] private Recipe[] allowedRecipes = new Recipe[0];
         [SerializeField] private Recipe defaultRecipe;
         [SerializeField] private int itemInputCapacity = 8;
         [SerializeField] private int outputCapacity = 4;
@@ -131,7 +130,11 @@ namespace Gameplay.Machines.Base
 
         private void InitializeRecipeState()
         {
-            allowedRecipes ??= Array.Empty<Recipe>();
+            if (allowedRecipes == null)
+            {
+                allowedRecipes = new Recipe[0];
+            }
+
             _energyInput = InventorySlot.Empty;
             _waterInput = InventorySlot.Empty;
             _itemInputs = new ItemContainer(Mathf.Max(1, itemInputCapacity));

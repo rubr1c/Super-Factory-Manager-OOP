@@ -226,9 +226,9 @@ namespace Systems.Inventory
             }
             else
             {
-                var temp = to;
+                var destinationSlotBeforeSwap = to;
                 to = from;
-                from = temp;
+                from = destinationSlotBeforeSwap;
             }
 
             InventoryChanged?.Invoke();
