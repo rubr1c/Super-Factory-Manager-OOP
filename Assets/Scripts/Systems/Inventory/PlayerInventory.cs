@@ -22,7 +22,8 @@ namespace Systems.Inventory
 
         public static PlayerInventory Instance { get; private set; }
 
-        [SerializeField] private StartingSlot[] startingSlots =
+        [SerializeField]
+        private StartingSlot[] startingSlots =
         {
             new()
             {
@@ -144,6 +145,61 @@ namespace Systems.Inventory
             }
 
             slot.Remove(amount);
+            InventoryChanged?.Invoke();
+            return true;
+        }
+
+        public float CountItem(Item item)
+        {
+            if (item == null)
+            {
+                return 0f;
+            }
+
+            var total = 0f;
+            for (var i = 0; i < TotalSlotCount; i++)
+            {
+                var slot = _items.GetSlot(i);
+                if (!slot.IsEmpty && slot.Held == item)
+                {
+                    total += slot.Count;
+                }
+            }
+
+            return total;
+        }
+
+        public bool TryConsumeItem(Item item, float amount)
+        {
+            if (item == null || amount < 0f)
+            {
+                return false;
+            }
+
+            if (amount == 0f)
+            {
+                return true;
+            }
+
+            if (CountItem(item) < amount)
+            {
+                return false;
+            }
+
+            var remaining = amount;
+            for (var i = 0; i < TotalSlotCount && remaining > 0f; i++)
+            {
+                ref var slot = ref _items.GetSlot(i);
+                if (slot.IsEmpty || slot.Held != item)
+                {
+                    continue;
+                }
+
+                var consumed = Mathf.Min(slot.Count, remaining);
+                slot.Remove(consumed);
+                remaining -= consumed;
+            }
+
             InventoryChanged?.Invoke();
             return true;
         }

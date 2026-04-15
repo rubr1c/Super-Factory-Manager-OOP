@@ -209,7 +209,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9e74b57efb01f704eac7e8068fa5bb7b, type: 2}
   - {fileID: 11400000, guid: c389cab00b183bc4db01055d069f2ddc, type: 2}
   - {fileID: 11400000, guid: cec59c77805b28b469e78b2eee8f9d5b, type: 2}
-  - {fileID: 11400000, guid: abcca865c0167034ab34718cbb3270ec, type: 2}
   - {fileID: 11400000, guid: a46b942dec3d9b840998626daa550885, type: 2}
   - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f81, type: 2}
   - {fileID: 11400000, guid: c85be78133c57ad4983d7e640bb2af7e, type: 2}
@@ -306,6 +305,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e688c85fa66eb6442bf30635f5fed6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.InventoryMenuUI
+--- !u!1 &304950240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 304950242}
+  - component: {fileID: 304950241}
+  - component: {fileID: 304950243}
+  m_Layer: 5
+  m_Name: TimelineMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &304950241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304950240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: e7139164b9af2b749a592aa2ff4c5e2f, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 5f2c3d4e6a7b4891bcde2345f6789a10, type: 3}
+  m_SortingOrder: 1
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &304950242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304950240}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &304950243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304950240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d8e9c0b7f64e70a6d43b8c9e2f1a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Presentation.UI.TimelineMenuUI
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Systems.Inventory.PlayerInventory
   startingSlots:
   - slotIndex: 0
-    itemId: starter_drill
+    itemId: logistics_buffer
     count: 1
   - slotIndex: 1
     itemId: energy_generator
@@ -708,8 +775,8 @@ MonoBehaviour:
     itemId: liquid_extractor
     count: 1
   - slotIndex: 3
-    itemId: item_pipe
-    count: 6
+    itemId: chronos_fragment
+    count: 20
   - slotIndex: 4
     itemId: energy_pipe
     count: 4
@@ -804,3 +871,4 @@ SceneRoots:
   - {fileID: 250495242}
   - {fileID: 2038104220}
   - {fileID: 2106101987}
+  - {fileID: 304950242}

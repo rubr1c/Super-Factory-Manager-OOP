@@ -1,6 +1,8 @@
 using Application.Managers;
+using Data.Items;
 using Presentation.UI;
 using Systems.Inventory;
+using Gameplay.Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -41,15 +43,38 @@ namespace Presentation.Input
 
             var gridPos = currentTimeline.WorldToGridPosition(mousePos);
             var existingEntity = currentTimeline.EntityAt(gridPos);
+            var playerInventory = PlayerInventory.Instance;
             if (existingEntity)
             {
+                if (playerInventory != null
+                    && playerInventory.SelectedHotbarSlotIndex >= 0
+                    && existingEntity is UpgradableEntity upgradable)
+                {
+                    var selected = playerInventory.SelectedHotbarSlot;
+                    if (!selected.IsEmpty
+                        && selected.Held is UpgradeCardItem upgradeCard
+                        && selected.Count >= 1f
+                        && upgradable.TryInstallUpgrade(upgradeCard, out var installedSlot))
+                    {
+                        if (!playerInventory.TryConsumeSelectedHotbarItem(1))
+                        {
+                            upgradable.Upgrades.TryRemove(installedSlot);
+                        }
+                        else
+                        {
+                            EntityInfoPanel.Instance?.Show(existingEntity);
+                        }
+
+                        return;
+                    }
+                }
+
                 existingEntity.OnInteract();
                 return;
             }
 
             EntityInfoPanel.Instance?.Hide();
 
-            var playerInventory = PlayerInventory.Instance;
             if (!playerInventory)
             {
                 return;

@@ -13,8 +13,11 @@ namespace Core
             _cards = new UpgradeCardItem[capacity];
         }
 
-        public bool TryInstall(UpgradeCardItem card)
+        public bool TryInstall(UpgradeCardItem card) => TryInstall(card, out _);
+
+        public bool TryInstall(UpgradeCardItem card, out int installedSlotIndex)
         {
+            installedSlotIndex = -1;
             if (card == null)
             {
                 return false;
@@ -25,6 +28,7 @@ namespace Core
                 if (_cards[i] == null)
                 {
                     _cards[i] = card;
+                    installedSlotIndex = i;
                     return true;
                 }
             }

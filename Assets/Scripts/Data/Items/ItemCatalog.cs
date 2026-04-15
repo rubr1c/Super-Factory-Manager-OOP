@@ -36,7 +36,6 @@ namespace Data.Items
         public static Item CIRCUIT_FABRICATOR => Get("circuit_fabricator");
         public static Item INVENTORY_UPLINK => Get("inventory_uplink");
         public static Item LOGISTICS_BUFFER => Get("logistics_buffer");
-        public static Item INTER_TIMELINE_BRIDGE => Get("inter_timeline_bridge");
 
         public static Item Get(string registryName)
         {

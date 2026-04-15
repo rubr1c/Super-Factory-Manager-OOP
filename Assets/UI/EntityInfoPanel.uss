@@ -49,3 +49,103 @@
     color: rgb(255, 220, 220);
     background-color: rgba(170, 45, 45, 0.95);
 }
+
+.entity-buffer-grid {
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+.entity-buffer-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.entity-buffer-slot {
+    width: 48px;
+    height: 48px;
+    margin: 4px;
+    background-color: rgba(40, 42, 54, 0.85);
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgba(100, 180, 255, 0.2);
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.entity-buffer-slot:hover {
+    border-color: rgba(100, 180, 255, 0.55);
+    background-color: rgba(55, 58, 72, 0.9);
+}
+
+.entity-buffer-slot--selected {
+    border-color: rgba(120, 210, 255, 0.95);
+    background-color: rgba(56, 82, 108, 0.95);
+}
+
+.entity-buffer-slot .slot-icon {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    right: 6px;
+    bottom: 6px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.entity-buffer-slot .slot-count {
+    position: absolute;
+    right: 4px;
+    bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    color: rgb(235, 240, 255);
+    background-color: rgba(18, 18, 24, 0.92);
+    border-radius: 4px;
+    font-size: 10px;
+    -unity-font-style: bold;
+}
+
+.upgrade-section {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top-width: 1px;
+    border-top-color: rgba(100, 180, 255, 0.25);
+    flex-direction: column;
+}
+
+.upgrade-header {
+    font-size: 14px;
+    color: rgb(200, 215, 245);
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+}
+
+.upgrade-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding: 6px 8px;
+    background-color: rgba(35, 38, 52, 0.75);
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgba(100, 180, 255, 0.12);
+}
+
+.upgrade-slot-name {
+    flex-grow: 1;
+    flex-shrink: 1;
+    color: rgb(220, 230, 255);
+    font-size: 12px;
+    margin-right: 8px;
+    white-space: normal;
+}
+
+.upgrade-remove-button {
+    flex-shrink: 0;
+    height: 28px;
+    min-width: 72px;
+    margin-top: 0;
+    margin-left: 4px;
+    font-size: 11px;
+}

@@ -61,6 +61,8 @@ namespace Gameplay.Entities
             return item != null;
         }
 
+        protected virtual bool UseIntegerTransfers => false;
+
         public InventorySlot TryInsert(InventorySlot slot)
         {
             if (slot.IsEmpty || !CanHoldItem(slot.Held) || !Buffer.CanAdd(slot))
@@ -75,6 +77,15 @@ namespace Gameplay.Entities
             }
 
             var movedAmount = Mathf.Min(spaceAvailable, slot.Count);
+            if (UseIntegerTransfers)
+            {
+                movedAmount = Mathf.Floor(movedAmount);
+                if (movedAmount <= 0f)
+                {
+                    return slot;
+                }
+            }
+
             Buffer.Add(new InventorySlot(slot.Held, movedAmount));
             var remainder = slot;
             remainder.Remove(movedAmount);
@@ -115,6 +126,11 @@ namespace Gameplay.Entities
             }
 
             var extractedAmount = Mathf.Min(Buffer.Count, request.Count);
+            if (UseIntegerTransfers)
+            {
+                extractedAmount = Mathf.Floor(extractedAmount);
+            }
+
             if (extractedAmount <= 0f)
             {
                 return InventorySlot.Empty;
@@ -178,6 +194,19 @@ namespace Gameplay.Entities
                     BalanceWith(transport);
                 }
             }
+
+            if (UseIntegerTransfers && !Buffer.IsEmpty)
+            {
+                var whole = Mathf.Floor(Buffer.Count);
+                if (whole <= 0f)
+                {
+                    Buffer = InventorySlot.Empty;
+                }
+                else
+                {
+                    Buffer.Count = whole;
+                }
+            }
         }
 
         private void PullFromProducer(IProducer producer)
@@ -189,6 +218,7 @@ namespace Gameplay.Entities
             }
 
             var amountToExtract = Mathf.Min(GetRemainingCapacity(availableOutput), TransferRate);
+            amountToExtract = QuantizeOutboundAmount(amountToExtract);
             if (amountToExtract <= 0f)
             {
                 return;
@@ -232,20 +262,50 @@ namespace Gameplay.Entities
                 return;
             }
 
+            float transferAmountNeeded;
+            float spaceAvailable = transport.GetRemainingCapacity(Buffer);
+
+            if (UseIntegerTransfers)
+            {
+                var a = Mathf.FloorToInt(Buffer.Count);
+                var b = Mathf.FloorToInt(neighborBuffer.Count);
+                if (a <= b)
+                {
+                    return;
+                }
+
+                var transferWhole = (a - b) / 2;
+                if (transferWhole == 0 && b == 0)
+                {
+                    transferWhole = 1;
+                }
+
+                var rateCap = Mathf.FloorToInt(TransferRate);
+                if (rateCap <= 0 && TransferRate > 0f)
+                {
+                    rateCap = 1;
+                }
+
+                var spaceCap = Mathf.FloorToInt(spaceAvailable);
+                var amountToTransfer = Mathf.Min(Mathf.Min(rateCap, transferWhole), spaceCap);
+                TransferTo(transport, amountToTransfer);
+                return;
+            }
+
             if (Buffer.Count <= neighborBuffer.Count)
             {
                 return;
             }
 
             var difference = Buffer.Count - neighborBuffer.Count;
-            var transferAmountNeeded = difference / 2f;
-            var spaceAvailable = transport.GetRemainingCapacity(Buffer);
-            var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
-            TransferTo(transport, amountToTransfer);
+            transferAmountNeeded = difference / 2f;
+            var amountToTransferFloat = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
+            TransferTo(transport, amountToTransferFloat);
         }
 
         private void TransferTo(IConsumer consumer, float amountToMove)
         {
+            amountToMove = QuantizeOutboundAmount(amountToMove);
             if (Buffer.IsEmpty || amountToMove <= 0f)
             {
                 return;
@@ -258,6 +318,22 @@ namespace Gameplay.Entities
             {
                 Buffer.Remove(movedAmount);
             }
+        }
+
+        private float QuantizeOutboundAmount(float amount)
+        {
+            if (!UseIntegerTransfers)
+            {
+                return amount;
+            }
+
+            var floored = Mathf.Floor(amount);
+            if (floored <= 0f && amount > 0f)
+            {
+                return 1f;
+            }
+
+            return floored;
         }
 
         private string GetBufferLabelText()

@@ -19,6 +19,8 @@ namespace Presentation.UI
         private PlaceableGridEntity _currentEntity;
         private readonly Dictionary<string, Label> _liveLabels = new();
 
+        public PlaceableGridEntity CurrentEntity => _currentEntity;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -60,6 +62,10 @@ namespace Presentation.UI
 
             _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
             _currentEntity.RefreshInfoPanel(this);
+            if (_currentEntity is UpgradableEntity upgradableRefresh)
+            {
+                upgradableRefresh.RefreshUpgradeSection(this);
+            }
         }
 
         public void Show(PlaceableGridEntity entity)
@@ -118,6 +124,11 @@ namespace Presentation.UI
             }
         }
 
+        public void AddContentChild(VisualElement child)
+        {
+            _content.Add(child);
+        }
+
         private void SetPanelVisible(bool visible)
         {
             _panel.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
@@ -134,6 +145,10 @@ namespace Presentation.UI
             _content.Clear();
             _liveLabels.Clear();
             _currentEntity.BuildInfoPanel(this);
+            if (_currentEntity is UpgradableEntity upgradable)
+            {
+                upgradable.BuildUpgradeSection(this);
+            }
         }
 
         private void DeleteCurrentEntity()

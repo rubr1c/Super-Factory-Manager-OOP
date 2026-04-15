@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Gameplay.Machines.Logistics
 {
-    public class InventoryUplink : UpgradableEntity, ILogisticsTickable, IConsumer
+    public class InventoryUplink : PlaceableGridEntity, ILogisticsTickable, IConsumer
     {
         private InventorySlot _incomingBuffer;
 
@@ -17,7 +17,6 @@ namespace Gameplay.Machines.Logistics
         {
             base.Place(item, pos, slotSize, timeline);
             _incomingBuffer = InventorySlot.Empty;
-            InitUpgrades();
         }
 
         public void OnLogisticsTick()

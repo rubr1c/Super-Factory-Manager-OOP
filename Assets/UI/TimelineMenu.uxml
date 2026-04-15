@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/TimelineMenu.uss?fileID=7433441132597879392&amp;guid=9ab4cd5ef6784123a4567bc89def0123&amp;type=3#TimelineMenu"/>
+    <ui:VisualElement name="timeline-root" class="timeline-root">
+        <ui:Button name="timeline-menu-button" text="Timelines" class="timeline-menu-button"/>
+        <ui:VisualElement name="timeline-panel" class="timeline-panel">
+            <ui:Label text="Timeline Control" class="timeline-title"/>
+            <ui:VisualElement class="timeline-row">
+                <ui:Label text="Active Timeline" class="timeline-label"/>
+                <ui:Label name="timeline-id-value" text="--" class="timeline-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="timeline-row">
+                <ui:Label text="Speed Modifier" class="timeline-label"/>
+                <ui:Label name="timeline-speed-value" text="--" class="timeline-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="timeline-row">
+                <ui:Label text="Energy Modifier" class="timeline-label"/>
+                <ui:Label name="timeline-energy-value" text="--" class="timeline-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="timeline-nav">
+                <ui:Button name="timeline-previous-button" text="Previous" class="timeline-button"/>
+                <ui:Button name="timeline-next-button" text="Next" class="timeline-button"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="timeline-buy-section">
+                <ui:VisualElement class="timeline-row">
+                    <ui:Label text="Chronos Fragments" class="timeline-label"/>
+                    <ui:Label name="timeline-fragments-value" text="0" class="timeline-value"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="timeline-row">
+                    <ui:Label text="Next Timeline Cost" class="timeline-label"/>
+                    <ui:Label name="timeline-cost-value" text="0" class="timeline-value"/>
+                </ui:VisualElement>
+                <ui:Button name="timeline-buy-button" text="Buy New Timeline" class="timeline-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

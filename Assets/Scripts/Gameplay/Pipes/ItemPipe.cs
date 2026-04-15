@@ -8,6 +8,8 @@ namespace Gameplay.Pipes
     {
         private const string WaterRegistryName = "water";
 
+        protected override bool UseIntegerTransfers => true;
+
         public override bool CanHoldItem(Item item)
         {
             if (item.RegistryName == WaterRegistryName)

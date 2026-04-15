@@ -31,15 +31,13 @@ namespace Gameplay.Machines.Extraction
                 return;
             }
 
-            var requiredEnergy = Mathf.Max(0f, energyCostPerItem);
+            var requiredEnergy = Mathf.Max(0f, energyCostPerItem * EffectiveModifiers.Energy);
             if (requiredEnergy > 0f)
             {
                 if (_energyInput.IsEmpty || _energyInput.Held != ItemCatalog.ENERGY || _energyInput.Count < requiredEnergy)
                 {
                     return;
                 }
-
-                _energyInput.Remove(requiredEnergy);
             }
 
             var resource = drillOutputs[Random.Range(0, drillOutputs.Length)];
@@ -48,8 +46,16 @@ namespace Gameplay.Machines.Extraction
                 return;
             }
 
-            var yieldAmount = Mathf.Max(1f, Modifiers.Yield);
-            _output.TryAdd(new InventorySlot(resource, yieldAmount));
+            var yieldAmount = Mathf.Max(1f, EffectiveModifiers.Yield) * Mathf.Max(1f, EffectiveModifiers.Speed);
+            if (!_output.TryAdd(new InventorySlot(resource, yieldAmount)))
+            {
+                return;
+            }
+
+            if (requiredEnergy > 0f)
+            {
+                _energyInput.Remove(requiredEnergy);
+            }
         }
 
         public InventorySlot PeekOutput() => _output.GetFirst();

@@ -1,0 +1,68 @@
+.timeline-root {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.timeline-menu-button {
+    height: 32px;
+    min-width: 100px;
+    margin-bottom: 8px;
+}
+
+.timeline-panel {
+    width: 260px;
+    padding: 12px;
+    background-color: rgba(22, 26, 38, 0.92);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgba(100, 180, 255, 0.28);
+    flex-direction: column;
+}
+
+.timeline-title {
+    margin-bottom: 8px;
+    color: rgb(235, 240, 255);
+    font-size: 15px;
+    -unity-font-style: bold;
+}
+
+.timeline-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.timeline-label {
+    color: rgba(180, 195, 220, 0.78);
+    font-size: 12px;
+}
+
+.timeline-value {
+    color: rgb(235, 240, 255);
+    font-size: 12px;
+    -unity-font-style: bold;
+}
+
+.timeline-nav {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.timeline-button {
+    flex-grow: 1;
+    height: 30px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.timeline-buy-section {
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top-width: 1px;
+    border-top-color: rgba(100, 180, 255, 0.16);
+}

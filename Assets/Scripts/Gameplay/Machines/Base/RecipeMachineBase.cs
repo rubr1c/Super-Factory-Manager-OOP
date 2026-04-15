@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Application.Managers;
 using Core;
 using Data.Items;
@@ -13,6 +14,8 @@ namespace Gameplay.Machines.Base
 {
     public abstract class RecipeMachineBase : UpgradableEntity, IProducer, IConsumer
     {
+        private const int MaxUiSummaryEntries = 2;
+
         [SerializeField] private MachineType machineType;
         [SerializeField] private Recipe[] allowedRecipes = Array.Empty<Recipe>();
         [SerializeField] private Recipe defaultRecipe;
@@ -65,14 +68,37 @@ namespace Gameplay.Machines.Base
         public override void BuildInfoPanel(EntityInfoPanel panel)
         {
             panel.AddLiveLabel("active-recipe", $"Recipe: {ActiveRecipeUiName}");
-            panel.AddLiveLabel("recipe-progress", $"Progress: {ProgressUiText}");
+            panel.AddLiveLabel("stored-inputs", $"Inputs: {GetContainerSummary(_itemInputs)}");
+            panel.AddLiveLabel("stored-output", $"Output: {GetContainerSummary(_outputBuffer)}");
+
+            if (_usesEnergy)
+            {
+                panel.AddLiveLabel("stored-energy", $"Energy: {GetSlotSummary(_energyInput)}");
+            }
+
+            if (_usesWater)
+            {
+                panel.AddLiveLabel("stored-water", $"Water: {GetSlotSummary(_waterInput)}");
+            }
+
             panel.AddButton("Collect", CollectOutput);
         }
 
         public override void RefreshInfoPanel(EntityInfoPanel panel)
         {
             panel.SetLiveLabelText("active-recipe", $"Recipe: {ActiveRecipeUiName}");
-            panel.SetLiveLabelText("recipe-progress", $"Progress: {ProgressUiText}");
+            panel.SetLiveLabelText("stored-inputs", $"Inputs: {GetContainerSummary(_itemInputs)}");
+            panel.SetLiveLabelText("stored-output", $"Output: {GetContainerSummary(_outputBuffer)}");
+
+            if (_usesEnergy)
+            {
+                panel.SetLiveLabelText("stored-energy", $"Energy: {GetSlotSummary(_energyInput)}");
+            }
+
+            if (_usesWater)
+            {
+                panel.SetLiveLabelText("stored-water", $"Water: {GetSlotSummary(_waterInput)}");
+            }
         }
 
         protected void RunRecipeTick()
@@ -80,8 +106,7 @@ namespace Gameplay.Machines.Base
             var recipe = FindCraftableRecipe();
             if (recipe == null)
             {
-                _activeRecipe = GetPreferredRecipe();
-                _progressSeconds = 0f;
+                _activeRecipe ??= GetPreferredRecipe();
                 return;
             }
 
@@ -103,21 +128,6 @@ namespace Gameplay.Machines.Base
         }
 
         private string ActiveRecipeUiName => _activeRecipe != null ? _activeRecipe.DisplayName : "Idle";
-
-        private string ProgressUiText
-        {
-            get
-            {
-                if (_activeRecipe == null)
-                {
-                    return "0%";
-                }
-
-                var duration = GetCraftDuration(_activeRecipe);
-                var ratio = duration <= 0f ? 1f : Mathf.Clamp01(_progressSeconds / duration);
-                return $"{ratio * 100f:0}%";
-            }
-        }
 
         private void InitializeRecipeState()
         {
@@ -251,6 +261,7 @@ namespace Gameplay.Machines.Base
                 simulated[index] = _outputBuffer.GetSlot(index);
             }
 
+            var yieldMultiplier = Mathf.Max(1f, EffectiveModifiers.Yield);
             var outputs = recipe.ItemOutputs;
             for (var index = 0; index < outputs.Length; index++)
             {
@@ -260,7 +271,7 @@ namespace Gameplay.Machines.Base
                     return false;
                 }
 
-                var remaining = new InventorySlot(output.Item, output.Amount);
+                var remaining = new InventorySlot(output.Item, output.Amount * yieldMultiplier);
                 for (var slotIndex = 0; slotIndex < simulated.Length; slotIndex++)
                 {
                     remaining = simulated[slotIndex].TryInsert(remaining);
@@ -353,25 +364,72 @@ namespace Gameplay.Machines.Base
 
         private void ProduceRecipe(Recipe recipe)
         {
+            var yieldMultiplier = Mathf.Max(1f, EffectiveModifiers.Yield);
             var outputs = recipe.ItemOutputs;
             for (var index = 0; index < outputs.Length; index++)
             {
                 var output = outputs[index];
                 if (output.IsValid)
                 {
-                    _outputBuffer.TryInsert(new InventorySlot(output.Item, output.Amount));
+                    _outputBuffer.TryInsert(new InventorySlot(output.Item, output.Amount * yieldMultiplier));
                 }
             }
         }
 
         private float GetCraftDuration(Recipe recipe)
         {
-            return recipe.ProcessTimeSeconds / Mathf.Max(0.01f, Modifiers.Speed);
+            return recipe.ProcessTimeSeconds / Mathf.Max(0.01f, EffectiveModifiers.Speed);
         }
 
         private float GetEffectiveEnergyCost(Recipe recipe)
         {
-            return recipe.EnergyCost * Mathf.Max(0f, Modifiers.Energy);
+            return recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy);
+        }
+
+        private static string GetSlotSummary(InventorySlot slot)
+        {
+            if (slot.IsEmpty)
+            {
+                return "Empty";
+            }
+
+            return $"{slot.Held.DisplayName} x{slot.Count:0.##}";
+        }
+
+        private static string GetContainerSummary(ItemContainer container)
+        {
+            var parts = new List<string>();
+            var hiddenCount = 0;
+
+            for (var index = 0; index < container.Capacity; index++)
+            {
+                var slot = container.GetSlot(index);
+                if (slot.IsEmpty)
+                {
+                    continue;
+                }
+
+                if (parts.Count < MaxUiSummaryEntries)
+                {
+                    parts.Add($"{slot.Held.DisplayName} x{slot.Count:0.##}");
+                    continue;
+                }
+
+                hiddenCount++;
+            }
+
+            if (parts.Count == 0)
+            {
+                return "Empty";
+            }
+
+            var summary = string.Join(", ", parts);
+            if (hiddenCount > 0)
+            {
+                summary += $", +{hiddenCount} more";
+            }
+
+            return summary;
         }
     }
 }

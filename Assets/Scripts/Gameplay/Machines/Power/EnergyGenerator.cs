@@ -12,6 +12,7 @@ namespace Gameplay.Machines.Power
     {
         private InventorySlot _energyOutput;
         [SerializeField] private float energyPerTick = 100.0f;
+        [SerializeField] private float maxStoredEnergy = 10000f;
 
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
@@ -22,7 +23,7 @@ namespace Gameplay.Machines.Power
 
         public void OnProductionTick()
         {
-            var generatedAmount = energyPerTick * Modifiers.Energy;
+            var generatedAmount = energyPerTick * EffectiveModifiers.Speed;
             if (generatedAmount <= 0f)
             {
                 return;
@@ -38,7 +39,13 @@ namespace Gameplay.Machines.Power
                 return;
             }
 
-            _energyOutput.Add(new InventorySlot(ItemCatalog.ENERGY, generatedAmount));
+            var headroom = Mathf.Max(0f, maxStoredEnergy - _energyOutput.Count);
+            if (headroom <= 0f)
+            {
+                return;
+            }
+
+            _energyOutput.Add(new InventorySlot(ItemCatalog.ENERGY, Mathf.Min(generatedAmount, headroom)));
         }
 
         public InventorySlot PeekOutput() => _energyOutput;
