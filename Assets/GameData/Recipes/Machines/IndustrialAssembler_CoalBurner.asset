@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2caac3dfcc34b3e8b558b1ad2cb5c33, type: 3}
+  m_Name: IndustrialAssembler_CoalBurner
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Recipes.Recipe
+  recipeId: industrial_assembler_coal_burner
+  displayName: Assemble Coal Burner
+  machineType: 3
+  itemInputs:
+  - item: {fileID: 11400000, guid: c85be78133c57ad4983d7e640bb2af7e, type: 2}
+    amount: 4
+  - item: {fileID: 11400000, guid: 301f55aef75217744b638d5bc65e21c9, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 0f3a51e13ff2b214394b0cf605f76820, type: 2}
+    amount: 2
+  itemOutputs:
+  - item: {fileID: 11400000, guid: c613ac615e149184395725eb4a2bb26c, type: 2}
+    amount: 1
+  energyCost: 80
+  waterCost: 0
+  processTimeSeconds: 3

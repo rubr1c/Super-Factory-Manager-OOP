@@ -103,5 +103,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7562cffb15124e48bc4dacfe58377752, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Entity.Machine.EnergyGenerator
-  fallbackBurnTime: 10
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Power.EnergyGenerator
+  energyPerTick: 100

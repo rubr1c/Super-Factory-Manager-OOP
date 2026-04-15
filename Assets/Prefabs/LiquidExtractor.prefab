@@ -103,6 +103,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb48d74ac1bbf804b9ab3743434c8242, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.LiquidExtractor
-  energyCostPerCycle: 250
-  waterPerCycle: 50
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Extraction.LiquidExtractor
+  machineType: 4
+  allowedRecipes:
+  - {fileID: 11400000, guid: a1000000000000000000000000000002, type: 2}
+  defaultRecipe: {fileID: 11400000, guid: a1000000000000000000000000000002, type: 2}
+  itemInputCapacity: 1
+  outputCapacity: 4

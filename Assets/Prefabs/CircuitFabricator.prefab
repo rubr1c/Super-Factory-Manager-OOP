@@ -103,4 +103,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5975a2845a2d9084abb5afbb22c6ba86, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.CircuitFabricator
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Crafting.CircuitFabricator
+  machineType: 2
+  allowedRecipes:
+  - {fileID: 11400000, guid: a1000000000000000000000000000008, type: 2}
+  defaultRecipe: {fileID: 11400000, guid: a1000000000000000000000000000008, type: 2}
+  itemInputCapacity: 6
+  outputCapacity: 4

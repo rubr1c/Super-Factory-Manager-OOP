@@ -103,4 +103,29 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a060d936b909cd64c96ba1ec36d02fa1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.IndustrialAssembler
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Crafting.IndustrialAssembler
+  machineType: 3
+  allowedRecipes:
+  - {fileID: 11400000, guid: a1000000000000000000000000000009, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000000a, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000000b, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000000c, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000000d, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000000e, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000000f, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000010, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000011, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000012, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000013, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000014, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000015, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000016, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000017, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000018, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000019, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000001a, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000001b, type: 2}
+  - {fileID: 11400000, guid: a100000000000000000000000000001c, type: 2}
+  defaultRecipe: {fileID: 11400000, guid: a1000000000000000000000000000009, type: 2}
+  itemInputCapacity: 12
+  outputCapacity: 6

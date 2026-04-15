@@ -87,6 +87,7 @@ namespace Presentation.UI
         public void AddLabel(string text)
         {
             var label = new Label(text);
+            label.AddToClassList("panel-label");
             _content.Add(label);
         }
 
@@ -95,6 +96,7 @@ namespace Presentation.UI
             if (!_liveLabels.TryGetValue(key, out var label))
             {
                 label = new Label(text);
+                label.AddToClassList("panel-label");
                 _liveLabels[key] = label;
                 _content.Add(label);
             }

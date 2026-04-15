@@ -103,5 +103,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2e696bd6a5149a4f8a8bbf693931f8d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.LogisticsBuffer
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Logistics.LogisticsBuffer
   capacity: 16

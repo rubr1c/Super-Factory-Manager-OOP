@@ -32,6 +32,11 @@
     flex-direction: column;
 }
 
+.panel-label {
+    color: rgb(220, 230, 255);
+    margin-top: 6px;
+}
+
 .panel-button {
     height: 36px;
     margin-top: 8px;

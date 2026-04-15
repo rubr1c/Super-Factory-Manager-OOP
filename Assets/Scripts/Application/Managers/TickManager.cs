@@ -10,6 +10,8 @@ namespace Application.Managers
 
         [SerializeField] private float tickRateSeconds = 1.0f;
 
+        public float TickRateSeconds => tickRateSeconds;
+
         private void Awake()
         {
             if (Instance == null) Instance = this;

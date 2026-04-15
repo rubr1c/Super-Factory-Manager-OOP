@@ -29,6 +29,30 @@ namespace Systems.Inventory
                 slotIndex = 0,
                 itemId = "starter_drill",
                 count = 1
+            },
+            new()
+            {
+                slotIndex = 1,
+                itemId = "coal_burner",
+                count = 1
+            },
+            new()
+            {
+                slotIndex = 2,
+                itemId = "plate_compressor",
+                count = 1
+            },
+            new()
+            {
+                slotIndex = 3,
+                itemId = "item_pipe",
+                count = 6
+            },
+            new()
+            {
+                slotIndex = 4,
+                itemId = "energy_pipe",
+                count = 4
             }
         };
 

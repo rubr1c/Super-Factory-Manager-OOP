@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7a9025eacc46ffb841a8d4075b64b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.TimelineManager
-  timelinePrefab: {fileID: 0}
+  timelinePrefab: {fileID: 8691321373789671872, guid: 12bbf68fb56cfff469dbcb6cca6a34f2, type: 3}
   timelines: []
 --- !u!114 &227766769
 MonoBehaviour:
@@ -649,8 +649,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2074307227}
-  - component: {fileID: 2074307226}
   - component: {fileID: 2074307225}
+  - component: {fileID: 2074307228}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -670,22 +670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0edc28d22e84f0d8ab4f4c09e08ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
---- !u!114 &2074307226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074307224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785fc2efacb37a547ad23796245ed43d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Inventory.PlayerInventory
-  startingSlots:
-  - slotIndex: 0
-    itemId: starter_drill
-    count: 1
 --- !u!4 &2074307227
 Transform:
   m_ObjectHideFlags: 0
@@ -701,6 +685,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2074307228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074307224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785fc2efacb37a547ad23796245ed43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.Inventory.PlayerInventory
+  startingSlots:
+  - slotIndex: 0
+    itemId: starter_drill
+    count: 1
+  - slotIndex: 1
+    itemId: energy_generator
+    count: 1
+  - slotIndex: 2
+    itemId: liquid_extractor
+    count: 1
+  - slotIndex: 3
+    itemId: item_pipe
+    count: 6
+  - slotIndex: 4
+    itemId: energy_pipe
+    count: 4
 --- !u!1 &2106101984
 GameObject:
   m_ObjectHideFlags: 0

@@ -103,6 +103,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5360bd3dd8c7b3e4f8ac00ff2b81d4be, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.InterTimelineBridge
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Logistics.InterTimelineBridge
   linkedBridge: {fileID: 0}
   transferRate: 50

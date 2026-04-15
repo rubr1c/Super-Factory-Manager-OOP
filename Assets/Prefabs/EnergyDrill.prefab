@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3cf285bf4ca76bd4bb1bb3dd1728b934, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.EnergyDrill
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Extraction.EnergyDrill
   drillOutputs:
   - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f81, type: 2}
   - {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f82, type: 2}

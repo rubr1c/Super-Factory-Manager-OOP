@@ -103,4 +103,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e51582df748f4b845bc10680faa0083b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.PlateCompressor
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Machines.Crafting.PlateCompressor
+  machineType: 0
+  allowedRecipes:
+  - {fileID: 11400000, guid: a1000000000000000000000000000003, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000004, type: 2}
+  - {fileID: 11400000, guid: a1000000000000000000000000000005, type: 2}
+  defaultRecipe: {fileID: 11400000, guid: a1000000000000000000000000000003, type: 2}
+  itemInputCapacity: 6
+  outputCapacity: 4
