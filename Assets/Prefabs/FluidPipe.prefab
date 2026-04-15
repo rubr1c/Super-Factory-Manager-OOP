@@ -104,5 +104,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbedee175caea854ba15d217517a830f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Pipes.FluidPipe
-  TransferRate: 10
+  TransferRate: 50
   Connections: 00000000000000000000000000000000

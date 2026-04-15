@@ -8,6 +8,7 @@
 
             <ui:Label name="panel-title" text="Name" class="panel-title"/>
             <ui:VisualElement name="panel-content" class="panel-content"></ui:VisualElement>
+            <ui:Button name="delete-button" text="Delete" class="panel-button panel-delete-button"/>
 
         </ui:VisualElement>
 

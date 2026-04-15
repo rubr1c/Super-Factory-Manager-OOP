@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnergyPipe
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
   registryName: energy_pipe
-  displayName: EnergyPipe
+  displayName: Energy Pipe
   icon: {fileID: 0}
   maxStackSize: 100
   prefab: {fileID: 3360724490406457834, guid: 211f5ab80db3d45429f6acaba12f972c, type: 3}

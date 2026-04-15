@@ -1,6 +1,7 @@
 using Core;
 using Data.Items;
 using Gameplay.World;
+using Presentation.UI;
 using Systems.Inventory;
 using UnityEngine;
 
@@ -10,6 +11,16 @@ namespace Gameplay.Entities
 
     public abstract class PipeEntity : PlaceableGridEntity, ITransport, ILogisticsTickable
     {
+        private const string BufferLabelKey = "pipe-buffer";
+
+        private static readonly string[] DirectionNames =
+        {
+            "North",
+            "East",
+            "South",
+            "West"
+        };
+
         protected InventorySlot Buffer;
         protected float MaxCapacity;
 
@@ -41,6 +52,8 @@ namespace Gameplay.Entities
             {
                 Connections[index] = PipeMode.None;
             }
+
+            ConfigureDefaultConnections();
         }
 
         public virtual bool CanHoldItem(Item item)
@@ -66,6 +79,22 @@ namespace Gameplay.Entities
             var remainder = slot;
             remainder.Remove(movedAmount);
             return remainder;
+        }
+
+        public override void BuildInfoPanel(EntityInfoPanel panel)
+        {
+            panel.AddLiveLabel(BufferLabelKey, GetBufferLabelText());
+
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                var connectionIndex = index;
+                panel.AddButton(GetConnectionButtonText(connectionIndex), () => CycleConnectionMode(connectionIndex));
+            }
+        }
+
+        public override void RefreshInfoPanel(EntityInfoPanel panel)
+        {
+            panel.SetLiveLabelText(BufferLabelKey, GetBufferLabelText());
         }
 
         public InventorySlot PeekOutput()
@@ -172,6 +201,29 @@ namespace Gameplay.Entities
             }
         }
 
+        private void ConfigureDefaultConnections()
+        {
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                var neighborPos = GridPos + GridDirections.Cardinal[index];
+                if (ParentTimeline.EntityAt(neighborPos) is not PipeEntity neighborPipe)
+                {
+                    continue;
+                }
+
+                if (Connections[index] == PipeMode.None)
+                {
+                    Connections[index] = PipeMode.Neutral;
+                }
+
+                var oppositeIndex = (index + 2) % 4;
+                if (neighborPipe.Connections[oppositeIndex] == PipeMode.None)
+                {
+                    neighborPipe.Connections[oppositeIndex] = PipeMode.Neutral;
+                }
+            }
+        }
+
         private void BalanceWith(ITransport transport)
         {
             var neighborBuffer = transport.PeekBuffer();
@@ -189,7 +241,6 @@ namespace Gameplay.Entities
             var transferAmountNeeded = difference / 2f;
             var spaceAvailable = transport.GetRemainingCapacity(Buffer);
             var amountToTransfer = Mathf.Min(Mathf.Min(TransferRate, transferAmountNeeded), spaceAvailable);
-
             TransferTo(transport, amountToTransfer);
         }
 
@@ -207,6 +258,38 @@ namespace Gameplay.Entities
             {
                 Buffer.Remove(movedAmount);
             }
+        }
+
+        private string GetBufferLabelText()
+        {
+            if (Buffer.IsEmpty)
+            {
+                return "Buffer: Empty";
+            }
+
+            return $"Buffer: {Buffer.Count:0.##} {Buffer.Held.DisplayName}";
+        }
+
+        private string GetConnectionButtonText(int connectionIndex)
+        {
+            return $"{DirectionNames[connectionIndex]}: {Connections[connectionIndex]}";
+        }
+
+        private void CycleConnectionMode(int connectionIndex)
+        {
+            Connections[connectionIndex] = GetNextMode(Connections[connectionIndex]);
+            EntityInfoPanel.Instance?.Show(this);
+        }
+
+        private static PipeMode GetNextMode(PipeMode currentMode)
+        {
+            return currentMode switch
+            {
+                PipeMode.None => PipeMode.Push,
+                PipeMode.Push => PipeMode.Pull,
+                PipeMode.Pull => PipeMode.Neutral,
+                _ => PipeMode.None
+            };
         }
     }
 }

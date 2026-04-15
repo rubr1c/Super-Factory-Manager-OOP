@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FluidPipe
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
   registryName: fluid_pipe
-  displayName: FluidPipe
+  displayName: Fluid Pipe
   icon: {fileID: 0}
   maxStackSize: 100
   prefab: {fileID: 3360724490406457834, guid: 191c3b4b3aae8364c8886ff7bad61817, type: 3}

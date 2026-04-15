@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706f8fd531d7499c8680a43ff5603b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  cameraComponent: {fileID: 0}
+  cameraComponent: {fileID: 519420031}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

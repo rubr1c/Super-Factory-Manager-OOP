@@ -11,11 +11,13 @@
 
 .entity-info-panel {
     width: 320px;
+    height: 100%;
     background-color: rgba(18, 18, 24, 0.92);
     border-left-width: 2px;
     border-left-color: rgba(100, 180, 255, 0.4);
     padding: 16px;
     flex-shrink: 0;
+    flex-direction: column;
 }
 
 .panel-title {
@@ -30,6 +32,7 @@
 
 .panel-content {
     flex-direction: column;
+    flex-grow: 1;
 }
 
 .panel-label {
@@ -40,4 +43,9 @@
 .panel-button {
     height: 36px;
     margin-top: 8px;
+}
+
+.panel-delete-button {
+    color: rgb(255, 220, 220);
+    background-color: rgba(170, 45, 45, 0.95);
 }

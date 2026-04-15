@@ -104,5 +104,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8295e4404134ffda419aabf7c42b627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity.EnergyPipe
-  TransferRate: 10
+  TransferRate: 100
   Connections: 00000000000000000000000000000000

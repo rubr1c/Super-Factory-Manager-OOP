@@ -1,6 +1,7 @@
 using Gameplay.Entities;
 using System;
 using System.Collections.Generic;
+using Systems.Inventory;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,6 +15,7 @@ namespace Presentation.UI
         private VisualElement _panel;
         private Label _title;
         private VisualElement _content;
+        private Button _deleteButton;
         private PlaceableGridEntity _currentEntity;
         private readonly Dictionary<string, Label> _liveLabels = new();
 
@@ -31,6 +33,8 @@ namespace Presentation.UI
             _panel = root.Q<VisualElement>("entity-info-panel");
             _title = root.Q<Label>("panel-title");
             _content = root.Q<VisualElement>("panel-content");
+            _deleteButton = root.Q<Button>("delete-button");
+            _deleteButton.clicked += DeleteCurrentEntity;
 
             SetPanelVisible(false);
         }
@@ -130,6 +134,31 @@ namespace Presentation.UI
             _content.Clear();
             _liveLabels.Clear();
             _currentEntity.BuildInfoPanel(this);
+        }
+
+        private void DeleteCurrentEntity()
+        {
+            if (!_currentEntity)
+            {
+                return;
+            }
+
+            if (_currentEntity.Held != null)
+            {
+                var inventory = PlayerInventory.Instance;
+                if (inventory == null)
+                {
+                    return;
+                }
+
+                if (!inventory.AddSlot(new InventorySlot(_currentEntity.Held, 1f)).IsEmpty)
+                {
+                    return;
+                }
+            }
+
+            _currentEntity.Remove();
+            Hide();
         }
     }
 }
