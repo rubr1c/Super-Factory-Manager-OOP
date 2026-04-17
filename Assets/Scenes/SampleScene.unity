@@ -766,20 +766,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Systems.Inventory.PlayerInventory
   startingSlots:
   - slotIndex: 0
-    itemId: logistics_buffer
+    itemId: starter_drill
     count: 1
   - slotIndex: 1
-    itemId: energy_generator
+    itemId: industrial_assembler
     count: 1
   - slotIndex: 2
-    itemId: liquid_extractor
+    itemId: coal_burner
     count: 1
-  - slotIndex: 3
-    itemId: chronos_fragment
-    count: 20
-  - slotIndex: 4
-    itemId: energy_pipe
-    count: 4
 --- !u!1 &2106101984
 GameObject:
   m_ObjectHideFlags: 0

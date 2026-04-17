@@ -1,5 +1,6 @@
 using Core;
 using Data.Items;
+using Gameplay.Machines.Logistics;
 using Gameplay.World;
 using Presentation.UI;
 using Systems.Inventory;
@@ -157,43 +158,9 @@ namespace Gameplay.Entities
 
         public void OnLogisticsTick()
         {
-            for (var index = 0; index < Connections.Length; index++)
-            {
-                var connection = Connections[index];
-                if (connection == PipeMode.None)
-                {
-                    continue;
-                }
-
-                var neighborPos = GridPos + GridDirections.Cardinal[index];
-                var neighbor = ParentTimeline.EntityAt(neighborPos);
-                if (!neighbor)
-                {
-                    continue;
-                }
-
-                if (connection == PipeMode.Pull && neighbor is IProducer producer)
-                {
-                    PullFromProducer(producer);
-                    continue;
-                }
-
-                if (Buffer.IsEmpty)
-                {
-                    continue;
-                }
-
-                if (connection == PipeMode.Push && neighbor is IConsumer consumer)
-                {
-                    TransferTo(consumer, Mathf.Min(Buffer.Count, TransferRate));
-                    continue;
-                }
-
-                if (connection == PipeMode.Neutral && neighbor is ITransport transport)
-                {
-                    BalanceWith(transport);
-                }
-            }
+            RunPullPhase();
+            RunPushPhase();
+            RunNeutralPhase();
 
             if (UseIntegerTransfers && !Buffer.IsEmpty)
             {
@@ -209,8 +176,78 @@ namespace Gameplay.Entities
             }
         }
 
-        private void PullFromProducer(IProducer producer)
+        private void RunPullPhase()
         {
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                var connection = Connections[index];
+                if (connection != PipeMode.Pull)
+                {
+                    continue;
+                }
+
+                var neighborPos = GridPos + GridDirections.Cardinal[index];
+                var neighbor = ParentTimeline.EntityAt(neighborPos);
+                if (!neighbor)
+                {
+                    continue;
+                }
+
+                if (neighbor is IProducer producer)
+                {
+                    PullFromProducer(producer);
+                }
+            }
+        }
+
+        private void RunPushPhase()
+        {
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                if (Connections[index] != PipeMode.Push || Buffer.IsEmpty)
+                {
+                    continue;
+                }
+
+                var neighborPos = GridPos + GridDirections.Cardinal[index];
+                var neighbor = ParentTimeline.EntityAt(neighborPos);
+                if (!neighbor || neighbor is not IConsumer consumer)
+                {
+                    continue;
+                }
+
+                TransferTo(consumer, Mathf.Min(Buffer.Count, TransferRate));
+            }
+        }
+
+        private void RunNeutralPhase()
+        {
+            for (var index = 0; index < Connections.Length; index++)
+            {
+                if (Connections[index] != PipeMode.Neutral || Buffer.IsEmpty)
+                {
+                    continue;
+                }
+
+                var neighborPos = GridPos + GridDirections.Cardinal[index];
+                var neighbor = ParentTimeline.EntityAt(neighborPos);
+                if (!neighbor || neighbor is not ITransport transport)
+                {
+                    continue;
+                }
+
+                BalanceWith(transport);
+            }
+        }
+
+        protected virtual void PullFromProducer(IProducer producer)
+        {
+            if (producer is LogisticsBuffer logisticsBuffer)
+            {
+                PullFromLogisticsBuffer(logisticsBuffer);
+                return;
+            }
+
             var availableOutput = producer.PeekOutput();
             if (availableOutput.IsEmpty || !CanHoldItem(availableOutput.Held))
             {
@@ -228,6 +265,33 @@ namespace Gameplay.Entities
             if (!extractedSlot.IsEmpty)
             {
                 TryInsert(extractedSlot);
+            }
+        }
+
+        private void PullFromLogisticsBuffer(LogisticsBuffer logisticsBuffer)
+        {
+            var slotCount = logisticsBuffer.SlotCount;
+            for (var slotIndex = 0; slotIndex < slotCount; slotIndex++)
+            {
+                var slot = logisticsBuffer.PeekSlot(slotIndex);
+                if (slot.IsEmpty || !CanHoldItem(slot.Held))
+                {
+                    continue;
+                }
+
+                var amountToExtract = Mathf.Min(GetRemainingCapacity(slot), TransferRate);
+                amountToExtract = QuantizeOutboundAmount(amountToExtract);
+                if (amountToExtract <= 0f)
+                {
+                    continue;
+                }
+
+                var extractedSlot = logisticsBuffer.TryExtract(new InventorySlot(slot.Held, amountToExtract));
+                if (!extractedSlot.IsEmpty)
+                {
+                    TryInsert(extractedSlot);
+                    return;
+                }
             }
         }
 

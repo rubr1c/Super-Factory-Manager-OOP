@@ -16,13 +16,13 @@ MonoBehaviour:
   displayName: Assemble Plate Compressor
   machineType: 3
   itemInputs:
-  - item: {fileID: 11400000, guid: ed8be4744699df149a901815f64b6a93, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 301f55aef75217744b638d5bc65e21c9, type: 2}
-    amount: 2
+  - item: {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f81, type: 2}
+    amount: 8
+  - item: {fileID: 11400000, guid: d4e5f6a7b8c94d0e1f2a3b4c5d6e7f82, type: 2}
+    amount: 4
   itemOutputs:
   - item: {fileID: 11400000, guid: 758b97c8f011ff142a23f92ad8957a4d, type: 2}
     amount: 1
-  energyCost: 150
+  energyCost: 0
   waterCost: 0
   processTimeSeconds: 4

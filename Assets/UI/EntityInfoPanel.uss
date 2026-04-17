@@ -38,9 +38,9 @@
     flex-grow: 1;
     align-self: flex-start;
     width: 100%;
-    max-width: 220px;
+    max-width: 236px;
     min-width: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .panel-label {
@@ -78,6 +78,22 @@
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 100%;
+}
+
+.logistics-buffer-grid {
+    width: 232px;
+}
+
+.recipe-machine-input-grid {
+    width: 232px;
+}
+
+.recipe-machine-input-grid .entity-buffer-slot {
+    flex-shrink: 0;
+}
+
+.logistics-buffer-row {
+    flex-wrap: nowrap;
 }
 
 .entity-buffer-slot {

@@ -34,26 +34,14 @@ namespace Systems.Inventory
             new()
             {
                 slotIndex = 1,
-                itemId = "coal_burner",
+                itemId = "industrial_assembler",
                 count = 1
             },
             new()
             {
                 slotIndex = 2,
-                itemId = "plate_compressor",
+                itemId = "coal_burner",
                 count = 1
-            },
-            new()
-            {
-                slotIndex = 3,
-                itemId = "item_pipe",
-                count = 6
-            },
-            new()
-            {
-                slotIndex = 4,
-                itemId = "energy_pipe",
-                count = 4
             }
         };
 

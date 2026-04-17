@@ -126,5 +126,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a100000000000000000000000000001b, type: 2}
   - {fileID: 11400000, guid: a100000000000000000000000000001c, type: 2}
   defaultRecipe: {fileID: 11400000, guid: a1000000000000000000000000000009, type: 2}
-  itemInputCapacity: 12
+  itemInputCapacity: 8
   outputCapacity: 6

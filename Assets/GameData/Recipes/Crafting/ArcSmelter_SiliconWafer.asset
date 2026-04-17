@@ -22,5 +22,5 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 66e507b562a71e44aa3a805e2a8691ca, type: 2}
     amount: 1
   energyCost: 90
-  waterCost: 10
+  waterCost: 0
   processTimeSeconds: 3

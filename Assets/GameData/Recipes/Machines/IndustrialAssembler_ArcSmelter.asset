@@ -16,17 +16,15 @@ MonoBehaviour:
   displayName: Assemble Arc Smelter
   machineType: 3
   itemInputs:
-  - item: {fileID: 11400000, guid: ed8be4744699df149a901815f64b6a93, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 301f55aef75217744b638d5bc65e21c9, type: 2}
-    amount: 4
-  - item: {fileID: 11400000, guid: cea5e4f3267726544bcee4a3b2ca2769, type: 2}
-    amount: 2
+  - item: {fileID: 11400000, guid: c85be78133c57ad4983d7e640bb2af7e, type: 2}
+    amount: 8
+  - item: {fileID: 11400000, guid: 81db8ebb78bbc464da17438e45a736cc, type: 2}
+    amount: 8
   - item: {fileID: 11400000, guid: 0f3a51e13ff2b214394b0cf605f76820, type: 2}
-    amount: 4
+    amount: 6
   itemOutputs:
   - item: {fileID: 11400000, guid: d9f7cb8ebbdd5e344ac6d400c2bb0939, type: 2}
     amount: 1
-  energyCost: 250
+  energyCost: 120
   waterCost: 0
   processTimeSeconds: 6

@@ -23,6 +23,8 @@ namespace Gameplay.Machines.Logistics
         private Label[] _bufferSlotCounts;
         private Button _takeFromBufferButton;
 
+        public int SlotCount => _storage != null ? _storage.Capacity : Mathf.Max(0, capacity);
+
         public override void Place(Item item, Vector2Int pos, float slotSize, Timeline timeline)
         {
             base.Place(item, pos, slotSize, timeline);
@@ -41,6 +43,16 @@ namespace Gameplay.Machines.Logistics
             return _storage.TryInsert(slot);
         }
 
+        public InventorySlot PeekSlot(int slotIndex)
+        {
+            if (_storage == null || slotIndex < 0 || slotIndex >= _storage.Capacity)
+            {
+                return InventorySlot.Empty;
+            }
+
+            return _storage.GetSlot(slotIndex);
+        }
+
         public override void BuildInfoPanel(EntityInfoPanel panel)
         {
             _selectedBufferSlotIndex = -1;
@@ -48,6 +60,7 @@ namespace Gameplay.Machines.Logistics
 
             var grid = new VisualElement();
             grid.AddToClassList("entity-buffer-grid");
+            grid.AddToClassList("logistics-buffer-grid");
 
             _bufferSlotRoots = new VisualElement[capacity];
             _bufferSlotIcons = new VisualElement[capacity];
@@ -60,6 +73,7 @@ namespace Gameplay.Machines.Logistics
                 {
                     row = new VisualElement();
                     row.AddToClassList("entity-buffer-row");
+                    row.AddToClassList("logistics-buffer-row");
                     grid.Add(row);
                 }
 
