@@ -1,11 +1,11 @@
 using Application.Managers;
 using Data.Items;
+using Gameplay.Entities;
 using Presentation.UI;
 using Systems.Inventory;
-using Gameplay.Entities;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine;
 
 namespace Presentation.Input
 {
@@ -20,21 +20,11 @@ namespace Presentation.Input
 
         private void Update()
         {
-            if (!TryGetTapPosition(out var screenPosition))
-            {
-                return;
-            }
-
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
+            if (!TryGetTapPosition(out var screenPosition)) return;
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
             var currentTimeline = TimelineManager.Instance.ActiveTimeline;
-            if (!currentTimeline || !_camera)
-            {
-                return;
-            }
+            if (!currentTimeline || !_camera) return;
 
             Vector3 screen = screenPosition;
             screen.z = -_camera.transform.position.z;
@@ -56,14 +46,8 @@ namespace Presentation.Input
                         && selected.Count >= 1f
                         && upgradable.TryInstallUpgrade(upgradeCard, out var installedSlot))
                     {
-                        if (!playerInventory.TryConsumeSelectedHotbarItem(1))
-                        {
-                            upgradable.Upgrades.TryRemove(installedSlot);
-                        }
-                        else
-                        {
-                            EntityInfoPanel.Instance?.Show(existingEntity);
-                        }
+                        if (!playerInventory.TryConsumeSelectedHotbarItem(1)) upgradable.Upgrades.TryRemove(installedSlot);
+                        else EntityInfoPanel.Instance?.Show(existingEntity);
 
                         return;
                     }
@@ -75,16 +59,10 @@ namespace Presentation.Input
 
             EntityInfoPanel.Instance?.Hide();
 
-            if (!playerInventory)
-            {
-                return;
-            }
+            if (!playerInventory) return;
 
             var selectedSlot = playerInventory.SelectedHotbarSlot;
-            if (selectedSlot.IsEmpty || !currentTimeline.IsSlotEmpty(gridPos) || !currentTimeline.TryPlace(selectedSlot.Held, gridPos))
-            {
-                return;
-            }
+            if (selectedSlot.IsEmpty || !currentTimeline.IsSlotEmpty(gridPos) || !currentTimeline.TryPlace(selectedSlot.Held, gridPos)) return;
 
             playerInventory.TryConsumeSelectedHotbarItem(1);
         }

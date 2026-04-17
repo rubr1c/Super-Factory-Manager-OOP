@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System;
 using Data.Items;
 using Gameplay.World;
 using Systems.Inventory;
@@ -58,26 +58,14 @@ namespace Application.Managers
         public bool TryBuyNewTimeline()
         {
             var inventory = PlayerInventory.Instance;
-            if (inventory == null)
-            {
-                return false;
-            }
+            if (inventory == null) return false;
 
-            if (!ItemCatalog.TryGet("chronos_fragment", out var chronosFragment))
-            {
-                return false;
-            }
+            if (!ItemCatalog.TryGet("chronos_fragment", out var chronosFragment)) return false;
 
             var cost = GetNewTimelineCost();
-            if (inventory.CountItem(chronosFragment) < cost)
-            {
-                return false;
-            }
+            if (inventory.CountItem(chronosFragment) < cost) return false;
 
-            if (!inventory.TryConsumeItem(chronosFragment, cost))
-            {
-                return false;
-            }
+            if (!inventory.TryConsumeItem(chronosFragment, cost)) return false;
 
             return CreateNewTimeline() != null;
         }

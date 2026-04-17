@@ -1,6 +1,6 @@
 using Systems.Inventory;
-using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine;
 
 namespace Presentation.UI
 {
@@ -26,7 +26,7 @@ namespace Presentation.UI
 
             SetInventoryVisible(false);
             BuildSlots(root);
-   
+
             _menuSlot.RegisterCallback<ClickEvent>(evt =>
             {
                 evt.StopPropagation();
@@ -53,10 +53,7 @@ namespace Presentation.UI
 
         private void OnDestroy()
         {
-            if (_inventory != null)
-            {
-                _inventory.InventoryChanged -= RefreshSlots;
-            }
+            if (_inventory != null) _inventory.InventoryChanged -= RefreshSlots;
         }
 
         private void SetInventoryVisible(bool visible)
@@ -123,10 +120,7 @@ namespace Presentation.UI
         {
             if (_inventoryOverlay.style.display == DisplayStyle.None)
             {
-                if (isHotbar)
-                {
-                    _inventory.ToggleHotbarSlotSelection(index);
-                }
+                if (isHotbar) _inventory.ToggleHotbarSlotSelection(index);
 
                 return;
             }

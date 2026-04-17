@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using Core;
 using Data.Items;
 using Gameplay.Entities;
 using Gameplay.Machines.Extraction;
 using Presentation.UI;
-using System.Collections.Generic;
 using Systems.Inventory;
 using UnityEngine;
 
@@ -26,39 +26,21 @@ namespace Gameplay.Pipes
         [SerializeField] private bool useWhitelist;
         [SerializeField] private Item filteredItem;
 
-        protected override bool UseIntegerTransfers => true;
-
         public override bool CanHoldItem(Item item)
         {
-            if (item == null)
-            {
-                return false;
-            }
+            if (item == null || item.RegistryName == WaterRegistryName || item is IEnergyItem) return false;
 
-            if (item.RegistryName == WaterRegistryName)
-            {
-                return false;
-            }
-
-            if (item is IEnergyItem)
-            {
-                return false;
-            }
-
-            if (useWhitelist)
-            {
-                return filteredItem != null && item == filteredItem;
-            }
-
-            return filteredItem == null || item != filteredItem;
+            return useWhitelist
+                ? filteredItem != null && item == filteredItem
+                : filteredItem == null || item != filteredItem;
         }
 
         public override void BuildInfoPanel(EntityInfoPanel panel)
         {
             base.BuildInfoPanel(panel);
 
-            panel.AddLiveLabel(ModeLabelKey, GetModeLabelText());
-            panel.AddLiveLabel(ItemLabelKey, GetFilterItemLabelText());
+            panel.AddLiveLabel(ModeLabelKey, useWhitelist ? "Mode: Whitelist" : "Mode: Blacklist");
+            panel.AddLiveLabel(ItemLabelKey, $"Filter Item: {(filteredItem != null ? filteredItem.DisplayName : "None")}");
             panel.AddButton("Toggle Whitelist/Blacklist", ToggleFilterMode);
             panel.AddButton("Cycle Filter Item", CycleFilterItem);
         }
@@ -66,19 +48,8 @@ namespace Gameplay.Pipes
         public override void RefreshInfoPanel(EntityInfoPanel panel)
         {
             base.RefreshInfoPanel(panel);
-            panel.SetLiveLabelText(ModeLabelKey, GetModeLabelText());
-            panel.SetLiveLabelText(ItemLabelKey, GetFilterItemLabelText());
-        }
-
-        private string GetModeLabelText()
-        {
-            return useWhitelist ? "Mode: Whitelist" : "Mode: Blacklist";
-        }
-
-        private string GetFilterItemLabelText()
-        {
-            var itemName = filteredItem != null ? filteredItem.DisplayName : "None";
-            return $"Filter Item: {itemName}";
+            panel.SetLiveLabelText(ModeLabelKey, useWhitelist ? "Mode: Whitelist" : "Mode: Blacklist");
+            panel.SetLiveLabelText(ItemLabelKey, $"Filter Item: {(filteredItem != null ? filteredItem.DisplayName : "None")}");
         }
 
         private void ToggleFilterMode()
@@ -97,60 +68,33 @@ namespace Gameplay.Pipes
 
             for (var itemIdIndex = 0; itemIdIndex < DrillOutputItemIds.Length; itemIdIndex++)
             {
-                if (!ItemCatalog.TryGet(DrillOutputItemIds[itemIdIndex], out var drillOutputItem) || drillOutputItem == null)
-                {
-                    continue;
-                }
+                if (!ItemCatalog.TryGet(DrillOutputItemIds[itemIdIndex], out var drillOutputItem) || drillOutputItem == null) continue;
 
-                if (!CanHoldItem(drillOutputItem))
-                {
-                    continue;
-                }
+                if (!CanHoldItem(drillOutputItem)) continue;
 
                 var requestedAmount = Mathf.Min(TransferRate, GetRemainingCapacity(new InventorySlot(drillOutputItem, TransferRate)));
-                if (requestedAmount <= 0f)
-                {
-                    continue;
-                }
+                if (requestedAmount <= 0f) continue;
 
                 var wholeRequestedAmount = Mathf.Floor(requestedAmount);
-                if (wholeRequestedAmount <= 0f)
-                {
-                    wholeRequestedAmount = 1f;
-                }
+                if (wholeRequestedAmount <= 0f) continue;
 
                 var request = new InventorySlot(drillOutputItem, wholeRequestedAmount);
                 var extractedSlot = producer.TryExtract(request);
-                if (extractedSlot.IsEmpty)
-                {
-                    continue;
-                }
+                if (extractedSlot.IsEmpty) continue;
 
                 TryInsert(extractedSlot);
                 return;
             }
         }
 
-        private static List<Item> GetDrillOutputItems()
-        {
-            var drillOutputItems = new List<Item>();
-
-            for (var itemIdIndex = 0; itemIdIndex < DrillOutputItemIds.Length; itemIdIndex++)
-            {
-                if (!ItemCatalog.TryGet(DrillOutputItemIds[itemIdIndex], out var outputItem) || outputItem == null)
-                {
-                    continue;
-                }
-
-                drillOutputItems.Add(outputItem);
-            }
-
-            return drillOutputItems;
-        }
-
         private void CycleFilterItem()
         {
-            var drillOutputItems = GetDrillOutputItems();
+            var drillOutputItems = new List<Item>();
+            for (var itemIdIndex = 0; itemIdIndex < DrillOutputItemIds.Length; itemIdIndex++)
+            {
+                if (ItemCatalog.TryGet(DrillOutputItemIds[itemIdIndex], out var outputItem) && outputItem != null) drillOutputItems.Add(outputItem);
+            }
+
             if (drillOutputItems.Count == 0)
             {
                 filteredItem = null;
@@ -168,14 +112,8 @@ namespace Gameplay.Pipes
                 }
             }
 
-            if (currentIndex == drillOutputItems.Count - 1)
-            {
-                filteredItem = null;
-            }
-            else
-            {
-                filteredItem = drillOutputItems[currentIndex + 1];
-            }
+            if (currentIndex == drillOutputItems.Count - 1) filteredItem = null;
+            else filteredItem = drillOutputItems[currentIndex + 1];
 
             EntityInfoPanel.Instance?.Show(this);
         }

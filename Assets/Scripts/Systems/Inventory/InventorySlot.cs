@@ -22,30 +22,18 @@ namespace Systems.Inventory
 
         public bool CanAdd(InventorySlot incoming)
         {
-            if (incoming.IsEmpty)
-            {
-                return false;
-            }
+            if (incoming.IsEmpty) return false;
 
-            if (IsEmpty)
-            {
-                return true;
-            }
+            if (IsEmpty) return true;
 
-            if (Held != incoming.Held)
-            {
-                return false;
-            }
+            if (Held != incoming.Held) return false;
 
             return Count < incoming.Held.MaxStackSize;
         }
 
         public void Add(InventorySlot incoming)
         {
-            if (incoming.IsEmpty)
-            {
-                return;
-            }
+            if (incoming.IsEmpty) return;
 
             if (IsEmpty)
             {
@@ -54,40 +42,25 @@ namespace Systems.Inventory
                 return;
             }
 
-            if (Held != incoming.Held)
-            {
-                return;
-            }
+            if (Held != incoming.Held) return;
 
             Count = Mathf.Min(incoming.Held.MaxStackSize, Count + incoming.Count);
         }
 
         public InventorySlot TryInsert(InventorySlot incoming, Func<Item, bool> canAccept = null)
         {
-            if (incoming.IsEmpty)
-            {
-                return incoming;
-            }
+            if (incoming.IsEmpty) return incoming;
 
-            if (canAccept != null && !canAccept(incoming.Held))
-            {
-                return incoming;
-            }
+            if (canAccept != null && !canAccept(incoming.Held)) return incoming;
 
-            if (!CanAdd(incoming))
-            {
-                return incoming;
-            }
+            if (!CanAdd(incoming)) return incoming;
 
             var maxCount = incoming.Held.MaxStackSize;
             var availableSpace = IsEmpty
                 ? maxCount
                 : maxCount - Count;
             var movedAmount = Mathf.Min(availableSpace, incoming.Count);
-            if (movedAmount <= 0f)
-            {
-                return incoming;
-            }
+            if (movedAmount <= 0f) return incoming;
 
             Add(new InventorySlot(incoming.Held, movedAmount));
             var remainder = incoming;
@@ -97,16 +70,10 @@ namespace Systems.Inventory
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            if (request.IsEmpty || IsEmpty || Held != request.Held)
-            {
-                return Empty;
-            }
+            if (request.IsEmpty || IsEmpty || Held != request.Held) return Empty;
 
             var extractedAmount = Mathf.Min(Count, request.Count);
-            if (extractedAmount <= 0f)
-            {
-                return Empty;
-            }
+            if (extractedAmount <= 0f) return Empty;
 
             Remove(extractedAmount);
             return new InventorySlot(request.Held, extractedAmount);
@@ -114,10 +81,7 @@ namespace Systems.Inventory
 
         public void Remove(float amount)
         {
-            if (IsEmpty || amount <= 0f)
-            {
-                return;
-            }
+            if (IsEmpty || amount <= 0f) return;
 
             var nextCount = Count - amount;
             if (nextCount <= 0f)
@@ -125,10 +89,7 @@ namespace Systems.Inventory
                 Held = null;
                 Count = 0f;
             }
-            else
-            {
-                Count = nextCount;
-            }
+            else Count = nextCount;
         }
     }
 }

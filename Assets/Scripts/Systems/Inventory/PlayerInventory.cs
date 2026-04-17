@@ -84,53 +84,31 @@ namespace Systems.Inventory
 
         private void OnDestroy()
         {
-            if (Instance == this)
-            {
-                Instance = null;
-            }
+            if (Instance == this) Instance = null;
         }
 
         public InventorySlot GetSlot(int index)
         {
-            if (index < 0 || index >= TotalSlotCount)
-            {
-                return InventorySlot.Empty;
-            }
-
-            return _items.GetSlot(index);
+            return index < 0 || index >= TotalSlotCount
+                ? InventorySlot.Empty
+                : _items.GetSlot(index);
         }
 
         public void ToggleHotbarSlotSelection(int hotbarSlotIndex)
         {
-            if (hotbarSlotIndex < 0 || hotbarSlotIndex >= HotbarSlotCount)
-            {
-                return;
-            }
+            if (hotbarSlotIndex < 0 || hotbarSlotIndex >= HotbarSlotCount) return;
 
-            if (SelectedHotbarSlotIndex == hotbarSlotIndex)
-            {
-                SelectedHotbarSlotIndex = -1;
-            }
-            else
-            {
-                SelectedHotbarSlotIndex = hotbarSlotIndex;
-            }
+            SelectedHotbarSlotIndex = SelectedHotbarSlotIndex == hotbarSlotIndex ? -1 : hotbarSlotIndex;
 
             InventoryChanged?.Invoke();
         }
 
         public bool TryConsumeSelectedHotbarItem(int amount)
         {
-            if (SelectedHotbarSlotIndex < 0)
-            {
-                return false;
-            }
+            if (SelectedHotbarSlotIndex < 0) return false;
 
             ref var slot = ref _items.GetSlot(SelectedHotbarSlotIndex);
-            if (slot.IsEmpty || slot.Count < amount)
-            {
-                return false;
-            }
+            if (slot.IsEmpty || slot.Count < amount) return false;
 
             slot.Remove(amount);
             InventoryChanged?.Invoke();
@@ -139,19 +117,13 @@ namespace Systems.Inventory
 
         public float CountItem(Item item)
         {
-            if (item == null)
-            {
-                return 0f;
-            }
+            if (item == null) return 0f;
 
             var total = 0f;
             for (var i = 0; i < TotalSlotCount; i++)
             {
                 var slot = _items.GetSlot(i);
-                if (!slot.IsEmpty && slot.Held == item)
-                {
-                    total += slot.Count;
-                }
+                if (!slot.IsEmpty && slot.Held == item) total += slot.Count;
             }
 
             return total;
@@ -159,29 +131,15 @@ namespace Systems.Inventory
 
         public bool TryConsumeItem(Item item, float amount)
         {
-            if (item == null || amount < 0f)
-            {
-                return false;
-            }
-
-            if (amount == 0f)
-            {
-                return true;
-            }
-
-            if (CountItem(item) < amount)
-            {
-                return false;
-            }
+            if (item == null || amount < 0f) return false;
+            if (amount == 0f) return true;
+            if (CountItem(item) < amount) return false;
 
             var remaining = amount;
             for (var i = 0; i < TotalSlotCount && remaining > 0f; i++)
             {
                 ref var slot = ref _items.GetSlot(i);
-                if (slot.IsEmpty || slot.Held != item)
-                {
-                    continue;
-                }
+                if (slot.IsEmpty || slot.Held != item) continue;
 
                 var consumed = Mathf.Min(slot.Count, remaining);
                 slot.Remove(consumed);
@@ -242,41 +200,31 @@ namespace Systems.Inventory
 
         private InventorySlot Add(InventorySlot incoming)
         {
+            if (incoming.IsEmpty) return InventorySlot.Empty;
+
             for (var i = 0; i < TotalSlotCount; i++)
             {
                 ref var slot = ref _items.GetSlot(i);
-                if (slot.IsEmpty || !slot.CanAdd(incoming))
-                {
-                    continue;
-                }
+                if (slot.IsEmpty || !slot.CanAdd(incoming)) continue;
 
                 var space = incoming.Held.MaxStackSize - slot.Count;
                 var take = Mathf.Min(space, incoming.Count);
                 slot.Add(new InventorySlot(incoming.Held, take));
                 incoming.Remove(take);
 
-                if (incoming.IsEmpty)
-                {
-                    return InventorySlot.Empty;
-                }
+                if (incoming.IsEmpty) return InventorySlot.Empty;
             }
 
             for (var i = 0; i < TotalSlotCount; i++)
             {
                 ref var slot = ref _items.GetSlot(i);
-                if (!slot.IsEmpty || !slot.CanAdd(incoming))
-                {
-                    continue;
-                }
+                if (!slot.IsEmpty) continue;
 
                 var take = Mathf.Min(incoming.Held.MaxStackSize, incoming.Count);
                 slot.Add(new InventorySlot(incoming.Held, take));
                 incoming.Remove(take);
 
-                if (incoming.IsEmpty)
-                {
-                    return InventorySlot.Empty;
-                }
+                if (incoming.IsEmpty) return InventorySlot.Empty;
             }
 
             return incoming;

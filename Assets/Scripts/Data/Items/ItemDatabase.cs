@@ -24,10 +24,7 @@ namespace Data.Items
 
         public Item Get(string registryName)
         {
-            if (TryGet(registryName, out var item))
-            {
-                return item;
-            }
+            if (TryGet(registryName, out var item)) return item;
 
             throw new UnityException($"Item '{registryName}' is not in the ItemDatabase.");
         }
@@ -37,10 +34,7 @@ namespace Data.Items
             for (var i = 0; i < items.Count; i++)
             {
                 var currentItem = items[i];
-                if (currentItem == null)
-                {
-                    continue;
-                }
+                if (currentItem == null) continue;
 
                 if (currentItem.RegistryName == registryName)
                 {

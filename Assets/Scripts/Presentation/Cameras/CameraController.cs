@@ -1,13 +1,13 @@
 using Application.Managers;
 using Gameplay.World;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine;
 
 namespace Presentation.Cameras
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] private UnityEngine.Camera cameraComponent;
+        [SerializeField] private Camera cameraComponent;
 
         private bool _isPanning;
         private Vector3 _lastTouchPos;
@@ -15,16 +15,10 @@ namespace Presentation.Cameras
 
         private void LateUpdate()
         {
-            if (!cameraComponent)
-            {
-                return;
-            }
+            if (!cameraComponent) return;
 
             var activeTimeline = TimelineManager.Instance.ActiveTimeline;
-            if (!activeTimeline)
-            {
-                return;
-            }
+            if (!activeTimeline) return;
 
             if (_trackedTimeline != activeTimeline)
             {
@@ -55,25 +49,16 @@ namespace Presentation.Cameras
 
         private void HandlePanning()
         {
-            if (Pointer.current == null)
-            {
-                return;
-            }
+            if (Pointer.current == null) return;
 
             if (Pointer.current.press.wasPressedThisFrame)
             {
                 _isPanning = true;
                 _lastTouchPos = Pointer.current.position.ReadValue();
             }
-            else if (Pointer.current.press.wasReleasedThisFrame)
-            {
-                _isPanning = false;
-            }
+            else if (Pointer.current.press.wasReleasedThisFrame) _isPanning = false;
 
-            if (!_isPanning || !Pointer.current.press.isPressed)
-            {
-                return;
-            }
+            if (!_isPanning || !Pointer.current.press.isPressed) return;
 
             var currentMousePos = Pointer.current.position.ReadValue();
             var lastPos = ScreenToWorldOnPlayPlane(_lastTouchPos);
@@ -107,15 +92,9 @@ namespace Presentation.Cameras
             var minPosY = gridMinY + cameraVerticalSize;
             var maxPosY = gridMaxY - cameraVerticalSize;
 
-            if (minPosX > maxPosX)
-            {
-                minPosX = maxPosX = (gridMinX + gridMaxX) * 0.5f;
-            }
+            if (minPosX > maxPosX) minPosX = maxPosX = (gridMinX + gridMaxX) * 0.5f;
 
-            if (minPosY > maxPosY)
-            {
-                minPosY = maxPosY = (gridMinY + gridMaxY) * 0.5f;
-            }
+            if (minPosY > maxPosY) minPosY = maxPosY = (gridMinY + gridMaxY) * 0.5f;
 
             var cameraPos = cameraComponent.transform.position;
             cameraPos.x = Mathf.Clamp(cameraPos.x, minPosX, maxPosX);

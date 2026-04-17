@@ -7,8 +7,8 @@ using Gameplay.Entities;
 using Gameplay.World;
 using Presentation.UI;
 using Systems.Inventory;
-using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine;
 
 namespace Gameplay.Machines.Base
 {
@@ -51,63 +51,39 @@ namespace Gameplay.Machines.Base
 
         public InventorySlot TryInsert(InventorySlot slot)
         {
-            if (slot.IsEmpty)
-            {
-                return InventorySlot.Empty;
-            }
+            if (slot.IsEmpty) return InventorySlot.Empty;
 
-            if (slot.Held == ItemCatalog.ENERGY && _usesEnergy)
-            {
-                return _energyInput.TryInsert(slot, item => item == ItemCatalog.ENERGY);
-            }
+            if (slot.Held == ItemCatalog.ENERGY && _usesEnergy) return _energyInput.TryInsert(slot, item => item == ItemCatalog.ENERGY);
 
-            if (slot.Held == ItemCatalog.WATER && _usesWater)
-            {
-                return _waterInput.TryInsert(slot, item => item == ItemCatalog.WATER);
-            }
+            if (slot.Held == ItemCatalog.WATER && _usesWater) return _waterInput.TryInsert(slot, item => item == ItemCatalog.WATER);
 
             return AcceptsItem(slot.Held) ? _itemInputs.TryInsert(slot) : slot;
         }
 
         public override void BuildInfoPanel(EntityInfoPanel panel)
         {
-            if (_usesItemInputs)
-            {
-                BuildItemInputGrid(panel);
-            }
+            if (_usesItemInputs) BuildItemInputGrid(panel);
 
             panel.AddLiveLabel("stored-output", $"Output: {GetContainerSummary(_outputBuffer)}");
 
-            if (_usesEnergy || _usesWater)
-            {
-                panel.AddLiveLabel("stored-utilities", GetUtilitiesSummary());
-            }
+            if (_usesEnergy || _usesWater) panel.AddLiveLabel("stored-utilities", GetUtilitiesSummary());
 
             panel.AddButton("Collect", CollectOutput);
-            if (_usesItemInputs)
-            {
-                RefreshItemInputGridVisuals();
-            }
+            if (_usesItemInputs) RefreshItemInputGridVisuals();
         }
 
         public override void RefreshInfoPanel(EntityInfoPanel panel)
         {
             panel.SetLiveLabelText("stored-output", $"Output: {GetContainerSummary(_outputBuffer)}");
 
-            if (_usesEnergy || _usesWater)
-            {
-                panel.SetLiveLabelText("stored-utilities", GetUtilitiesSummary());
-            }
+            if (_usesEnergy || _usesWater) panel.SetLiveLabelText("stored-utilities", GetUtilitiesSummary());
 
-            if (_usesItemInputs)
-            {
-                RefreshItemInputGridVisuals();
-            }
+            if (_usesItemInputs) RefreshItemInputGridVisuals();
         }
 
         private void BuildItemInputGrid(EntityInfoPanel panel)
         {
-            var slotCount = _itemInputs != null ? _itemInputs.Capacity : Mathf.Max(1, itemInputCapacity);
+            var slotCount = _itemInputs.Capacity;
             _itemInputSlotIcons = new VisualElement[slotCount];
             _itemInputSlotCounts = new Label[slotCount];
 
@@ -150,15 +126,7 @@ namespace Gameplay.Machines.Base
         private void OnItemInputSlotClicked(int slotIndex)
         {
             var inventory = PlayerInventory.Instance;
-            if (inventory == null || _itemInputs == null)
-            {
-                return;
-            }
-
-            if (slotIndex < 0 || slotIndex >= _itemInputs.Capacity)
-            {
-                return;
-            }
+            if (inventory == null) return;
 
             var selectedHotbarSlotIndex = inventory.SelectedHotbarSlotIndex;
             if (selectedHotbarSlotIndex >= 0 && selectedHotbarSlotIndex < PlayerInventory.HotbarSlotCount)
@@ -166,62 +134,36 @@ namespace Gameplay.Machines.Base
                 var selectedHotbarSlot = inventory.SelectedHotbarSlot;
                 if (!selectedHotbarSlot.IsEmpty)
                 {
-                    InsertFromSelectedHotbar(inventory, selectedHotbarSlot);
+                    if (AcceptsItem(selectedHotbarSlot.Held))
+                    {
+                        var wholeItemCount = Mathf.FloorToInt(selectedHotbarSlot.Count);
+                        for (var index = 0; index < wholeItemCount; index++)
+                        {
+                            if (!inventory.TryConsumeSelectedHotbarItem(1)) break;
+
+                            var remainder = _itemInputs.TryInsert(new InventorySlot(selectedHotbarSlot.Held, 1f));
+                            if (!remainder.IsEmpty)
+                            {
+                                inventory.AddSlot(remainder);
+                                break;
+                            }
+                        }
+                    }
+
                     RefreshItemInputGridVisuals();
                     return;
                 }
             }
 
-            ExtractToPlayerInventory(slotIndex, inventory);
-            RefreshItemInputGridVisuals();
-        }
-
-        private void InsertFromSelectedHotbar(PlayerInventory inventory, InventorySlot selectedHotbarSlot)
-        {
-            if (selectedHotbarSlot.IsEmpty || !AcceptsItem(selectedHotbarSlot.Held))
-            {
-                return;
-            }
-
-            var wholeItemCount = Mathf.FloorToInt(selectedHotbarSlot.Count);
-            if (wholeItemCount <= 0)
-            {
-                return;
-            }
-
-            for (var index = 0; index < wholeItemCount; index++)
-            {
-                if (!inventory.TryConsumeSelectedHotbarItem(1))
-                {
-                    return;
-                }
-
-                var remainder = _itemInputs.TryInsert(new InventorySlot(selectedHotbarSlot.Held, 1f));
-                if (!remainder.IsEmpty)
-                {
-                    inventory.AddSlot(remainder);
-                    return;
-                }
-            }
-        }
-
-        private void ExtractToPlayerInventory(int slotIndex, PlayerInventory inventory)
-        {
             ref var machineSlot = ref _itemInputs.GetSlot(slotIndex);
-            if (machineSlot.IsEmpty)
-            {
-                return;
-            }
+            if (!machineSlot.IsEmpty) machineSlot = inventory.AddSlot(machineSlot);
 
-            machineSlot = inventory.AddSlot(machineSlot);
+            RefreshItemInputGridVisuals();
         }
 
         private void RefreshItemInputGridVisuals()
         {
-            if (_itemInputs == null || _itemInputSlotIcons == null || _itemInputSlotCounts == null)
-            {
-                return;
-            }
+            if (_itemInputSlotIcons == null || _itemInputSlotCounts == null) return;
 
             var slotCount = Mathf.Min(_itemInputs.Capacity, _itemInputSlotIcons.Length);
             for (var index = 0; index < slotCount; index++)
@@ -231,14 +173,8 @@ namespace Gameplay.Machines.Base
 
                 _itemInputSlotIcons[index].style.display = hasItem ? DisplayStyle.Flex : DisplayStyle.None;
                 _itemInputSlotCounts[index].style.display = hasItem ? DisplayStyle.Flex : DisplayStyle.None;
-                if (hasItem && slot.Held.Icon != null)
-                {
-                    _itemInputSlotIcons[index].style.backgroundImage = new StyleBackground(slot.Held.Icon);
-                }
-                else
-                {
-                    _itemInputSlotIcons[index].style.backgroundImage = StyleKeyword.None;
-                }
+                if (hasItem && slot.Held.Icon != null) _itemInputSlotIcons[index].style.backgroundImage = new StyleBackground(slot.Held.Icon);
+                else _itemInputSlotIcons[index].style.backgroundImage = StyleKeyword.None;
 
                 _itemInputSlotCounts[index].text = hasItem ? $"{slot.Count:0.##}" : string.Empty;
             }
@@ -259,11 +195,9 @@ namespace Gameplay.Machines.Base
                 _progressSeconds = 0f;
             }
 
-            _progressSeconds += TickManager.Instance != null ? TickManager.Instance.TickRateSeconds : 1f;
-            if (_progressSeconds < GetCraftDuration(recipe))
-            {
-                return;
-            }
+            var tickRateSeconds = TickManager.Instance != null ? TickManager.Instance.TickRateSeconds : 1f;
+            _progressSeconds += tickRateSeconds;
+            if (_progressSeconds < recipe.ProcessTimeSeconds / Mathf.Max(0.01f, EffectiveModifiers.Speed)) return;
 
             ConsumeRecipe(recipe);
             ProduceRecipe(recipe);
@@ -272,10 +206,8 @@ namespace Gameplay.Machines.Base
 
         private void InitializeRecipeState()
         {
-            if (allowedRecipes == null)
-            {
-                allowedRecipes = new Recipe[0];
-            }
+            allowedRecipes ??= new Recipe[0];
+            var recipes = allowedRecipes;
 
             _energyInput = InventorySlot.Empty;
             _waterInput = InventorySlot.Empty;
@@ -285,23 +217,14 @@ namespace Gameplay.Machines.Base
             _usesItemInputs = false;
             _usesEnergy = false;
             _usesWater = false;
-            for (var index = 0; index < allowedRecipes.Length; index++)
+            for (var index = 0; index < recipes.Length; index++)
             {
-                var recipe = allowedRecipes[index];
-                if (recipe == null || recipe.MachineType != machineType)
-                {
-                    continue;
-                }
+                var recipe = recipes[index];
+                if (recipe == null || recipe.MachineType != machineType) continue;
 
-                if (recipe.EnergyCost > 0f)
-                {
-                    _usesEnergy = true;
-                }
+                if (recipe.EnergyCost > 0f) _usesEnergy = true;
 
-                if (recipe.WaterCost > 0f)
-                {
-                    _usesWater = true;
-                }
+                if (recipe.WaterCost > 0f) _usesWater = true;
 
                 if (!_usesItemInputs)
                 {
@@ -324,27 +247,19 @@ namespace Gameplay.Machines.Base
         private void CollectOutput()
         {
             var inventory = PlayerInventory.Instance;
-            if (inventory == null)
-            {
-                return;
-            }
+            if (inventory == null) return;
 
             inventory.Add(_outputBuffer);
         }
 
         private Recipe GetPreferredRecipe()
         {
-            if (IsAllowedRecipe(defaultRecipe))
-            {
-                return defaultRecipe;
-            }
+            if (IsAllowedRecipe(defaultRecipe)) return defaultRecipe;
 
-            for (var index = 0; index < allowedRecipes.Length; index++)
+            var recipes = allowedRecipes;
+            for (var index = 0; index < recipes.Length; index++)
             {
-                if (IsAllowedRecipe(allowedRecipes[index]))
-                {
-                    return allowedRecipes[index];
-                }
+                if (IsAllowedRecipe(recipes[index])) return recipes[index];
             }
 
             return null;
@@ -352,79 +267,33 @@ namespace Gameplay.Machines.Base
 
         private Recipe FindCraftableRecipe()
         {
-            Recipe bestRecipe = null;
-            var bestInputTypeCount = -1;
-            var bestInputTotalAmount = -1f;
+            if (CanCraft(defaultRecipe)) return defaultRecipe;
 
-            for (var index = 0; index < allowedRecipes.Length; index++)
+            var recipes = allowedRecipes;
+
+            for (var index = 0; index < recipes.Length; index++)
             {
-                var recipe = allowedRecipes[index];
-                if (!CanCraft(recipe))
-                {
-                    continue;
-                }
+                var recipe = recipes[index];
+                if (recipe == defaultRecipe) continue;
 
-                GetRecipeInputMetrics(recipe, out var inputTypeCount, out var inputTotalAmount);
-                var isBetter = inputTypeCount > bestInputTypeCount
-                    || (inputTypeCount == bestInputTypeCount && inputTotalAmount > bestInputTotalAmount)
-                    || (bestRecipe != null
-                        && inputTypeCount == bestInputTypeCount
-                        && Mathf.Approximately(inputTotalAmount, bestInputTotalAmount)
-                        && recipe == _activeRecipe);
-
-                if (isBetter)
-                {
-                    bestRecipe = recipe;
-                    bestInputTypeCount = inputTypeCount;
-                    bestInputTotalAmount = inputTotalAmount;
-                }
+                if (CanCraft(recipe)) return recipe;
             }
 
-            return bestRecipe;
-        }
-
-        private static void GetRecipeInputMetrics(Recipe recipe, out int inputTypeCount, out float inputTotalAmount)
-        {
-            inputTypeCount = 0;
-            inputTotalAmount = 0f;
-            if (recipe == null)
-            {
-                return;
-            }
-
-            var inputs = recipe.ItemInputs;
-            for (var index = 0; index < inputs.Length; index++)
-            {
-                if (!inputs[index].IsValid)
-                {
-                    continue;
-                }
-
-                inputTypeCount++;
-                inputTotalAmount += inputs[index].Amount;
-            }
+            return null;
         }
 
         private bool CanCraft(Recipe recipe)
         {
-            if (!IsAllowedRecipe(recipe))
-            {
-                return false;
-            }
+            if (!IsAllowedRecipe(recipe)) return false;
 
-            if (_energyInput.Count < GetEffectiveEnergyCost(recipe) || _waterInput.Count < recipe.WaterCost)
-            {
-                return false;
-            }
+            var effectiveEnergyCost = recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy);
+            if (_energyInput.Count < effectiveEnergyCost || _waterInput.Count < recipe.WaterCost) return false;
 
             var inputs = recipe.ItemInputs;
             for (var index = 0; index < inputs.Length; index++)
             {
                 var input = inputs[index];
-                if (!input.IsValid || CountStoredItem(input.Item) < input.Amount)
-                {
-                    return false;
-                }
+                if (!input.IsValid || CountStoredItem(input.Item) < input.Amount) return false;
             }
 
             return HasOutputSpace(recipe);
@@ -432,17 +301,12 @@ namespace Gameplay.Machines.Base
 
         private bool IsAllowedRecipe(Recipe recipe)
         {
-            if (recipe == null || recipe.MachineType != machineType)
-            {
-                return false;
-            }
+            if (recipe == null || recipe.MachineType != machineType) return false;
 
-            for (var index = 0; index < allowedRecipes.Length; index++)
+            var recipes = allowedRecipes;
+            for (var index = 0; index < recipes.Length; index++)
             {
-                if (allowedRecipes[index] == recipe)
-                {
-                    return true;
-                }
+                if (recipes[index] == recipe) return true;
             }
 
             return false;
@@ -461,25 +325,16 @@ namespace Gameplay.Machines.Base
             for (var index = 0; index < outputs.Length; index++)
             {
                 var output = outputs[index];
-                if (!output.IsValid)
-                {
-                    return false;
-                }
+                if (!output.IsValid) return false;
 
                 var remaining = new InventorySlot(output.Item, output.Amount * yieldMultiplier);
                 for (var slotIndex = 0; slotIndex < simulated.Length; slotIndex++)
                 {
                     remaining = simulated[slotIndex].TryInsert(remaining);
-                    if (remaining.IsEmpty)
-                    {
-                        break;
-                    }
+                    if (remaining.IsEmpty) break;
                 }
 
-                if (!remaining.IsEmpty)
-                {
-                    return false;
-                }
+                if (!remaining.IsEmpty) return false;
             }
 
             return true;
@@ -487,26 +342,18 @@ namespace Gameplay.Machines.Base
 
         private bool AcceptsItem(Item item)
         {
-            if (item == null)
-            {
-                return false;
-            }
+            if (item == null) return false;
 
-            for (var recipeIndex = 0; recipeIndex < allowedRecipes.Length; recipeIndex++)
+            var recipes = allowedRecipes;
+            for (var recipeIndex = 0; recipeIndex < recipes.Length; recipeIndex++)
             {
-                var recipe = allowedRecipes[recipeIndex];
-                if (recipe == null || recipe.MachineType != machineType)
-                {
-                    continue;
-                }
+                var recipe = recipes[recipeIndex];
+                if (recipe == null || recipe.MachineType != machineType) continue;
 
                 var inputs = recipe.ItemInputs;
                 for (var inputIndex = 0; inputIndex < inputs.Length; inputIndex++)
                 {
-                    if (inputs[inputIndex].Item == item)
-                    {
-                        return true;
-                    }
+                    if (inputs[inputIndex].Item == item) return true;
                 }
             }
 
@@ -519,10 +366,7 @@ namespace Gameplay.Machines.Base
             for (var index = 0; index < _itemInputs.Capacity; index++)
             {
                 var slot = _itemInputs.GetSlot(index);
-                if (!slot.IsEmpty && slot.Held == item)
-                {
-                    total += slot.Count;
-                }
+                if (!slot.IsEmpty && slot.Held == item) total += slot.Count;
             }
 
             return total;
@@ -530,30 +374,23 @@ namespace Gameplay.Machines.Base
 
         private void ConsumeRecipe(Recipe recipe)
         {
-            _energyInput.Remove(GetEffectiveEnergyCost(recipe));
+            _energyInput.Remove(recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy));
             _waterInput.Remove(recipe.WaterCost);
 
             var inputs = recipe.ItemInputs;
             for (var index = 0; index < inputs.Length; index++)
             {
-                ConsumeStoredItem(inputs[index].Item, inputs[index].Amount);
-            }
-        }
-
-        private void ConsumeStoredItem(Item item, float amount)
-        {
-            var remaining = amount;
-            for (var index = 0; index < _itemInputs.Capacity && remaining > 0f; index++)
-            {
-                ref var slot = ref _itemInputs.GetSlot(index);
-                if (slot.IsEmpty || slot.Held != item)
+                var input = inputs[index];
+                var remaining = input.Amount;
+                for (var slotIndex = 0; slotIndex < _itemInputs.Capacity && remaining > 0f; slotIndex++)
                 {
-                    continue;
-                }
+                    ref var slot = ref _itemInputs.GetSlot(slotIndex);
+                    if (slot.IsEmpty || slot.Held != input.Item) continue;
 
-                var take = Mathf.Min(slot.Count, remaining);
-                slot.Remove(take);
-                remaining -= take;
+                    var take = Mathf.Min(slot.Count, remaining);
+                    slot.Remove(take);
+                    remaining -= take;
+                }
             }
         }
 
@@ -564,49 +401,24 @@ namespace Gameplay.Machines.Base
             for (var index = 0; index < outputs.Length; index++)
             {
                 var output = outputs[index];
-                if (output.IsValid)
-                {
-                    _outputBuffer.TryInsert(new InventorySlot(output.Item, output.Amount * yieldMultiplier));
-                }
+                if (output.IsValid) _outputBuffer.TryInsert(new InventorySlot(output.Item, output.Amount * yieldMultiplier));
             }
-        }
-
-        private float GetCraftDuration(Recipe recipe)
-        {
-            return recipe.ProcessTimeSeconds / Mathf.Max(0.01f, EffectiveModifiers.Speed);
-        }
-
-        private float GetEffectiveEnergyCost(Recipe recipe)
-        {
-            return recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy);
         }
 
         private static string GetSlotSummary(InventorySlot slot)
         {
-            if (slot.IsEmpty)
-            {
-                return "Empty";
-            }
+            if (slot.IsEmpty) return "Empty";
 
             return $"{slot.Held.DisplayName} x{slot.Count:0.##}";
         }
 
         private string GetUtilitiesSummary()
         {
-            if (_usesEnergy && _usesWater)
-            {
-                return $"Energy: {GetSlotSummary(_energyInput)} | Water: {GetSlotSummary(_waterInput)}";
-            }
+            if (_usesEnergy && _usesWater) return $"Energy: {GetSlotSummary(_energyInput)} | Water: {GetSlotSummary(_waterInput)}";
 
-            if (_usesEnergy)
-            {
-                return $"Energy: {GetSlotSummary(_energyInput)}";
-            }
+            if (_usesEnergy) return $"Energy: {GetSlotSummary(_energyInput)}";
 
-            if (_usesWater)
-            {
-                return $"Water: {GetSlotSummary(_waterInput)}";
-            }
+            if (_usesWater) return $"Water: {GetSlotSummary(_waterInput)}";
 
             return string.Empty;
         }
@@ -619,10 +431,7 @@ namespace Gameplay.Machines.Base
             for (var index = 0; index < container.Capacity; index++)
             {
                 var slot = container.GetSlot(index);
-                if (slot.IsEmpty)
-                {
-                    continue;
-                }
+                if (slot.IsEmpty) continue;
 
                 if (parts.Count < MaxUiSummaryEntries)
                 {
@@ -633,16 +442,10 @@ namespace Gameplay.Machines.Base
                 hiddenCount++;
             }
 
-            if (parts.Count == 0)
-            {
-                return "Empty";
-            }
+            if (parts.Count == 0) return "Empty";
 
             var summary = string.Join(", ", parts);
-            if (hiddenCount > 0)
-            {
-                summary += $", +{hiddenCount} more";
-            }
+            if (hiddenCount > 0) summary += $", +{hiddenCount} more";
 
             return summary;
         }

@@ -20,10 +20,7 @@ namespace Gameplay.Entities
 
         public virtual void Remove()
         {
-            if (ParentTimeline != null)
-            {
-                ParentTimeline.ClearEntityAt(GridPos, this);
-            }
+            if (ParentTimeline != null) ParentTimeline.ClearEntityAt(GridPos, this);
 
             Destroy(gameObject);
         }

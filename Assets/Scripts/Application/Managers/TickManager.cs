@@ -37,19 +37,13 @@ namespace Application.Managers
 
         private static void RunPhase<TPhase>(System.Action<TPhase> phaseAction)
         {
-            if (TimelineManager.Instance == null)
-            {
-                return;
-            }
+            if (TimelineManager.Instance == null) return;
 
             foreach (var timeline in TimelineManager.Instance.AllTimelines)
             {
                 foreach (var entity in timeline.GridEntities)
                 {
-                    if (entity is TPhase phaseEntity)
-                    {
-                        phaseAction(phaseEntity);
-                    }
+                    if (entity is TPhase phaseEntity) phaseAction(phaseEntity);
                 }
             }
         }

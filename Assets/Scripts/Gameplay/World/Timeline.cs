@@ -39,11 +39,12 @@ namespace Gameplay.World
             {
                 speedModifier = 1f;
                 energyUsageModifier = 1f;
-                return;
             }
-
-            speedModifier = GenerateRandomModifier(speedModifierRange);
-            energyUsageModifier = GenerateRandomModifier(energyUsageModifierRange);
+            else
+            {
+                speedModifier = GenerateRandomModifier(speedModifierRange);
+                energyUsageModifier = GenerateRandomModifier(energyUsageModifierRange);
+            }
         }
 
         public bool IsSlotEmpty(Vector2Int pos)
@@ -53,20 +54,14 @@ namespace Gameplay.World
 
         public PlaceableGridEntity EntityAt(Vector2Int pos)
         {
-            if (!IsValidGridPosition(pos))
-            {
-                return null;
-            }
-
-            return _entityGrid[pos.y * gridWidth + pos.x];
+            return IsValidGridPosition(pos)
+                ? _entityGrid[pos.y * gridWidth + pos.x]
+                : null;
         }
 
         public bool TryPlace(Item item, Vector2Int pos)
         {
-            if (item is not IPlaceable placeableItem || placeableItem.Prefab == null || !IsSlotEmpty(pos))
-            {
-                return false;
-            }
+            if (item is not IPlaceable placeableItem || placeableItem.Prefab == null || !IsSlotEmpty(pos)) return false;
 
             var spawnedItemObject = Instantiate(placeableItem.Prefab, transform);
             if (!spawnedItemObject.TryGetComponent<PlaceableGridEntity>(out var itemEntity))
@@ -82,16 +77,10 @@ namespace Gameplay.World
 
         public void ClearEntityAt(Vector2Int pos, PlaceableGridEntity entity)
         {
-            if (!IsValidGridPosition(pos))
-            {
-                return;
-            }
+            if (!IsValidGridPosition(pos)) return;
 
             var index = pos.y * gridWidth + pos.x;
-            if (_entityGrid[index] == entity)
-            {
-                _entityGrid[index] = null;
-            }
+            if (_entityGrid[index] == entity) _entityGrid[index] = null;
         }
 
         public Vector2Int WorldToGridPosition(Vector3 worldPos)
@@ -111,10 +100,7 @@ namespace Gameplay.World
         {
             var min = Mathf.Min(range.x, range.y);
             var max = Mathf.Max(range.x, range.y);
-            if (Mathf.Approximately(min, max))
-            {
-                return Mathf.Max(0f, min);
-            }
+            if (Mathf.Approximately(min, max)) return Mathf.Max(0f, min);
 
             var rawValue = Random.Range(min, max);
             return Mathf.Max(0f, Mathf.Round(rawValue * 100f) / 100f);

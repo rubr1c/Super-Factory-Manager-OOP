@@ -1,8 +1,8 @@
 using Application.Managers;
 using Data.Items;
 using Systems.Inventory;
-using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine;
 
 namespace Presentation.UI
 {
@@ -104,7 +104,7 @@ namespace Presentation.UI
         private void RefreshView()
         {
             var activeTimeline = _timelineManager.ActiveTimeline;
-            var fragmentCount = _chronosFragment != null ? _inventory.CountItem(_chronosFragment) : 0f;
+            var fragmentCount = _chronosFragment == null ? 0f : _inventory.CountItem(_chronosFragment);
             var timelineCost = _timelineManager.GetNewTimelineCost();
             var timelineCount = _timelineManager.AllTimelines.Count;
             var activeTimelineId = activeTimeline.TimelineID;

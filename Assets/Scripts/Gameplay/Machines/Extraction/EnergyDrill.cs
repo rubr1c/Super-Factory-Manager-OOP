@@ -1,9 +1,9 @@
 using Core;
 using Data.Items;
 using Gameplay.Entities;
-using Systems.Inventory;
 using Gameplay.World;
 using Presentation.UI;
+using Systems.Inventory;
 using UnityEngine;
 
 namespace Gameplay.Machines.Extraction
@@ -26,36 +26,18 @@ namespace Gameplay.Machines.Extraction
 
         public void OnProductionTick()
         {
-            if (drillOutputs == null || drillOutputs.Length == 0)
-            {
-                return;
-            }
+            if (drillOutputs == null || drillOutputs.Length == 0) return;
 
             var requiredEnergy = Mathf.Max(0f, energyCostPerItem * EffectiveModifiers.Energy);
-            if (requiredEnergy > 0f)
-            {
-                if (_energyInput.IsEmpty || _energyInput.Held != ItemCatalog.ENERGY || _energyInput.Count < requiredEnergy)
-                {
-                    return;
-                }
-            }
+            if (requiredEnergy > 0f)  if (_energyInput.IsEmpty || _energyInput.Held != ItemCatalog.ENERGY || _energyInput.Count < requiredEnergy) return;
 
             var resource = drillOutputs[Random.Range(0, drillOutputs.Length)];
-            if (resource == null)
-            {
-                return;
-            }
+            if (resource == null) return;
 
             var yieldAmount = Mathf.Max(1f, EffectiveModifiers.Yield) * Mathf.Max(1f, EffectiveModifiers.Speed);
-            if (!_output.TryAdd(new InventorySlot(resource, yieldAmount)))
-            {
-                return;
-            }
+            if (!_output.TryAdd(new InventorySlot(resource, yieldAmount))) return;
 
-            if (requiredEnergy > 0f)
-            {
-                _energyInput.Remove(requiredEnergy);
-            }
+            if (requiredEnergy > 0f) _energyInput.Remove(requiredEnergy);
         }
 
         public InventorySlot PeekOutput() => _output.GetFirst();

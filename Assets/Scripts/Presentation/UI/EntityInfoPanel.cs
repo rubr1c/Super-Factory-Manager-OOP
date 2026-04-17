@@ -1,9 +1,9 @@
-using Gameplay.Entities;
-using System;
 using System.Collections.Generic;
+using System;
+using Gameplay.Entities;
 using Systems.Inventory;
-using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine;
 
 namespace Presentation.UI
 {
@@ -43,16 +43,12 @@ namespace Presentation.UI
 
         private void OnDestroy()
         {
-            if (Instance == this)
-                Instance = null;
+            if (Instance == this) Instance = null;
         }
 
         private void Update()
         {
-            if (_panel.style.display == DisplayStyle.None)
-            {
-                return;
-            }
+            if (_panel.style.display == DisplayStyle.None) return;
 
             if (!_currentEntity)
             {
@@ -62,10 +58,7 @@ namespace Presentation.UI
 
             _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
             _currentEntity.RefreshInfoPanel(this);
-            if (_currentEntity is UpgradableEntity upgradableRefresh)
-            {
-                upgradableRefresh.RefreshUpgradeSection(this);
-            }
+            if (_currentEntity is UpgradableEntity upgradableRefresh) upgradableRefresh.RefreshUpgradeSection(this);
         }
 
         public void Show(PlaceableGridEntity entity)
@@ -110,18 +103,12 @@ namespace Presentation.UI
                 _liveLabels[key] = label;
                 _content.Add(label);
             }
-            else
-            {
-                label.text = text;
-            }
+            else label.text = text;
         }
 
         public void SetLiveLabelText(string key, string text)
         {
-            if (_liveLabels.TryGetValue(key, out var label))
-            {
-                label.text = text;
-            }
+            if (_liveLabels.TryGetValue(key, out var label)) label.text = text;
         }
 
         public void AddContentChild(VisualElement child)
@@ -136,40 +123,24 @@ namespace Presentation.UI
 
         private void RefreshCurrentEntityInfo()
         {
-            if (!_currentEntity)
-            {
-                return;
-            }
+            if (!_currentEntity) return;
 
             _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
             _content.Clear();
             _liveLabels.Clear();
             _currentEntity.BuildInfoPanel(this);
-            if (_currentEntity is UpgradableEntity upgradable)
-            {
-                upgradable.BuildUpgradeSection(this);
-            }
+            if (_currentEntity is UpgradableEntity upgradable) upgradable.BuildUpgradeSection(this);
         }
 
         private void DeleteCurrentEntity()
         {
-            if (!_currentEntity)
-            {
-                return;
-            }
+            if (!_currentEntity) return;
 
             if (_currentEntity.Held != null)
             {
                 var inventory = PlayerInventory.Instance;
-                if (inventory == null)
-                {
-                    return;
-                }
-
-                if (!inventory.AddSlot(new InventorySlot(_currentEntity.Held, 1f)).IsEmpty)
-                {
-                    return;
-                }
+                if (inventory == null) return;
+                if (!inventory.AddSlot(new InventorySlot(_currentEntity.Held, 1f)).IsEmpty) return;
             }
 
             _currentEntity.Remove();

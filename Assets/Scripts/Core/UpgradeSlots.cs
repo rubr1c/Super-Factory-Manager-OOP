@@ -18,10 +18,7 @@ namespace Core
         public bool TryInstall(UpgradeCardItem card, out int installedSlotIndex)
         {
             installedSlotIndex = -1;
-            if (card == null)
-            {
-                return false;
-            }
+            if (card == null) return false;
 
             for (var i = 0; i < _cards.Length; i++)
             {
@@ -38,10 +35,7 @@ namespace Core
 
         public UpgradeCardItem TryRemove(int slotIndex)
         {
-            if (slotIndex < 0 || slotIndex >= _cards.Length || _cards[slotIndex] == null)
-            {
-                return null;
-            }
+            if (slotIndex < 0 || slotIndex >= _cards.Length || _cards[slotIndex] == null) return null;
 
             var removed = _cards[slotIndex];
             _cards[slotIndex] = null;
@@ -50,10 +44,7 @@ namespace Core
 
         public UpgradeCardItem GetCard(int slotIndex)
         {
-            if (slotIndex < 0 || slotIndex >= _cards.Length)
-            {
-                return null;
-            }
+            if (slotIndex < 0 || slotIndex >= _cards.Length) return null;
 
             return _cards[slotIndex];
         }
@@ -64,10 +55,7 @@ namespace Core
             for (var i = 0; i < _cards.Length; i++)
             {
                 var card = _cards[i];
-                if (card == null)
-                {
-                    continue;
-                }
+                if (card == null) continue;
 
                 result.Speed *= card.SpeedMultiplier;
                 result.Energy *= card.EnergyMultiplier;

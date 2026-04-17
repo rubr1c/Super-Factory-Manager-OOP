@@ -17,10 +17,7 @@ namespace Systems.Inventory
         {
             for (var i = 0; i < _slots.Length; i++)
             {
-                if (!_slots[i].IsEmpty)
-                {
-                    return _slots[i];
-                }
+                if (!_slots[i].IsEmpty) return _slots[i];
             }
 
             return InventorySlot.Empty;
@@ -33,20 +30,14 @@ namespace Systems.Inventory
 
         public InventorySlot TryInsert(InventorySlot incoming)
         {
-            if (incoming.IsEmpty)
-            {
-                return InventorySlot.Empty;
-            }
+            if (incoming.IsEmpty) return InventorySlot.Empty;
 
             var remaining = incoming;
             for (var i = 0; i < _slots.Length; i++)
             {
                 ref var slot = ref _slots[i];
                 remaining = slot.TryInsert(remaining);
-                if (remaining.IsEmpty)
-                {
-                    return InventorySlot.Empty;
-                }
+                if (remaining.IsEmpty) return InventorySlot.Empty;
             }
 
             return remaining;
@@ -54,18 +45,12 @@ namespace Systems.Inventory
 
         public InventorySlot TryExtract(InventorySlot request)
         {
-            if (request.IsEmpty)
-            {
-                return InventorySlot.Empty;
-            }
+            if (request.IsEmpty) return InventorySlot.Empty;
 
             for (var i = 0; i < _slots.Length; i++)
             {
                 ref var slot = ref _slots[i];
-                if (slot.IsEmpty || slot.Held != request.Held)
-                {
-                    continue;
-                }
+                if (slot.IsEmpty || slot.Held != request.Held) continue;
 
                 return slot.TryExtract(request);
             }

@@ -1,9 +1,9 @@
-﻿using Core;
+using Core;
 using Data.Items;
 using Gameplay.Entities;
-using Systems.Inventory;
 using Gameplay.World;
 using Presentation.UI;
+using Systems.Inventory;
 using UnityEngine;
 
 namespace Gameplay.Machines.Extraction
@@ -27,16 +27,10 @@ namespace Gameplay.Machines.Extraction
 
         public void OnProductionTick()
         {
-            if (drillOutputs == null || drillOutputs.Length == 0)
-            {
-                return;
-            }
+            if (drillOutputs == null || drillOutputs.Length == 0) return;
 
             var resource = drillOutputs[Random.Range(0, drillOutputs.Length)];
-            if (resource == null)
-            {
-                return;
-            }
+            if (resource == null) return;
 
             _output.TryAdd(new InventorySlot(resource, 1f));
         }

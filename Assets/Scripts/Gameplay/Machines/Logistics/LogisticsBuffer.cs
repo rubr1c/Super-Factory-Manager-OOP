@@ -4,8 +4,8 @@ using Gameplay.Entities;
 using Gameplay.World;
 using Presentation.UI;
 using Systems.Inventory;
-using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine;
 
 namespace Gameplay.Machines.Logistics
 {
@@ -45,10 +45,7 @@ namespace Gameplay.Machines.Logistics
 
         public InventorySlot PeekSlot(int slotIndex)
         {
-            if (_storage == null || slotIndex < 0 || slotIndex >= _storage.Capacity)
-            {
-                return InventorySlot.Empty;
-            }
+            if (_storage == null || slotIndex < 0 || slotIndex >= _storage.Capacity) return InventorySlot.Empty;
 
             return _storage.GetSlot(slotIndex);
         }
@@ -116,10 +113,7 @@ namespace Gameplay.Machines.Logistics
 
         private void RefreshBufferPanel()
         {
-            if (_bufferSlotRoots == null || _storage == null)
-            {
-                return;
-            }
+            if (_bufferSlotRoots == null || _storage == null) return;
 
             for (var i = 0; i < capacity; i++)
             {
@@ -127,14 +121,8 @@ namespace Gameplay.Machines.Logistics
                 var hasItem = !slot.IsEmpty;
                 _bufferSlotIcons[i].style.display = hasItem ? DisplayStyle.Flex : DisplayStyle.None;
                 _bufferSlotCounts[i].style.display = hasItem ? DisplayStyle.Flex : DisplayStyle.None;
-                if (hasItem && slot.Held.Icon != null)
-                {
-                    _bufferSlotIcons[i].style.backgroundImage = new StyleBackground(slot.Held.Icon);
-                }
-                else
-                {
-                    _bufferSlotIcons[i].style.backgroundImage = StyleKeyword.None;
-                }
+                if (hasItem && slot.Held.Icon != null) _bufferSlotIcons[i].style.backgroundImage = new StyleBackground(slot.Held.Icon);
+                else _bufferSlotIcons[i].style.backgroundImage = StyleKeyword.None;
 
                 _bufferSlotCounts[i].text = hasItem ? $"{slot.Count:0.##}" : string.Empty;
             }
@@ -144,18 +132,12 @@ namespace Gameplay.Machines.Logistics
             var canTake = _selectedBufferSlotIndex >= 0
                 && _selectedBufferSlotIndex < capacity
                 && !_storage.GetSlot(_selectedBufferSlotIndex).IsEmpty;
-            if (_takeFromBufferButton != null)
-            {
-                _takeFromBufferButton.SetEnabled(canTake);
-            }
+            if (_takeFromBufferButton != null) _takeFromBufferButton.SetEnabled(canTake);
         }
 
         private void RefreshBufferSlotSelectionStyles()
         {
-            if (_bufferSlotRoots == null)
-            {
-                return;
-            }
+            if (_bufferSlotRoots == null) return;
 
             for (var i = 0; i < _bufferSlotRoots.Length; i++)
             {
@@ -165,22 +147,13 @@ namespace Gameplay.Machines.Logistics
 
         private void OnTakeFromBufferClicked()
         {
-            if (_selectedBufferSlotIndex < 0 || _selectedBufferSlotIndex >= capacity || _storage == null)
-            {
-                return;
-            }
+            if (_selectedBufferSlotIndex < 0 || _selectedBufferSlotIndex >= capacity || _storage == null) return;
 
             ref var slot = ref _storage.GetSlot(_selectedBufferSlotIndex);
-            if (slot.IsEmpty)
-            {
-                return;
-            }
+            if (slot.IsEmpty) return;
 
             var inventory = PlayerInventory.Instance;
-            if (inventory == null)
-            {
-                return;
-            }
+            if (inventory == null) return;
 
             var remainder = inventory.AddSlot(slot);
             slot = remainder;

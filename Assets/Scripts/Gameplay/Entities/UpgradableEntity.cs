@@ -3,7 +3,6 @@ using Core;
 using Data.Items;
 using Presentation.UI;
 using Systems.Inventory;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Gameplay.Entities
@@ -16,27 +15,21 @@ namespace Gameplay.Entities
 
         public UpgradeSlots Upgrades { get; private set; }
         public MachineModifiers Modifiers => Upgrades != null ? Upgrades.ComputeModifiers() : MachineModifiers.Default;
-        public MachineModifiers EffectiveModifiers => Modifiers.Scaled(GetTimelineSpeedModifier(), GetTimelineEnergyUsageModifier()).Clamped();
+        public MachineModifiers EffectiveModifiers => Modifiers
+            .Scaled(ParentTimeline != null ? ParentTimeline.SpeedModifier : 1f, ParentTimeline != null ? ParentTimeline.EnergyUsageModifier : 1f)
+            .Clamped();
 
         public bool TryInstallUpgrade(UpgradeCardItem card) => TryInstallUpgrade(card, out _);
 
         public bool TryInstallUpgrade(UpgradeCardItem card, out int installedSlotIndex)
         {
             installedSlotIndex = -1;
-            if (Upgrades == null)
-            {
-                return false;
-            }
-
-            return Upgrades.TryInstall(card, out installedSlotIndex);
+            return Upgrades != null && Upgrades.TryInstall(card, out installedSlotIndex);
         }
 
         public void BuildUpgradeSection(EntityInfoPanel panel)
         {
-            if (Upgrades == null)
-            {
-                return;
-            }
+            if (Upgrades == null) return;
 
             _upgradeSlotLabels.Clear();
             _upgradeRemoveButtons.Clear();
@@ -77,18 +70,12 @@ namespace Gameplay.Entities
 
         public void RefreshUpgradeSection(EntityInfoPanel panel)
         {
-            if (Upgrades == null || _upgradeSectionHeader == null)
-            {
-                return;
-            }
+            if (Upgrades == null || _upgradeSectionHeader == null) return;
 
             var installed = 0;
             for (var i = 0; i < Upgrades.Capacity; i++)
             {
-                if (Upgrades.GetCard(i) != null)
-                {
-                    installed++;
-                }
+                installed += Upgrades.GetCard(i) != null ? 1 : 0;
             }
 
             _upgradeSectionHeader.text = $"Upgrades ({installed}/{Upgrades.Capacity})";
@@ -103,46 +90,24 @@ namespace Gameplay.Entities
 
         private void RemoveUpgradeAt(int slotIndex)
         {
-            if (Upgrades == null)
-            {
-                return;
-            }
+            if (Upgrades == null) return;
 
             var removed = Upgrades.TryRemove(slotIndex);
-            if (removed == null)
-            {
-                return;
-            }
+            if (removed == null) return;
 
             var inventory = PlayerInventory.Instance;
             if (inventory != null)
             {
                 var remainder = inventory.AddSlot(new InventorySlot(removed, 1f));
-                if (!remainder.IsEmpty)
-                {
-                    Upgrades.TryInstall(removed);
-                }
+                if (!remainder.IsEmpty) Upgrades.TryInstall(removed);
             }
 
-            if (EntityInfoPanel.Instance != null && ReferenceEquals(EntityInfoPanel.Instance.CurrentEntity, this))
-            {
-                RefreshUpgradeSection(EntityInfoPanel.Instance);
-            }
+            if (EntityInfoPanel.Instance != null && ReferenceEquals(EntityInfoPanel.Instance.CurrentEntity, this)) RefreshUpgradeSection(EntityInfoPanel.Instance);
         }
 
         protected void InitUpgrades(int slotCount = 3)
         {
             Upgrades = new UpgradeSlots(slotCount);
-        }
-
-        protected float GetTimelineSpeedModifier()
-        {
-            return ParentTimeline != null ? ParentTimeline.SpeedModifier : 1f;
-        }
-
-        protected float GetTimelineEnergyUsageModifier()
-        {
-            return ParentTimeline != null ? ParentTimeline.EnergyUsageModifier : 1f;
         }
     }
 }
