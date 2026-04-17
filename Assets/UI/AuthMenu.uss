@@ -63,7 +63,6 @@
 .auth-field .unity-text-field__input,
 .auth-field .unity-text-input {
     color: rgb(0, 0, 0);
-    caret-color: rgb(0, 0, 0);
 }
 
 .auth-buttons {
@@ -72,7 +71,7 @@
     margin-top: 16px;
 }
 
-.auth-buttons Button {
+.auth-button {
     flex-grow: 1;
     margin-left: 6px;
     margin-right: 6px;
@@ -84,7 +83,7 @@
     -unity-font-style: bold;
 }
 
-.auth-buttons Button:hover {
+.auth-button:hover {
     background-color: rgba(72, 100, 140, 0.98);
     border-color: rgba(140, 210, 255, 0.65);
 }

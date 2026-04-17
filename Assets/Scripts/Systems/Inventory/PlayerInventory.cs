@@ -172,9 +172,9 @@ namespace Systems.Inventory
             }
             else
             {
-                var destinationSlotBeforeSwap = to;
+                var previousDestination = to;
                 to = from;
-                from = destinationSlotBeforeSwap;
+                from = previousDestination;
             }
 
             InventoryChanged?.Invoke();

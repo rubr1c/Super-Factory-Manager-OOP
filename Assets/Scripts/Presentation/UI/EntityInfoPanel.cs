@@ -57,6 +57,7 @@ namespace Presentation.UI
             }
 
             _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
+
             _currentEntity.RefreshInfoPanel(this);
             if (_currentEntity is UpgradableEntity upgradableRefresh) upgradableRefresh.RefreshUpgradeSection(this);
         }
@@ -78,7 +79,7 @@ namespace Presentation.UI
 
         public void AddButton(string text, Action onClick)
         {
-            var button = new Button(() => onClick())
+            var button = new Button(onClick)
             {
                 text = text
             };
@@ -126,6 +127,7 @@ namespace Presentation.UI
             if (!_currentEntity) return;
 
             _title.text = _currentEntity.Held ? _currentEntity.Held.DisplayName : "Unknown";
+
             _content.Clear();
             _liveLabels.Clear();
             _currentEntity.BuildInfoPanel(this);

@@ -158,6 +158,7 @@ namespace Presentation.UI
                     ? new StyleBackground(slot.Held.Icon)
                     : StyleKeyword.None;
                 _slotCounts[i].text = hasItem ? ((int)slot.Count).ToString() : string.Empty;
+
                 _slotRoots[i].EnableInClassList("selected-slot", i == _inventory.SelectedHotbarSlotIndex);
                 _slotRoots[i].EnableInClassList("move-slot", i == _moveFromSlotIndex);
             }

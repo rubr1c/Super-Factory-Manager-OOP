@@ -29,10 +29,25 @@ namespace Application.Managers
             {
                 yield return new WaitForSeconds(tickRateSeconds);
 
-                RunPhase<IProductionTickable>((phaseEntity) => phaseEntity.OnProductionTick());
-                RunPhase<ILogisticsTickable>((phaseEntity) => phaseEntity.OnLogisticsTick());
-                RunPhase<IConsumptionTickable>((phaseEntity) => phaseEntity.OnConsumptionTick());
+                RunPhase<IProductionTickable>(RunProductionPhase);
+                RunPhase<ILogisticsTickable>(RunLogisticsPhase);
+                RunPhase<IConsumptionTickable>(RunConsumptionPhase);
             }
+        }
+
+        private static void RunProductionPhase(IProductionTickable phaseEntity)
+        {
+            phaseEntity.OnProductionTick();
+        }
+
+        private static void RunLogisticsPhase(ILogisticsTickable phaseEntity)
+        {
+            phaseEntity.OnLogisticsTick();
+        }
+
+        private static void RunConsumptionPhase(IConsumptionTickable phaseEntity)
+        {
+            phaseEntity.OnConsumptionTick();
         }
 
         private static void RunPhase<TPhase>(System.Action<TPhase> phaseAction)

@@ -196,6 +196,7 @@ namespace Gameplay.Machines.Base
             }
 
             var tickRateSeconds = TickManager.Instance != null ? TickManager.Instance.TickRateSeconds : 1f;
+
             _progressSeconds += tickRateSeconds;
             if (_progressSeconds < recipe.ProcessTimeSeconds / Mathf.Max(0.01f, EffectiveModifiers.Speed)) return;
 

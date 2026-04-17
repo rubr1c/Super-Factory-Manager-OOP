@@ -16,6 +16,7 @@ namespace Application.Managers
         public Timeline ActiveTimeline { get; private set; }
 
         [SerializeField] private List<Timeline> timelines = new();
+
         public IReadOnlyList<Timeline> AllTimelines => timelines;
 
         public event Action<Timeline> ActiveTimelineChanged;

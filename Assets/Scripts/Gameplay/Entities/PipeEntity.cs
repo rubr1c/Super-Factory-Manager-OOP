@@ -272,13 +272,17 @@ namespace Gameplay.Entities
 
         private static PipeMode GetNextMode(PipeMode currentMode)
         {
-            return currentMode switch
+            switch (currentMode)
             {
-                PipeMode.None => PipeMode.Push,
-                PipeMode.Push => PipeMode.Pull,
-                PipeMode.Pull => PipeMode.Neutral,
-                _ => PipeMode.None
-            };
+                case PipeMode.None:
+                    return PipeMode.Push;
+                case PipeMode.Push:
+                    return PipeMode.Pull;
+                case PipeMode.Pull:
+                    return PipeMode.Neutral;
+                default:
+                    return PipeMode.None;
+            }
         }
     }
 }

@@ -119,8 +119,10 @@ namespace Gameplay.Machines.Logistics
             {
                 var slot = _storage.GetSlot(i);
                 var hasItem = !slot.IsEmpty;
+
                 _bufferSlotIcons[i].style.display = hasItem ? DisplayStyle.Flex : DisplayStyle.None;
                 _bufferSlotCounts[i].style.display = hasItem ? DisplayStyle.Flex : DisplayStyle.None;
+
                 if (hasItem && slot.Held.Icon != null) _bufferSlotIcons[i].style.backgroundImage = new StyleBackground(slot.Held.Icon);
                 else _bufferSlotIcons[i].style.backgroundImage = StyleKeyword.None;
 
