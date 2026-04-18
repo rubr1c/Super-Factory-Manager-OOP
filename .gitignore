@@ -97,3 +97,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Firebase / Google Services (API keys; keep local copies, do not commit)
+/[Aa]ssets/google-services.json
+/[Aa]ssets/google-services.json.meta
+/[Aa]ssets/StreamingAssets/google-services-desktop.json
+/[Aa]ssets/StreamingAssets/google-services-desktop.json.meta
+/[Aa]ssets/Plugins/Android/FirebaseApp.androidlib/res/values/google-services.xml
+
+# Google Play / plugin machine-local settings
+/[Pp]rojectSettings/GvhProjectSettings.xml
