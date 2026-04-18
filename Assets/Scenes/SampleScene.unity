@@ -774,6 +774,9 @@ MonoBehaviour:
   - slotIndex: 2
     itemId: coal_burner
     count: 1
+  - slotIndex: 3
+    itemId: energy_pipe
+    count: 1
 --- !u!1 &2106101984
 GameObject:
   m_ObjectHideFlags: 0

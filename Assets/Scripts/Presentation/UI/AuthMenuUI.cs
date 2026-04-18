@@ -32,11 +32,20 @@ namespace Presentation.UI
             _signUpButton = root.Q<Button>("sign-up-button");
             _statusLabel = root.Q<Label>("status-label");
 
-            _signInButton.clicked += OnSignInClicked;
-            _signUpButton.clicked += OnSignUpClicked;
-
             SetInteractable(false);
             SetStatus("Loading...");
+        }
+
+        private void OnEnable()
+        {
+            if (_signInButton != null) _signInButton.clicked += OnSignInClicked;
+            if (_signUpButton != null) _signUpButton.clicked += OnSignUpClicked;
+        }
+
+        private void OnDisable()
+        {
+            if (_signInButton != null) _signInButton.clicked -= OnSignInClicked;
+            if (_signUpButton != null) _signUpButton.clicked -= OnSignUpClicked;
         }
 
         private void Start()
@@ -57,11 +66,9 @@ namespace Presentation.UI
 
                 _auth = FirebaseAuth.DefaultInstance;
 
-                if (_auth.CurrentUser != null && _auth.CurrentUser.IsValid())
-                {
-                    LoadGameplay();
-                    return;
-                }
+                var restored = _auth.CurrentUser;
+                if (restored != null)
+                    _auth.SignOut();
 
                 _ready = true;
                 SetInteractable(true);
@@ -69,10 +76,9 @@ namespace Presentation.UI
             });
         }
 
-        private void OnDestroy()
+        private void OnApplicationQuit()
         {
-            if (_signInButton != null) _signInButton.clicked -= OnSignInClicked;
-            if (_signUpButton != null) _signUpButton.clicked -= OnSignUpClicked;
+            _auth?.SignOut();
         }
 
         private void OnSignInClicked()

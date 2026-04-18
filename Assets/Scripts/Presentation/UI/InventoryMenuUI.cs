@@ -26,34 +26,64 @@ namespace Presentation.UI
 
             SetInventoryVisible(false);
             BuildSlots(root);
-
-            _menuSlot.RegisterCallback<ClickEvent>(evt =>
-            {
-                evt.StopPropagation();
-                ToggleInventory();
-            });
-
-            _inventoryOverlay.RegisterCallback<ClickEvent>(evt =>
-            {
-                evt.StopPropagation();
-                CloseInventory();
-            });
-
-            _inventoryPanel.RegisterCallback<ClickEvent>(evt => evt.StopPropagation());
         }
 
         private void Start()
         {
             _inventory = PlayerInventory.Instance;
-            if (_inventory == null) return;
-
-            _inventory.InventoryChanged += RefreshSlots;
-            RefreshSlots();
+            if (isActiveAndEnabled) SubscribeInventoryEvents();
+            if (_inventory != null) RefreshSlots();
         }
 
-        private void OnDestroy()
+        private void OnEnable()
         {
-            if (_inventory != null) _inventory.InventoryChanged -= RefreshSlots;
+            if (_menuSlot != null) _menuSlot.RegisterCallback<ClickEvent>(OnMenuSlotClicked);
+            if (_inventoryOverlay != null) _inventoryOverlay.RegisterCallback<ClickEvent>(OnInventoryOverlayClicked);
+            if (_inventoryPanel != null) _inventoryPanel.RegisterCallback<ClickEvent>(OnInventoryPanelClicked);
+
+            SubscribeInventoryEvents();
+            if (_inventory != null) RefreshSlots();
+        }
+
+        private void OnDisable()
+        {
+            if (_menuSlot != null) _menuSlot.UnregisterCallback<ClickEvent>(OnMenuSlotClicked);
+            if (_inventoryOverlay != null) _inventoryOverlay.UnregisterCallback<ClickEvent>(OnInventoryOverlayClicked);
+            if (_inventoryPanel != null) _inventoryPanel.UnregisterCallback<ClickEvent>(OnInventoryPanelClicked);
+
+            UnsubscribeInventoryEvents();
+        }
+
+        private void SubscribeInventoryEvents()
+        {
+            if (_inventory == null) return;
+
+            _inventory.InventoryChanged -= RefreshSlots;
+            _inventory.InventoryChanged += RefreshSlots;
+        }
+
+        private void UnsubscribeInventoryEvents()
+        {
+            if (_inventory == null) return;
+
+            _inventory.InventoryChanged -= RefreshSlots;
+        }
+
+        private void OnMenuSlotClicked(ClickEvent evt)
+        {
+            evt.StopPropagation();
+            ToggleInventory();
+        }
+
+        private void OnInventoryOverlayClicked(ClickEvent evt)
+        {
+            evt.StopPropagation();
+            CloseInventory();
+        }
+
+        private static void OnInventoryPanelClicked(ClickEvent evt)
+        {
+            evt.StopPropagation();
         }
 
         private void SetInventoryVisible(bool visible)
@@ -75,7 +105,7 @@ namespace Presentation.UI
         private void CloseInventory()
         {
             _moveFromSlotIndex = -1;
-            RefreshSlots();
+            if (_inventory != null) RefreshSlots();
             SetInventoryVisible(false);
         }
 
@@ -118,6 +148,8 @@ namespace Presentation.UI
 
         private void OnSlotClicked(int index, bool isHotbar)
         {
+            if (_inventory == null) return;
+
             if (_inventoryOverlay.style.display == DisplayStyle.None)
             {
                 if (isHotbar) _inventory.ToggleHotbarSlotSelection(index);

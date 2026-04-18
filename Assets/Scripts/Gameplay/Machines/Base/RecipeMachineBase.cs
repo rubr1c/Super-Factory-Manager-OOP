@@ -185,7 +185,8 @@ namespace Gameplay.Machines.Base
             var recipe = FindCraftableRecipe();
             if (recipe == null)
             {
-                _activeRecipe ??= GetPreferredRecipe();
+                _activeRecipe = null;
+                _progressSeconds = 0f;
                 return;
             }
 
@@ -195,10 +196,8 @@ namespace Gameplay.Machines.Base
                 _progressSeconds = 0f;
             }
 
-            var tickRateSeconds = TickManager.Instance != null ? TickManager.Instance.TickRateSeconds : 1f;
-
-            _progressSeconds += tickRateSeconds;
-            if (_progressSeconds < recipe.ProcessTimeSeconds / Mathf.Max(0.01f, EffectiveModifiers.Speed)) return;
+            _progressSeconds += TickManager.Instance != null ? TickManager.Instance.TickRateSeconds : 1f;
+            if (_progressSeconds < GetCraftDuration(recipe)) return;
 
             ConsumeRecipe(recipe);
             ProduceRecipe(recipe);
@@ -268,27 +267,56 @@ namespace Gameplay.Machines.Base
 
         private Recipe FindCraftableRecipe()
         {
-            if (CanCraft(defaultRecipe)) return defaultRecipe;
+            Recipe bestRecipe = null;
+            var bestInputTypeCount = -1;
+            var bestInputTotalAmount = -1f;
 
             var recipes = allowedRecipes;
-
             for (var index = 0; index < recipes.Length; index++)
             {
                 var recipe = recipes[index];
-                if (recipe == defaultRecipe) continue;
+                if (!CanCraft(recipe)) continue;
 
-                if (CanCraft(recipe)) return recipe;
+                GetRecipeInputMetrics(recipe, out var inputTypeCount, out var inputTotalAmount);
+                var isBetter = inputTypeCount > bestInputTypeCount
+                    || (inputTypeCount == bestInputTypeCount && inputTotalAmount > bestInputTotalAmount)
+                    || (bestRecipe != null
+                        && inputTypeCount == bestInputTypeCount
+                        && Mathf.Approximately(inputTotalAmount, bestInputTotalAmount)
+                        && recipe == _activeRecipe);
+
+                if (isBetter)
+                {
+                    bestRecipe = recipe;
+                    bestInputTypeCount = inputTypeCount;
+                    bestInputTotalAmount = inputTotalAmount;
+                }
             }
 
-            return null;
+            return bestRecipe;
+        }
+
+        private static void GetRecipeInputMetrics(Recipe recipe, out int inputTypeCount, out float inputTotalAmount)
+        {
+            inputTypeCount = 0;
+            inputTotalAmount = 0f;
+            if (recipe == null) return;
+
+            var inputs = recipe.ItemInputs;
+            for (var index = 0; index < inputs.Length; index++)
+            {
+                if (!inputs[index].IsValid) continue;
+
+                inputTypeCount++;
+                inputTotalAmount += inputs[index].Amount;
+            }
         }
 
         private bool CanCraft(Recipe recipe)
         {
             if (!IsAllowedRecipe(recipe)) return false;
 
-            var effectiveEnergyCost = recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy);
-            if (_energyInput.Count < effectiveEnergyCost || _waterInput.Count < recipe.WaterCost) return false;
+            if (_energyInput.Count < GetEffectiveEnergyCost(recipe) || _waterInput.Count < recipe.WaterCost) return false;
 
             var inputs = recipe.ItemInputs;
             for (var index = 0; index < inputs.Length; index++)
@@ -375,24 +403,39 @@ namespace Gameplay.Machines.Base
 
         private void ConsumeRecipe(Recipe recipe)
         {
-            _energyInput.Remove(recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy));
+            _energyInput.Remove(GetEffectiveEnergyCost(recipe));
             _waterInput.Remove(recipe.WaterCost);
 
             var inputs = recipe.ItemInputs;
             for (var index = 0; index < inputs.Length; index++)
             {
                 var input = inputs[index];
-                var remaining = input.Amount;
-                for (var slotIndex = 0; slotIndex < _itemInputs.Capacity && remaining > 0f; slotIndex++)
-                {
-                    ref var slot = ref _itemInputs.GetSlot(slotIndex);
-                    if (slot.IsEmpty || slot.Held != input.Item) continue;
-
-                    var take = Mathf.Min(slot.Count, remaining);
-                    slot.Remove(take);
-                    remaining -= take;
-                }
+                ConsumeStoredItem(input.Item, input.Amount);
             }
+        }
+
+        private void ConsumeStoredItem(Item item, float amount)
+        {
+            var remaining = amount;
+            for (var index = 0; index < _itemInputs.Capacity && remaining > 0f; index++)
+            {
+                ref var slot = ref _itemInputs.GetSlot(index);
+                if (slot.IsEmpty || slot.Held != item) continue;
+
+                var take = Mathf.Min(slot.Count, remaining);
+                slot.Remove(take);
+                remaining -= take;
+            }
+        }
+
+        private float GetCraftDuration(Recipe recipe)
+        {
+            return recipe.ProcessTimeSeconds / Mathf.Max(0.01f, EffectiveModifiers.Speed);
+        }
+
+        private float GetEffectiveEnergyCost(Recipe recipe)
+        {
+            return recipe.EnergyCost * Mathf.Max(0f, EffectiveModifiers.Energy);
         }
 
         private void ProduceRecipe(Recipe recipe)

@@ -38,11 +38,6 @@ namespace Presentation.UI
             _nextTimelineButton = root.Q<Button>("timeline-next-button");
             _buyTimelineButton = root.Q<Button>("timeline-buy-button");
 
-            _menuButton.clicked += ToggleMenu;
-            _previousTimelineButton.clicked += OnPreviousTimelineClicked;
-            _nextTimelineButton.clicked += OnNextTimelineClicked;
-            _buyTimelineButton.clicked += OnBuyTimelineClicked;
-
             SetMenuOpen(false);
         }
 
@@ -52,20 +47,50 @@ namespace Presentation.UI
             _timelineManager = TimelineManager.Instance;
             ItemCatalog.TryGet("chronos_fragment", out _chronosFragment);
 
-            _inventory.InventoryChanged += RefreshView;
-            _timelineManager.ActiveTimelineChanged += OnActiveTimelineChanged;
-            _timelineManager.TimelinesChanged += RefreshView;
+            if (isActiveAndEnabled) SubscribeRuntimeEvents();
 
             RefreshView();
         }
 
-        private void OnDestroy()
+        private void OnEnable()
         {
-            _menuButton.clicked -= ToggleMenu;
-            _previousTimelineButton.clicked -= OnPreviousTimelineClicked;
-            _nextTimelineButton.clicked -= OnNextTimelineClicked;
-            _buyTimelineButton.clicked -= OnBuyTimelineClicked;
+            if (_menuButton != null) _menuButton.clicked += ToggleMenu;
+            if (_previousTimelineButton != null) _previousTimelineButton.clicked += OnPreviousTimelineClicked;
+            if (_nextTimelineButton != null) _nextTimelineButton.clicked += OnNextTimelineClicked;
+            if (_buyTimelineButton != null) _buyTimelineButton.clicked += OnBuyTimelineClicked;
 
+            SubscribeRuntimeEvents();
+        }
+
+        private void OnDisable()
+        {
+            if (_menuButton != null) _menuButton.clicked -= ToggleMenu;
+            if (_previousTimelineButton != null) _previousTimelineButton.clicked -= OnPreviousTimelineClicked;
+            if (_nextTimelineButton != null) _nextTimelineButton.clicked -= OnNextTimelineClicked;
+            if (_buyTimelineButton != null) _buyTimelineButton.clicked -= OnBuyTimelineClicked;
+
+            UnsubscribeRuntimeEvents();
+        }
+
+        private void SubscribeRuntimeEvents()
+        {
+            if (_inventory != null)
+            {
+                _inventory.InventoryChanged -= RefreshView;
+                _inventory.InventoryChanged += RefreshView;
+            }
+
+            if (_timelineManager != null)
+            {
+                _timelineManager.ActiveTimelineChanged -= OnActiveTimelineChanged;
+                _timelineManager.ActiveTimelineChanged += OnActiveTimelineChanged;
+                _timelineManager.TimelinesChanged -= RefreshView;
+                _timelineManager.TimelinesChanged += RefreshView;
+            }
+        }
+
+        private void UnsubscribeRuntimeEvents()
+        {
             if (_inventory != null) _inventory.InventoryChanged -= RefreshView;
             if (_timelineManager != null)
             {
@@ -103,6 +128,8 @@ namespace Presentation.UI
 
         private void RefreshView()
         {
+            if (_inventory == null || _timelineManager == null || _timelineManager.ActiveTimeline == null) return;
+
             var activeTimeline = _timelineManager.ActiveTimeline;
             var fragmentCount = _chronosFragment == null ? 0f : _inventory.CountItem(_chronosFragment);
             var timelineCost = _timelineManager.GetNewTimelineCost();

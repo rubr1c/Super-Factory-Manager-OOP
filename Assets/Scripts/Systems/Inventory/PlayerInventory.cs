@@ -42,6 +42,12 @@ namespace Systems.Inventory
                 slotIndex = 2,
                 itemId = "coal_burner",
                 count = 1
+            },
+            new()
+            {
+                slotIndex = 3,
+                itemId = "energy_pipe",
+                count = 1
             }
         };
 

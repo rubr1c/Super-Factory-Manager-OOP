@@ -36,9 +36,18 @@ namespace Presentation.UI
             _title = root.Q<Label>("panel-title");
             _content = root.Q<VisualElement>("panel-content");
             _deleteButton = root.Q<Button>("delete-button");
-            _deleteButton.clicked += DeleteCurrentEntity;
 
             SetPanelVisible(false);
+        }
+
+        private void OnEnable()
+        {
+            if (_deleteButton != null) _deleteButton.clicked += DeleteCurrentEntity;
+        }
+
+        private void OnDisable()
+        {
+            if (_deleteButton != null) _deleteButton.clicked -= DeleteCurrentEntity;
         }
 
         private void OnDestroy()
