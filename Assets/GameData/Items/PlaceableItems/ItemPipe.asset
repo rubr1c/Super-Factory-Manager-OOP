@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
   registryName: item_pipe
   displayName: Item Pipe
-  icon: {fileID: 0}
+  icon: {fileID: 7613047637900268213, guid: 098eaa6cb102eed439c8e197fa55f3ac, type: 3}
   maxStackSize: 100
   prefab: {fileID: 3360724490406457834, guid: 54a04b79a05aa2049a69b614cd5579f6, type: 3}

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.ResourceItem
   registryName: chronos_fragment
   displayName: Chronos Fragment
-  icon: {fileID: 0}
+  icon: {fileID: -7157039569515489011, guid: c062870edd1b34041af82c6e88fa83ab, type: 3}
   maxStackSize: 100

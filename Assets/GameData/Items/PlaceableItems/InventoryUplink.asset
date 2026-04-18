@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
   registryName: inventory_uplink
   displayName: Inventory Uplink
-  icon: {fileID: 0}
+  icon: {fileID: -2459074171905946854, guid: fff03d4ad14cff3448922a8ac52d02e4, type: 3}
   maxStackSize: 100
   prefab: {fileID: 3360724490406457834, guid: 82fd6d511929acd4192298caaadcf765, type: 3}

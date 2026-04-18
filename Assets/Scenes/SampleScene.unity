@@ -769,10 +769,43 @@ MonoBehaviour:
     itemId: starter_drill
     count: 1
   - slotIndex: 1
-    itemId: industrial_assembler
+    itemId: energy_drill
     count: 1
   - slotIndex: 2
+    itemId: energy_generator
+    count: 1
+  - slotIndex: 3
     itemId: coal_burner
+    count: 1
+  - slotIndex: 4
+    itemId: liquid_extractor
+    count: 1
+  - slotIndex: 5
+    itemId: plate_compressor
+    count: 1
+  - slotIndex: 6
+    itemId: arc_smelter
+    count: 1
+  - slotIndex: 7
+    itemId: industrial_assembler
+    count: 1
+  - slotIndex: 8
+    itemId: circuit_fabricator
+    count: 1
+  - slotIndex: 9
+    itemId: inventory_uplink
+    count: 1
+  - slotIndex: 10
+    itemId: logistics_buffer
+    count: 1
+  - slotIndex: 11
+    itemId: energy_pipe
+    count: 1
+  - slotIndex: 12
+    itemId: fluid_pipe
+    count: 1
+  - slotIndex: 13
+    itemId: item_pipe
     count: 1
 --- !u!1 &2106101984
 GameObject:

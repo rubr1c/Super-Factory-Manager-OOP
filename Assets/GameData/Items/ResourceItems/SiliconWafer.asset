@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.ResourceItem
   registryName: silicon_wafer
   displayName: Silicon Wafer
-  icon: {fileID: 0}
+  icon: {fileID: 691956130320491365, guid: f94d85c21647f784e8b26470ecd7d102, type: 3}
   maxStackSize: 100

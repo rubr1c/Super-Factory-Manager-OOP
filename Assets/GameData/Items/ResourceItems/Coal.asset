@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.FuelItem
   registryName: coal
   displayName: Coal
-  icon: {fileID: 0}
+  icon: {fileID: 6482737013037613852, guid: 1b4016a282fc75e41bb64f87dfe2ea3e, type: 3}
   maxStackSize: 100
   burnTime: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameItems.PlaceableItem
   registryName: energy_generator
   displayName: Energy Generator
-  icon: {fileID: 0}
+  icon: {fileID: 260827861205981495, guid: c81012c41c95d434cae5188e1a051879, type: 3}
   maxStackSize: 100
   tagIds:
   - placeable

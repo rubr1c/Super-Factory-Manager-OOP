@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.ResourceItem
   registryName: circuit_board
   displayName: CircuitBoard
-  icon: {fileID: 0}
+  icon: {fileID: -399242255717515368, guid: 4b5e3cd2d5109e048b3d509ba92c484f, type: 3}
   maxStackSize: 100

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.ResourceItem
   registryName: iron_plate
   displayName: Iron Plate
-  icon: {fileID: 0}
+  icon: {fileID: 7242358429175246540, guid: 99e642a8b4839a941b57c5b9f1e5d623, type: 3}
   maxStackSize: 100

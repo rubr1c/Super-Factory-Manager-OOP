@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
   registryName: energy_drill
   displayName: Energy Drill
-  icon: {fileID: 0}
+  icon: {fileID: 5573916414905273548, guid: 195aa4395b29a9744972f72b12b4535e, type: 3}
   maxStackSize: 100
   prefab: {fileID: 9203728190462739481, guid: b5fd97e25c7dbc74096f67978b74ba4a, type: 3}

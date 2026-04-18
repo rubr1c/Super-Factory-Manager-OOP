@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: starter_drill
   displayName: Starter Drill
-  icon: {fileID: 0}
+  icon: {fileID: -1468432559551252980, guid: 9d7ff9c5ebcaf334bac4c10e5d44b7ca, type: 3}
   maxStackSize: 100
   tagIds:
   - placeable

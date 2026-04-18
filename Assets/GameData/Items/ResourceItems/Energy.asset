@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.EnergyItem
   registryName: energy
   displayName: Energy
-  icon: {fileID: 0}
+  icon: {fileID: -5564248608999137188, guid: ff78f35c176d2024ba7730d2333ba29c, type: 3}
   maxStackSize: 100000

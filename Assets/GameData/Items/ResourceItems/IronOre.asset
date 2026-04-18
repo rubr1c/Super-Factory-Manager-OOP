@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: iron_ore
   displayName: Iron Ore
-  icon: {fileID: 0}
+  icon: {fileID: -3730300019221377472, guid: 10d854e539559964683a4ce93efa4932, type: 3}
   maxStackSize: 100
   tagIds:
   - resource

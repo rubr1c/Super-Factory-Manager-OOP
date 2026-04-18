@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: quartz
   displayName: Quartz
-  icon: {fileID: 0}
+  icon: {fileID: 7892299103824669735, guid: b7b9baa652fb5fb49ba294b55a91c171, type: 3}
   maxStackSize: 100
   tagIds:
   - resource

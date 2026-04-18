@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.UpgradeCardItem
   registryName: optimization_module
   displayName: OptimizationModule
-  icon: {fileID: 0}
+  icon: {fileID: -5844640106101155349, guid: cd436de87b99a474fb0a1a0f2aa688fc, type: 3}
   maxStackSize: 100
   speedMultiplier: 1
   energyMultiplier: 0.5

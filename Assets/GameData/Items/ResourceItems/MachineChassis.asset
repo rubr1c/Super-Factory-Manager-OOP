@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.ResourceItem
   registryName: machine_chassis
   displayName: Machine Chassis
-  icon: {fileID: 0}
+  icon: {fileID: 7549289543442664058, guid: 537aaf6542dca9744b28ea7aee30aea2, type: 3}
   maxStackSize: 100

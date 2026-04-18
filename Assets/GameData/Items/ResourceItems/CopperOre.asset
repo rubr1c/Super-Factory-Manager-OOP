@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: copper_ore
   displayName: Copper Ore
-  icon: {fileID: 0}
+  icon: {fileID: 2173475394280969611, guid: 2486bc0958d55a14c9d73583ada29658, type: 3}
   maxStackSize: 100
   tagIds:
   - resource

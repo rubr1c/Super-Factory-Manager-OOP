@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Items.UpgradeCardItem
   registryName: overclock_module
   displayName: Overclock Module
-  icon: {fileID: 0}
+  icon: {fileID: -4265763929170652750, guid: badcaa063e851464b8a9fc788846608b, type: 3}
   maxStackSize: 100
   speedMultiplier: 1.5
   energyMultiplier: 1
