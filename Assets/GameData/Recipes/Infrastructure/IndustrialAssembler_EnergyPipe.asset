@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2caac3dfcc34b3e8b558b1ad2cb5c33, type: 3}
+  m_Name: IndustrialAssembler_EnergyPipe
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Recipes.Recipe
+  recipeId: industrial_assembler_energy_pipe
+  displayName: Assemble Energy Pipe
+  machineType: 3
+  itemInputs:
+  - item: {fileID: 11400000, guid: 81db8ebb78bbc464da17438e45a736cc, type: 2}
+    amount: 2
+  - item: {fileID: 11400000, guid: 0f3a51e13ff2b214394b0cf605f76820, type: 2}
+    amount: 2
+  itemOutputs:
+  - item: {fileID: 11400000, guid: 9e74b57efb01f704eac7e8068fa5bb7b, type: 2}
+    amount: 2
+  energyCost: 30
+  waterCost: 0
+  processTimeSeconds: 1

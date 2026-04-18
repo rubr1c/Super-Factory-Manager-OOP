@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2caac3dfcc34b3e8b558b1ad2cb5c33, type: 3}
+  m_Name: IndustrialAssembler_FluidPipe
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Recipes.Recipe
+  recipeId: industrial_assembler_fluid_pipe
+  displayName: Assemble Fluid Pipe
+  machineType: 3
+  itemInputs:
+  - item: {fileID: 11400000, guid: c85be78133c57ad4983d7e640bb2af7e, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 81db8ebb78bbc464da17438e45a736cc, type: 2}
+    amount: 1
+  itemOutputs:
+  - item: {fileID: 11400000, guid: c389cab00b183bc4db01055d069f2ddc, type: 2}
+    amount: 2
+  energyCost: 20
+  waterCost: 0
+  processTimeSeconds: 1

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0e81a8c92343cabf2b80e8ad7f4e9d, type: 3}
+  m_Name: CoalBurner
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Items.PlaceableItem
+  registryName: coal_burner
+  displayName: Coal Burner
+  icon: {fileID: -740856517983301043, guid: 06cc3f8a452016f4fb5c47017112bfb5, type: 3}
+  maxStackSize: 100
+  prefab: {fileID: 3360724490406457834, guid: bc6a79ceb8ff2964bac3b29edef91509, type: 3}

@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/AuthMenu.uss?fileID=7433441132597879392&amp;guid=4c095b9a178d406395b5a4c1d9f07062&amp;type=3#AuthMenu"/>
+    <ui:VisualElement name="auth-root" class="auth-root">
+        <ui:VisualElement name="auth-panel" class="auth-panel">
+            <ui:Label text="Sign in" name="auth-title" class="auth-title"/>
+            <ui:VisualElement class="auth-field">
+                <ui:Label text="Email"/>
+                <ui:TextField name="email-field" value=""/>
+            </ui:VisualElement>
+            <ui:VisualElement class="auth-field">
+                <ui:Label text="Password"/>
+                <ui:TextField name="password-field" value="" password="true"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="auth-buttons">
+                <ui:Button text="Sign in" name="sign-in-button" class="auth-button"/>
+                <ui:Button text="Sign up" name="sign-up-button" class="auth-button"/>
+            </ui:VisualElement>
+            <ui:Label name="status-label" class="auth-status" text=""/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

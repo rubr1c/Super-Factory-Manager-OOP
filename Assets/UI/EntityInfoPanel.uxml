@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+
+    <Style src="project://database/Assets/UI/EntityInfoPanel.uss?fileID=7433441132597879392&amp;guid=ce44ac7194205d749ab18716b2dc8e07&amp;type=3#EntityInfoPanel"/>
+
+    <ui:VisualElement name="backdrop" picking-mode="Ignore" class="backdrop">
+
+        <ui:VisualElement name="entity-info-panel" class="entity-info-panel">
+
+            <ui:Label name="panel-title" text="Name" class="panel-title"/>
+            <ui:VisualElement name="panel-content" class="panel-content"></ui:VisualElement>
+            <ui:Button name="delete-button" text="Delete" class="panel-button panel-delete-button"/>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>
+

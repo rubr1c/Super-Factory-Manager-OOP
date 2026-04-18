@@ -1,0 +1,105 @@
+.auth-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(24, 26, 34);
+}
+
+.auth-panel {
+    min-width: 320px;
+    max-width: 420px;
+    padding: 28px;
+    flex-direction: column;
+    background-color: rgba(40, 42, 54, 0.95);
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: rgba(100, 180, 255, 0.35);
+}
+
+.auth-title {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(235, 240, 255);
+    margin-bottom: 18px;
+    -unity-text-align: middle-center;
+}
+
+.auth-field {
+    margin-bottom: 12px;
+}
+
+.auth-field Label {
+    color: rgb(200, 210, 230);
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+
+.auth-field TextField {
+    background-color: transparent;
+    border-color: rgba(100, 180, 255, 0.45);
+    border-width: 1px;
+    border-radius: 6px;
+    color: rgb(0, 0, 0);
+    padding: 0;
+}
+
+.auth-field TextField .unity-base-text-field__input,
+.auth-field TextField .unity-base-field__input,
+.auth-field TextField .unity-text-field__input {
+    color: rgb(0, 0, 0);
+    background-color: rgb(244, 246, 252);
+    border-width: 0;
+    border-radius: 5px;
+    margin: 0;
+    padding: 8px;
+}
+
+.auth-field .unity-base-text-field__input,
+.auth-field .unity-base-field__input,
+.auth-field .unity-text-field__input,
+.auth-field .unity-text-input {
+    color: rgb(0, 0, 0);
+}
+
+.auth-buttons {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.auth-button {
+    flex-grow: 1;
+    margin-left: 6px;
+    margin-right: 6px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: rgba(56, 82, 120, 0.95);
+    border-color: rgba(120, 200, 255, 0.45);
+    color: rgb(235, 245, 255);
+    -unity-font-style: bold;
+}
+
+.auth-button:hover {
+    background-color: rgba(72, 100, 140, 0.98);
+    border-color: rgba(140, 210, 255, 0.65);
+}
+
+.auth-status {
+    margin-top: 14px;
+    min-height: 40px;
+    font-size: 12px;
+    color: rgb(255, 200, 120);
+    white-space: normal;
+}
+
+.auth-status--error {
+    color: rgb(255, 140, 140);
+}
+
+.auth-status--ok {
+    color: rgb(160, 230, 180);
+}

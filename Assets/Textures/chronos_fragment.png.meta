@@ -1,0 +1,1105 @@
+fileFormatVersion: 2
+guid: c062870edd1b34041af82c6e88fa83ab
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7157039569515489011
+    second: chronos_fragment_0
+  - first:
+      213: 2561638878324965712
+    second: chronos_fragment_1
+  - first:
+      213: -9162621369042682614
+    second: chronos_fragment_2
+  - first:
+      213: 4842293677880032719
+    second: chronos_fragment_3
+  - first:
+      213: -15814002193920576
+    second: chronos_fragment_4
+  - first:
+      213: -8953211551047424711
+    second: chronos_fragment_5
+  - first:
+      213: -8620441526941884731
+    second: chronos_fragment_6
+  - first:
+      213: -8810599584549641165
+    second: chronos_fragment_7
+  - first:
+      213: 6644296683425600577
+    second: chronos_fragment_8
+  - first:
+      213: -5744445418778634262
+    second: chronos_fragment_9
+  - first:
+      213: 2106524782578682451
+    second: chronos_fragment_10
+  - first:
+      213: 8776705693137240396
+    second: chronos_fragment_11
+  - first:
+      213: 6784494837305797565
+    second: chronos_fragment_12
+  - first:
+      213: 8207118496124395606
+    second: chronos_fragment_13
+  - first:
+      213: 8395138916646082915
+    second: chronos_fragment_14
+  - first:
+      213: -8081561926516714800
+    second: chronos_fragment_15
+  - first:
+      213: 2115927133241845030
+    second: chronos_fragment_16
+  - first:
+      213: -9161732177163894703
+    second: chronos_fragment_17
+  - first:
+      213: -1797134336667833000
+    second: chronos_fragment_18
+  - first:
+      213: 4463060346010220530
+    second: chronos_fragment_19
+  - first:
+      213: 1471489242210971348
+    second: chronos_fragment_20
+  - first:
+      213: 4895410209513705102
+    second: chronos_fragment_21
+  - first:
+      213: 5746056692316275772
+    second: chronos_fragment_22
+  - first:
+      213: 7758652868360306032
+    second: chronos_fragment_23
+  - first:
+      213: 8303938061816115064
+    second: chronos_fragment_24
+  - first:
+      213: 7267124589194392666
+    second: chronos_fragment_25
+  - first:
+      213: -8572599299778441816
+    second: chronos_fragment_26
+  - first:
+      213: -8537173971501435279
+    second: chronos_fragment_27
+  - first:
+      213: 445357475961980610
+    second: chronos_fragment_28
+  - first:
+      213: -7226395972814865026
+    second: chronos_fragment_29
+  - first:
+      213: 6455632402666862899
+    second: chronos_fragment_30
+  - first:
+      213: 6168485466387708269
+    second: chronos_fragment_31
+  - first:
+      213: -2998520559936153765
+    second: chronos_fragment_32
+  - first:
+      213: 5105766122751253322
+    second: chronos_fragment_33
+  - first:
+      213: -33123022315342654
+    second: chronos_fragment_34
+  - first:
+      213: 4572205948389425877
+    second: chronos_fragment_35
+  - first:
+      213: -4284388884794391392
+    second: chronos_fragment_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1019
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: chronos_fragment_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 8
+        width: 1019
+        height: 1011
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d095d9f5e661dac90800000000000000
+      internalID: -7157039569515489011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_1
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 647
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 051c369dcf4cc8320800000000000000
+      internalID: 2561638878324965712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_2
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 639
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0dbec61964d7d080800000000000000
+      internalID: -9162621369042682614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_3
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 627
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcdb828c178433340800000000000000
+      internalID: 4842293677880032719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_4
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 621
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cd01c0bf31d7cff0800000000000000
+      internalID: -15814002193920576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_5
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 629
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 935e4ecc78dcfb380800000000000000
+      internalID: -8953211551047424711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_6
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 610
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce5a93ba1a0e5880800000000000000
+      internalID: -8620441526941884731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_7
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 582
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 334e6b0cb567ab580800000000000000
+      internalID: -8810599584549641165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_8
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 583
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14493ed61a8453c50800000000000000
+      internalID: 6644296683425600577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_9
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 567
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae75416b351a740b0800000000000000
+      internalID: -5744445418778634262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_10
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 558
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35ac8200121eb3d10800000000000000
+      internalID: 2106524782578682451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_11
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 542
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c410891b35f1dc970800000000000000
+      internalID: 8776705693137240396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_12
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 543
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbb6516db1e572e50800000000000000
+      internalID: 6784494837305797565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_13
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 519
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 650680ff9ca85e170800000000000000
+      internalID: 8207118496124395606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_14
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 515
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3695fb68d56818470800000000000000
+      internalID: 8395138916646082915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_15
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 531
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d256abee3688df80800000000000000
+      internalID: -8081561926516714800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_16
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 516
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 625ad7b54884d5d10800000000000000
+      internalID: 2115927133241845030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_17
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 511
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15041e4302dfad080800000000000000
+      internalID: -9161732177163894703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_18
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 511
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85da149a7db4f07e0800000000000000
+      internalID: -1797134336667833000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_19
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 503
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f732170db9ffed30800000000000000
+      internalID: 4463060346010220530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_20
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 493
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4de2bc46ba7cb6410800000000000000
+      internalID: 1471489242210971348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_21
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 486
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8e82e706adffe340800000000000000
+      internalID: 4895410209513705102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_22
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 481
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3484c42e181ebf40800000000000000
+      internalID: 5746056692316275772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_23
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 485
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07d7e2a3da54cab60800000000000000
+      internalID: 7758652868360306032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_24
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 477
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87f256bcba38d3370800000000000000
+      internalID: 8303938061816115064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_25
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 472
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a54307d9f430ad460800000000000000
+      internalID: 7267124589194392666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_26
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 440
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ad81fe3b52080980800000000000000
+      internalID: -8572599299778441816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_27
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 414
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17632fa318dd58980800000000000000
+      internalID: -8537173971501435279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_28
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 421
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c647c8c34a3e2600800000000000000
+      internalID: 445357475961980610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_29
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 408
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7d7e0a562fa6bb90800000000000000
+      internalID: -7226395972814865026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_30
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 403
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339b5718773079950800000000000000
+      internalID: 6455632402666862899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_31
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 399
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d69f23289dcda9550800000000000000
+      internalID: 6168485466387708269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_32
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 247
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b57dc45007d1366d0800000000000000
+      internalID: -2998520559936153765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_33
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 246
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4bdfc4bc335bd640800000000000000
+      internalID: 5105766122751253322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_34
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 247
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c4b10569c25a8ff0800000000000000
+      internalID: -33123022315342654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_35
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 249
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d20ea1e51db37f30800000000000000
+      internalID: 4572205948389425877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chronos_fragment_36
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 251
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a4c23a420bca84c0800000000000000
+      internalID: -4284388884794391392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      chronos_fragment_0: -7157039569515489011
+      chronos_fragment_1: 2561638878324965712
+      chronos_fragment_10: 2106524782578682451
+      chronos_fragment_11: 8776705693137240396
+      chronos_fragment_12: 6784494837305797565
+      chronos_fragment_13: 8207118496124395606
+      chronos_fragment_14: 8395138916646082915
+      chronos_fragment_15: -8081561926516714800
+      chronos_fragment_16: 2115927133241845030
+      chronos_fragment_17: -9161732177163894703
+      chronos_fragment_18: -1797134336667833000
+      chronos_fragment_19: 4463060346010220530
+      chronos_fragment_2: -9162621369042682614
+      chronos_fragment_20: 1471489242210971348
+      chronos_fragment_21: 4895410209513705102
+      chronos_fragment_22: 5746056692316275772
+      chronos_fragment_23: 7758652868360306032
+      chronos_fragment_24: 8303938061816115064
+      chronos_fragment_25: 7267124589194392666
+      chronos_fragment_26: -8572599299778441816
+      chronos_fragment_27: -8537173971501435279
+      chronos_fragment_28: 445357475961980610
+      chronos_fragment_29: -7226395972814865026
+      chronos_fragment_3: 4842293677880032719
+      chronos_fragment_30: 6455632402666862899
+      chronos_fragment_31: 6168485466387708269
+      chronos_fragment_32: -2998520559936153765
+      chronos_fragment_33: 5105766122751253322
+      chronos_fragment_34: -33123022315342654
+      chronos_fragment_35: 4572205948389425877
+      chronos_fragment_36: -4284388884794391392
+      chronos_fragment_4: -15814002193920576
+      chronos_fragment_5: -8953211551047424711
+      chronos_fragment_6: -8620441526941884731
+      chronos_fragment_7: -8810599584549641165
+      chronos_fragment_8: 6644296683425600577
+      chronos_fragment_9: -5744445418778634262
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

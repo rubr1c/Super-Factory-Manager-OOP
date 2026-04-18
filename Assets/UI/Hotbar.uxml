@@ -1,0 +1,50 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Hotbar.uss?fileID=7433441132597879392&amp;guid=8fdbe668c408d254cb5c5e21d4c82a77&amp;type=3#Hotbar"/>
+    <ui:VisualElement name="inventory-overlay" class="inventory-overlay">
+        <ui:VisualElement name="inventory-panel" class="inventory-panel">
+            <ui:VisualElement name="inventory-row-0" class="inventory-row">
+                <ui:VisualElement name="inventory-slot-0" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-1" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-2" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-3" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-4" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-5" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-6" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-7" class="hotbar-slot"></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="inventory-row-1" class="inventory-row">
+                <ui:VisualElement name="inventory-slot-8" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-9" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-10" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-11" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-12" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-13" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-14" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-15" class="hotbar-slot"></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="inventory-row-2" class="inventory-row">
+                <ui:VisualElement name="inventory-slot-16" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-17" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-18" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-19" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-20" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-21" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-22" class="hotbar-slot"></ui:VisualElement>
+                <ui:VisualElement name="inventory-slot-23" class="hotbar-slot"></ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="hotbar-root" class="hotbar-root">
+        <ui:VisualElement name="slot-0" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-1" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-2" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-3" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-4" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-5" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-6" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-7" class="hotbar-slot"></ui:VisualElement>
+        <ui:VisualElement name="slot-menu" class="hotbar-slot menu-slot">
+            <ui:Label text="..." class="menu-label"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
